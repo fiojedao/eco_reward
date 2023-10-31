@@ -1,0 +1,66 @@
+<header>
+  <div class="header-container">
+
+
+    <div class="options">
+
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base"
+        style="color: rgb(57, 57, 196);">
+        <span class="mat-button-wrapper">
+          <strong>Ecowards</strong>
+        </span>
+      </button>
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base">
+        <span class="mat-button-wrapper">
+          <strong>Demo</strong>
+        </span>
+      </button>
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base">
+        <span class="mat-button-wrapper">
+          <strong>Demo</strong>
+        </span>
+      </button>
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base">
+        <span class="mat-button-wrapper">
+          <strong>Demo</strong>
+        </span>
+      </button>
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base">
+        <span class="mat-button-wrapper">
+          <strong>Demo</strong>
+        </span>
+      </button>
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base">
+        <span class="mat-button-wrapper">
+          <strong>Demo</strong>
+        </span>
+      </button>
+      <button mat-button class="mat-focus-indicator hometop-btn mat-button mat-button-base">
+        <span class="mat-button-wrapper">
+          <strong>Demo</strong>
+        </span>
+      </button>
+    </div>
+
+    <div class="spacer"></div>
+
+    <button mat-button [matMenuTriggerFor]="menu" class="right"><span
+        style="display: flex; justify-content: center; align-items: center;">
+        <a mat-button class="mat-focus-indicator hometop-btn icon-button mat-button mat-button-base">
+          <span style="display: flex; justify-content: center; align-items: center;">
+            <mat-icon>person</mat-icon>
+            <strong> My Account (Dashboard)</strong>
+          </span>
+        </a>
+      </span></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <!-- <button mat-menu-item><strong>My coupon exchanges</strong> (user 1)</button> -->
+      <button mat-menu-item [routerLink]="'/dashboard'"><strong> Dashboard</strong></button>
+
+    </mat-menu>
+
+
+
+  </div>
+</header>

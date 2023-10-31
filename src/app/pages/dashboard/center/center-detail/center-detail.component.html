@@ -1,0 +1,17 @@
+<mat-card class="dashboard-card" *ngIf="datos">
+  <mat-card-header>
+    <mat-card-title>
+      {{datos.name }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="dashboard-card-content">
+    <p><b>Administrador: </b>{{datos.User.name}}</p>
+    <p><b>Horario: </b>{{datos.operating_hours}}</p>
+    <p><b>Dirección: </b> {{datos.Address.province}} - {{datos.Address.canton}} - {{datos.Address.district}}</p>
+    <!--  <p><b>Provincia: </b>{{datos.Address.province}}</p>
+    <p><b>Cantón: </b>{{datos.Address.canton}}</p>
+    <p><b>Distrito: </b>{{datos.Address.district}}</p> -->
+    <p><b>Dirección exacta: </b>{{datos.Address.exact_address }}</p>
+    <p><b>Teléfono: </b>{{datos.phone}}</p>
+  </mat-card-content>
+</mat-card>
