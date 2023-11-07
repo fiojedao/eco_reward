@@ -3,12 +3,10 @@
 <section id="intro-section" class="home-intro-section background-div">
   <div fxlayout="row" fxlayout.lt-md="column" fxlayoutwrap="nowrap" fxlayoutgap="30px" class="hero-container">
     <div style="margin-right: 30px; flex: 1 1 100%; box-sizing: border-box; max-width: 60%;">
-      <h1 class="home-intro-title">Bienvenido a EcoRewards</h1>
-      <div class="home-intro-desc"> En EcoRewards, creemos en la importancia de cuidar nuestro planeta y recompensar las
-        acciones ecológicas que hacen la
-        diferencia. Nuestra aplicación te ofrece la oportunidad de transformar tus simples actos de reciclaje en
-        recompensas
-        significativas.
+      <h1 class="home-intro-title">Welcome to EcoRewards</h1>
+      <div class="home-intro-desc"> At EcoRewards, we believe in the importance of caring for our planet and rewarding
+        ecological actions that make a
+        difference. Our app offers you the opportunity to transform your simple recycling acts into meaningful rewards.
       </div>
       <div fxlayout="column" fxlayoutgap="30px" class="intro-list"
         style="flex-direction: column; box-sizing: border-box; display: flex;">
@@ -21,8 +19,8 @@
           <span fxflex="20px" style="flex: 1 1 20px; box-sizing: border-box; max-width: 20px; min-width: 20px;">
           </span>
           <span>
-            <b>Recicla:</b>
-            Fomentamos el reciclaje de materiales como papel, vidrio, cartón y plástico.
+            <b>Recycle:</b>
+            We encourage the recycling of materials such as paper, glass, cardboard and plastic.
           </span>
         </div>
 
@@ -34,8 +32,8 @@
           <span fxflex="20px" style="flex: 1 1 20px; box-sizing: border-box; max-width: 20px; min-width: 20px;">
           </span>
           <span>
-            <b>Gana:</b>
-            Acumula eco-monedas y canjea productos ecológicos, cupones y más.
+            <b>Win:</b>
+            Accumulate eco-coins and redeem organic products, coupons and more.
           </span>
         </div>
 
@@ -48,8 +46,7 @@
           </span>
           <span>
 
-            <b>Cuida:</b> Nuestra aplicación promueve la importancia de la ecología y la responsabilidad
-            ambiental.
+            <b>Take care:</b> Our application promotes the importance of ecology and environmental responsibility.
           </span>
         </div>
 
@@ -69,49 +66,103 @@
 <!-- Materials -->
 
 <section class="portfolio home-material-section">
-  <div class="container">
-    <div class="section-header">
-      <h2 style="font-size: 28px;">Materials</h2>
-      <p style="font-size: 20px; margin-bottom: 2rem; line-height: 1.2;">Descubre los materiales que puedes reciclar y
-        contribuye a un
-        futuro más sostenible. <br> ¡Empieza a reciclar y gana
-        eco-monedas hoy! </p>
-    </div>
-    <div fxlayout="row" fxlayout.lt-sm="column" fxlayoutwrap="nowrap" fxlayoutgap="30px"
-      style="flex-direction: row; box-sizing: border-box; display: flex;  flex-wrap: wrap;">
+  <div class="section-header">
+    <h2 style="font-size: 28px;">Materials</h2>
+    <p style="font-size: 20px; margin-bottom: 2rem; line-height: 1.2;">Discover the materials you can recycle and
+      contribute to a more sustainable future. <br> Start recycling and earn eco-coins today! </p>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-3" *ngFor="let material of materialData || []">
+      <mat-card class="cardWithShadow material overflow-hidden">
+        <!--  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+
+        <img mat-card-image [src]="material?.image" alt="{{ material?.image }}">
 
 
-      <div *ngFor="let material of materialData" fxflex="29"
-        style="margin-right: 30px; flex: 1 1 100%; box-sizing: border-box; max-width: 29%;">
-        <mat-card class="example-card">
-          <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{ material.name }}</mat-card-title>
-            <mat-card-subtitle>{{ material.description}}</mat-card-subtitle>
-          </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-            alt="Photo of a Shiba Inu">
-          <mat-card-content>
-            <p>{{ material.price }}</p>
-            <p>{{ material.unit_of_measure }}</p>
+        <mat-card-content class="p-b-24 p-t-12 position-relative">
+          <mat-card-title>{{ material.name }}</mat-card-title>
 
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Details</button>
+
+          <div class="d-flex align-items-center">
+            <button mat-mini-fab class="bg-light-warning text-success shadow-none icon-27">
+              <i-tabler class="icon-20" name="coins" style="color:#f8c076 ;"></i-tabler>
+            </button>
+            <div class="mat-body-1 f-w-600 m-l-12">{{ material.price }} </div>
+          </div>
+
+
+          <div class="d-flex align-items-center" style="padding-top: .1rem;">
+            <button mat-mini-fab class="bg-light-success text-success shadow-none icon-27">
+              <i-tabler class="icon-20" name="box-seam" class="icon-20"></i-tabler>
+            </button>
+            <div class="mat-body-1 f-w-600 m-l-12">{{ material.unit_of_measure }} </div>
+          </div>
+
+          <mat-card-actions class="container-actions">
+            <button class="card-button" mat-raised-button
+              (click)="openMaterialDialog(material.materialID)"><b>Details</b>
+            </button>
           </mat-card-actions>
-        </mat-card>
-      </div>
+        </mat-card-content>
+      </mat-card>
     </div>
+  </div>
+</section>
 
+<!-- Centros -->
+
+<section class="portfolio home-material-section">
+  <div class="section-header">
+    <h2 style="font-size: 28px;">Recycling centers</h2>
+    <p style="font-size: 20px; margin-bottom: 2rem; line-height: 1.2;">
+      At EcoRewards, we connect the community with
+      local collection centers that promote recycling efficiently and
+      sustainable.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-3" *ngFor="let centro of centerData of centerData">
+      <mat-card class="cardWithShadow material overflow-hidden center-card">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content class="p-b-24 p-t-12 position-relative">
+          <mat-card-title style="min-height: 50px;">{{ centro.name }}</mat-card-title>
+          <div class="d-flex align-items-center">
+            <button mat-mini-fab class="bg-light-warning text-success shadow-none icon-27"
+              style="display: flex; justify-content: center; align-items: center;">
+              <i-tabler class="icon-20" name="map-pin-filled" style="color:#f8c076 ;"></i-tabler>
+            </button>
+            <div class="mat-body-1 f-w-600 m-l-12">{{ centro.Address.province }} </div>
+          </div>
+
+
+          <div class="d-flex align-items-center" style="padding-top: .1rem;">
+            <button mat-mini-fab class="bg-light-success text-success shadow-none icon-27">
+              <i-tabler name="clock-2" class="icon-20"></i-tabler>
+            </button>
+            <div class="mat-body-1 f-w-600 m-l-12">{{ centro.operating_hours }} </div>
+          </div>
+
+          <mat-card-actions class="container-actions">
+            <button class="card-button" mat-raised-button (click)="openCenterDialog(centro.centerID)"><b>Details</b>
+            </button>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </section>
 
 
-<!-- Centros -->
 
 
 
-<section class="portfolio home-material-section">
+
+
+
+
+<!-- <section class="portfolio home-material-section">
   <div class="container">
     <div class="section-header">
       <h2 style="font-size: 28px;">Recycling centers</h2>
@@ -123,9 +174,6 @@
     </div>
     <div fxlayout="row" fxlayout.lt-sm="column" fxlayoutwrap="nowrap" fxlayoutgap="30px"
       style="flex-direction: row; box-sizing: border-box; display: flex;  flex-wrap: wrap;">
-
-
-
 
       <div *ngFor="let centro of centerData" fxflex="29"
         style="margin-right: 30px; flex: 1 1 100%; box-sizing: border-box; max-width: 29%;">
@@ -150,4 +198,4 @@
     </div>
 
   </div>
-</section>
+</section> -->
