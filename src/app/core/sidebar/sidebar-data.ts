@@ -2,7 +2,7 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Inicio',
   },
   {
     displayName: 'Dashboard',
@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
-    navCap: 'Ui Components',
+    navCap: 'Mantenimientos',
   },
   {
     displayName: 'User',
@@ -23,7 +23,7 @@ export const navItems: NavItem[] = [
     route: 'home/center',
   },
   {
-    navCap: 'Auth',
+    navCap: 'Autenticar',
   },
   {
     displayName: 'Login',
@@ -36,7 +36,7 @@ export const navItems: NavItem[] = [
     route: '/authentication/register',
   },
   {
-    navCap: 'Extra',
+    navCap: 'Adicional',
   },
   {
     displayName: 'Icons',
