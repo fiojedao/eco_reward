@@ -15,10 +15,14 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
       },
+      {
+        path: 'about',
+        component: HomeComponent,
+      },
     ],
   },
   {
-    path: 'dashboard',
+    path: 'home',
     component: DashTemplateComponent,
     children: [
       {
@@ -37,4 +41,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes), CoreModule],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
