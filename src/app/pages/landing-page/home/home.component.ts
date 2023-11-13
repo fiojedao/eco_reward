@@ -44,7 +44,7 @@ export class HomeComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.materialData = response;
-        debugger;
+        /* debugger; */
         /*         if (this.materialData && this.materialData.image) {
           this.materialData.image = `http://localhost:3000/${this.materialData.image}`;
         } */

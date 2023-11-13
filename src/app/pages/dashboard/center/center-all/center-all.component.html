@@ -5,9 +5,15 @@
       <mat-card-title>
         <div class="centered-content">
           Centro de acoplo
-          <a mat-fab matTooltip="Crear un centro" aria-label="Crear Centro" color="primary" class="custom-fab">
+          <a mat-fab matTooltip="Crear un centro" aria-label="Crear Centro" color="primary" class="custom-fab"
+            (click)="createCenter()">
             <mat-icon>add</mat-icon>
           </a>
+
+          <!--       <a mat-fab matTooltip="Crear Videojuego" aria-label="Crear Videojuego" color="primary"
+            (click)="crearVideojuego()">
+            <mat-icon>add</mat-icon>
+          </a> -->
         </div>
       </mat-card-title>
     </mat-card-content>
@@ -39,6 +45,10 @@
             <button mat-mini-fab color="accent" matTooltip="Detalle Centro" aria-label="Detalle Centro" color="primary"
               (click)="centerDetail(row.centerID)">
               <mat-icon class="mat-18">info</mat-icon>
+            </button>
+            <button mat-mini-fab color="accent" matTooltip="Detalle Centro" aria-label="Detalle Centro" color="primary"
+              (click)="updateCenter(row.centerID)">
+              <mat-icon class="mat-18">edit</mat-icon>
             </button>
 
           </td>

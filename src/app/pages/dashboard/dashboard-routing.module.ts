@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 
 const routes: Routes = [
-  {
+  /*   {
     path: 'dashboard',
     component: InicioComponent,
     children: [
@@ -20,7 +20,7 @@ const routes: Routes = [
           ),
       },
     ],
-  },
+  }, */
 ];
 
 @NgModule({

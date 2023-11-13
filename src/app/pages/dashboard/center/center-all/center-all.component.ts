@@ -51,9 +51,14 @@ export class CenterAllComponent {
   }
 
   centerDetail(id: number) {
-    this.router.navigate(['/center', id], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(['home', 'center', id]);
+  }
+
+  createCenter() {
+    this.router.navigate(['home', 'center', 'create']);
+  }
+  updateCenter(id: number) {
+    this.router.navigate(['home', 'center', 'update', id]);
   }
 
   ngOnDestroy() {

@@ -1,0 +1,36 @@
+.full-width {
+  width: 100%;
+}
+
+/* .or-border {
+  position: relative;
+  text-align: center;
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 500px;
+    top: 40%;
+    height: 1px;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 500px;
+    top: 40%;
+    height: 1px;
+  }
+} */
+
+h1 {
+  font-style: roboto;
+  font-weight: 500;
+}
+
+.container-actions {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  gap: 0.5rem;
+}

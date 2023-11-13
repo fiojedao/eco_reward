@@ -18,9 +18,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { CenterDetailComponent } from './center-detail/center-detail.component';
+import { CenterFormComponent } from './center-form/center-form.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [CenterAllComponent, CenterDetailComponent],
+  declarations: [
+    CenterAllComponent,
+    CenterDetailComponent,
+    CenterFormComponent,
+  ],
   imports: [
     CommonModule,
     CenterRoutingModule,
@@ -37,6 +44,7 @@ import { CenterDetailComponent } from './center-detail/center-detail.component';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    ReactiveFormsModule,
   ],
 })
 export class CenterModule {}
