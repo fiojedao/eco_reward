@@ -6,6 +6,7 @@ import { DashTemplateComponent } from './core/dash-template/dash-template.compon
 import { LandingTemplateComponent } from './pages/landing-page/landing-template/landing-template.component';
 import { HomeComponent } from './pages/landing-page/home/home.component';
 import { CenterAllComponent } from './pages/dashboard/center/center-all/center-all.component';
+import { MaterialExchangeAllComponent } from './pages/dashboard/material-exchange/material-exchange-all/material-exchange-all.component';
 const routes: Routes = [
   {
     path: '',
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'center',
         component: CenterAllComponent,
+      },
+      {
+        path: 'material-exchange',
+        component: MaterialExchangeAllComponent,
       },
     ],
   },

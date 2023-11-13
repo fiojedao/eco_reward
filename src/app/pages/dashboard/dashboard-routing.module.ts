@@ -19,6 +19,13 @@ const routes: Routes = [
             (m) => m.CenterRoutingModule
           ),
       },
+      {
+        path: 'material-exchange',
+        loadChildren: () =>
+          import('./material-exchange/material-exchange-routing.module').then(
+            (m) => m.MaterialExchangeRoutingModule
+          ),
+      },
     ],
   },
 ];
