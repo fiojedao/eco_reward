@@ -23,6 +23,11 @@ export const navItems: NavItem[] = [
     route: 'home/center',
   },
   {
+    displayName: 'Historial de canje',
+    iconName: 'checkup-list',
+    route: 'home/material-exchange',
+  },
+  {
     navCap: 'Autenticar',
   },
   {

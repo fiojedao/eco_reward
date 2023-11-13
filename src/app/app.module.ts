@@ -21,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CenterModule } from './pages/dashboard/center/center.module';
 import { UserModule } from './pages/dashboard/user/user.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
+import { MaterialExchangeModule } from './pages/dashboard/material-exchange/material-exchange.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,8 +43,10 @@ import { LandingPageModule } from './pages/landing-page/landing-page.module';
     CenterModule,
     UserModule,
     LandingPageModule,
+    MaterialExchangeModule,
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
 })
+
 export class AppModule {}

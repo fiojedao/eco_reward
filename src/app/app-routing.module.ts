@@ -10,6 +10,7 @@ import { CenterDetailComponent } from './pages/dashboard/center/center-detail/ce
 import { CenterFormComponent } from './pages/dashboard/center/center-form/center-form.component';
 import { UserDetailComponent } from './pages/dashboard/user/user-detail/user-detail.component';
 import { UserCouponComponent } from './pages/dashboard/user/user-coupon/user-coupon.component';
+import { MaterialExchangeAllComponent } from './pages/dashboard/material-exchange/material-exchange-all/material-exchange-all.component';
 const routes: Routes = [
   {
     path: '',
@@ -56,6 +57,10 @@ const routes: Routes = [
       {
         path: 'center/:id',
         component: CenterDetailComponent,
+      },
+      {
+        path: 'material-exchange',
+        component: MaterialExchangeAllComponent,
       },
     ],
   },

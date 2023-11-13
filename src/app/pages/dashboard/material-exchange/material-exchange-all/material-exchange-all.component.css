@@ -1,0 +1,27 @@
+.full-width-table {
+    width: 100%;
+  }
+  
+  /* .mat-mdc-card-title {
+    padding: 1.5rem;
+  }
+   */
+  .custom-fab {
+    width: 30px;
+    height: 30px;
+    margin-left: 1rem;
+  }
+  
+  .custom-card {
+    background-color: transparent;
+    box-shadow: none;
+    height: 100px !important;
+    margin: 0;
+  }
+  
+  .centered-content {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+  }
+  
