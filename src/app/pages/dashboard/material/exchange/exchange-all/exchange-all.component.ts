@@ -14,6 +14,8 @@ import { MaterialExchangeModel } from 'src/models/MaterialExchangeModel';
   styleUrls: ['./exchange-all.component.css']
 })
 export class ExchangeAllComponent {
+  userId: number = 3;
+  userIRole: number = 3;
   datos: any; //respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -41,7 +43,7 @@ export class ExchangeAllComponent {
 
   listCenter() {
     this.gService
-      .list('materialexchange/')
+      .list(`materialexchange/exchangesByUserid/${this.userId}`)
       // pipe
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
