@@ -9,11 +9,11 @@ import { GenericService } from 'src/app/share/generic.service';
 import { MaterialExchangeModel } from 'src/models/MaterialExchangeModel';
 
 @Component({
-  selector: 'app-material-exchange-all',
-  templateUrl: './material-exchange-all.component.html',
-  styleUrls: ['./material-exchange-all.component.css']
+  selector: 'app-exchange-all',
+  templateUrl: './exchange-all.component.html',
+  styleUrls: ['./exchange-all.component.css']
 })
-export class MaterialExchangeAllComponent {
+export class ExchangeAllComponent {
   datos: any; //respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
 

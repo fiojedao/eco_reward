@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MaterialExchangeRoutingModule } from './material-exchange-routing.module';
-import { MaterialExchangeAllComponent } from './material-exchange-all/material-exchange-all.component';
+import { ExchangeRoutingModule } from './exchange-routing.module';
+import { ExchangeAllComponent } from './exchange-all/exchange-all.component';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -19,10 +19,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
-  declarations: [MaterialExchangeAllComponent],
+  declarations: [ExchangeAllComponent],
   imports: [
     CommonModule,
-    MaterialExchangeRoutingModule,
+    ExchangeRoutingModule,
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
@@ -38,4 +38,4 @@ import { MatRadioModule } from '@angular/material/radio';
     MatRadioModule,
   ]
 })
-export class MaterialExchangeModule { }
+export class ExchangeModule { }

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MaterialExchangeAllComponent } from './material-exchange-all/material-exchange-all.component';
+import { ExchangeAllComponent } from './exchange-all/exchange-all.component';
 
 const routes: Routes = [
   {
     path: 'material-exchange',
-    component: MaterialExchangeAllComponent,
+    component: ExchangeAllComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MaterialExchangeRoutingModule {}
+export class ExchangeRoutingModule {}

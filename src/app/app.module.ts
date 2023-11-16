@@ -21,7 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CenterModule } from './pages/dashboard/center/center.module';
 import { UserModule } from './pages/dashboard/user/user.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
-import { MaterialExchangeModule } from './pages/dashboard/material-exchange/material-exchange.module';
+import { ExchangeModule } from './pages/dashboard/material/exchange/exchange.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,7 +43,7 @@ import { MaterialExchangeModule } from './pages/dashboard/material-exchange/mate
     CenterModule,
     UserModule,
     LandingPageModule,
-    MaterialExchangeModule,
+    ExchangeModule,
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
