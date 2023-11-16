@@ -11,6 +11,7 @@ import { CenterFormComponent } from './pages/dashboard/center/center-form/center
 import { UserDetailComponent } from './pages/dashboard/user/user-detail/user-detail.component';
 import { UserCouponComponent } from './pages/dashboard/user/user-coupon/user-coupon.component';
 import { ExchangeAllComponent } from './pages/dashboard/material/exchange/exchange-all/exchange-all.component';
+import { ExchangeDetailComponent } from './pages/dashboard/material/exchange/exchange-detail/exchange-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'material-exchange',
         component: ExchangeAllComponent,
+      },
+      {
+        path: 'material-exchange/:id',
+        component: ExchangeDetailComponent,
       },
     ],
   },

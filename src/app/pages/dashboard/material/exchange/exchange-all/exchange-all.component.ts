@@ -31,9 +31,14 @@ export class ExchangeAllComponent {
   ) {
     this.listCenter();
   }
-  ngAfterViewInit(): void {
-    this.listCenter();
+
+  ngAfterViewInit() {
+    // Move the paginator setup here
+    this.dataSource.paginator = this.paginator;
+    this.paginator.length = this.datos.length;
+    this.paginator.pageSizeOptions = [5, 10, 25];
   }
+
   listCenter() {
     this.gService
       .list('materialexchange/')
@@ -42,15 +47,14 @@ export class ExchangeAllComponent {
       .subscribe((response: any) => {
         console.log(response);
         this.datos = response as MaterialExchangeModel;
-        debugger
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       });
-  }  
+  } 
+   
   
   exchangeDetail(id: number) {
-
+    this.router.navigate(['home', 'material-exchange', id]);
   }
   ngOnDestroy() {
     this.destroy$.next(true);
