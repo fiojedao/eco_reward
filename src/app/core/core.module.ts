@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 //Import all material modules
-import { MaterialModule } from '../material.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MatSidenavModule } from '@angular/material/sidenav'; // Módulo de sidenav
 
@@ -27,6 +26,7 @@ import { HeaderLandingComponent } from './header-landing/header-landing.componen
 import { MatMenuModule } from '@angular/material/menu';
 import { navItems } from './sidebar/sidebar-data';
 import { AppNavItemComponent } from './sidebar/nav-item/nav-item.component';
+import { MaterialImports } from '../materialImports.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { AppNavItemComponent } from './sidebar/nav-item/nav-item.component';
     MatButtonModule,
     MatMenuModule,
     MatGridListModule,
-    MaterialModule,
+    MaterialImports,
     NgScrollbarModule,
     TablerIconsModule.pick(TablerIcons),
     ShareModule,

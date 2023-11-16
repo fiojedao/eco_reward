@@ -1,0 +1,73 @@
+<form [formGroup]="materialForm" (ngSubmit)="submitMaterial()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card">
+    <div class="text-center m-t-20 " style="padding-bottom: 1rem;">
+      <h1>{{titleForm}}</h1>
+    </div>
+
+    <!--     <mat-card-header>
+      <mat-card-title class="or-border m-t-30 "> New Center </mat-card-title>
+    </mat-card-header> -->
+    <mat-card-content class="card-content">
+      <div class="row">
+        <div class="col">
+          <!-- NAME -->
+          <mat-form-field class="full-width">
+            <input matInput #centerName formControlName="name" maxlength="30" placeholder="Name">
+            <mat-hint align="end">{{centerName.value.length}} / 30</mat-hint>
+            <mat-error *ngIf="errorHandling('name','required')">
+              Name is <b>required</b>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('name','minlength')">
+              Name is required <b>al least 3 characters</b>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <input matInput #centerName formControlName="description" maxlength="60" placeholder="Description">
+            <mat-hint align="end">{{centerName.value.length}} / 60</mat-hint>
+            <mat-error *ngIf="errorHandling('name','required')">
+              Description is <b>required</b>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('name','minlength')">
+              Name is required <b>al least 3 characters</b>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <label for="imagenInput">Choose an image: </label>
+            <input matInput formControlName="image" id="imagenInput" type="text" readonly />
+            <button mat-button (click)="fileInput.click()">Select Image</button>
+            <input type="file" #fileInput style="display:none" accept="image/*" />
+          </mat-form-field>
+
+
+
+          <mat-form-field class="full-width">
+            <input matInput formControlName="unit_of_measure" placeholder="Unit of measure">
+            <mat-error *ngIf="errorHandling('unit_of_measure','required')">
+              Unit of measure is <b>required</b>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <input matInput formControlName="color_representation" placeholder="Color">
+          </mat-form-field>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="container-actions">
+        <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
+        <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="accent" type="submit">Save</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

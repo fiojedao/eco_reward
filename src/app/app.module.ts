@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from './material.module';
 
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -22,6 +21,8 @@ import { CenterModule } from './pages/dashboard/center/center.module';
 import { UserModule } from './pages/dashboard/user/user.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { ExchangeModule } from './pages/dashboard/material/exchange/exchange.module';
+import { MaterialImports } from './materialImports.module';
+import { MaterialModule } from './pages/dashboard/material/material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,7 @@ import { ExchangeModule } from './pages/dashboard/material/exchange/exchange.mod
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
+    MaterialImports,
     TablerIconsModule.pick(TablerIcons),
     NgScrollbarModule,
     MaterialModule,
@@ -48,5 +49,4 @@ import { ExchangeModule } from './pages/dashboard/material/exchange/exchange.mod
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
 })
-
 export class AppModule {}

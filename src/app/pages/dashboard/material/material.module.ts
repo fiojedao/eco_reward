@@ -9,27 +9,24 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-
-import { CenterRoutingModule } from './center-routing.module';
-import { CenterAllComponent } from './center-all/center-all.component';
-import { CenterDetailComponent } from './center-detail/center-detail.component';
-import { CenterFormComponent } from './center-form/center-form.component';
-
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialFormComponent } from './material-form/material-form.component';
+import { MaterialAllComponent } from './material-all/material-all.component';
+import { MaterialDetailComponent } from './material-detail/material-detail.component';
+import { MaterialImports } from 'src/app/materialImports.module';
 
 @NgModule({
   declarations: [
-    CenterAllComponent,
-    CenterDetailComponent,
-    CenterFormComponent,
+    MaterialFormComponent,
+    MaterialAllComponent,
+    MaterialDetailComponent,
   ],
   imports: [
     CommonModule,
-    CenterRoutingModule,
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
@@ -44,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
+    MaterialImports,
   ],
 })
-export class CenterModule {}
+export class MaterialModule {}

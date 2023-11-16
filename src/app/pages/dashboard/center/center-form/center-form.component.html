@@ -1,4 +1,4 @@
-<form [formGroup]="centerForm" (ngSubmit)="submitVideojuego()" novalidate>
+<form [formGroup]="centerForm" (ngSubmit)="submitCenter()" novalidate>
   <input type="hidden" formControlName="id" />
   <mat-card class="shipping-card">
     <div class="text-center m-t-20 " style="padding-bottom: 1rem;">
@@ -8,13 +8,13 @@
     <!--     <mat-card-header>
       <mat-card-title class="or-border m-t-30 "> New Center </mat-card-title>
     </mat-card-header> -->
-    <mat-card-content>
+    <mat-card-content class="card-content">
       <div class="row">
         <div class="col">
           <!-- NAME -->
           <mat-form-field class="full-width">
-            <input matInput #centerName formControlName="name" maxlength="20" placeholder="Name">
-            <mat-hint align="end">{{centerName.value.length}} / 20</mat-hint>
+            <input matInput #centerName formControlName="name" maxlength="50" placeholder="Name">
+            <mat-hint align="end">{{centerName.value.length}} / 50</mat-hint>
             <mat-error *ngIf="errorHandling('name','required')">
               Name es <b>requerido</b>
             </mat-error>
@@ -83,8 +83,8 @@
 
           <!-- accepted_materials -->
           <mat-form-field class="full-width">
-            <mat-select placeholder="Accepted material" formControlName="accepted_materials" multiple>
-              <mat-option *ngFor="let item of acceptedMaterialList" [value]="item.materialID">
+            <mat-select placeholder="Accepted material" formControlName="Center_Material" multiple>
+              <mat-option *ngFor="let item of center_MaterialMaterialList" [value]="item.materialID">
                 {{item.name}}
               </mat-option>
             </mat-select>
@@ -102,8 +102,8 @@
     <mat-card-actions>
       <div class="container-actions">
         <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
-        <button mat-raised-button color="warn">Reset</button>
-        <button mat-raised-button color="accent" type="submit">Guardar</button>
+        <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="accent" type="submit">Save</button>
       </div>
     </mat-card-actions>
   </mat-card>

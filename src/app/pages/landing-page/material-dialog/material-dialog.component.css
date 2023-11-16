@@ -21,3 +21,8 @@
 .mat-mdc-card-header {
   padding-top: 0.2rem;
 }
+
+.colorRepresentation {
+  width: 50%;
+  border-radius: 2px;
+}

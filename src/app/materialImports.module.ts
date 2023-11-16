@@ -41,6 +41,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
+import { MatColorPickerModule } from 'mat-color-picker';
 
 @NgModule({
   declarations: [],
@@ -80,6 +85,9 @@ import { MatTableModule } from '@angular/material/table';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    /*     MatColorPickerModule, */
   ],
 })
-export class MaterialModule {}
+export class MaterialImports {}

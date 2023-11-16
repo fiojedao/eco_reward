@@ -29,7 +29,7 @@ export class MaterialDialogComponent {
         this.datos = data;
 
         if (this.datos && this.datos.image) {
-          this.datos.image = `${environment.apiURL}${this.datos.image}`;
+          this.datos.image = `http://localhost:3000/${this.datos.image}`;
         }
         console.log(this.datos);
       });

@@ -19,7 +19,7 @@ export class CenterFormComponent {
   //Center to update
   centerInfo: any;
   administratorList: any;
-  acceptedMaterialList: any;
+  center_MaterialMaterialList: any;
   //Respuesta del API crear/modificar
   respCenter: any;
 
@@ -37,7 +37,7 @@ export class CenterFormComponent {
     private noti: NotificacionService
   ) {
     this.getAdministratorList();
-    this.getAcceptedMaterialList();
+    this.getCenter_MaterialMaterialList();
     this.formularioReactive();
   }
 
@@ -55,9 +55,10 @@ export class CenterFormComponent {
           .subscribe((data: any) => {
             this.centerInfo = data;
             console.log(this.centerInfo);
+            debugger;
             //Precargar los datos en el formulario
             this.centerForm.patchValue({
-              id: this.centerInfo.id,
+              id: this.centerInfo.centerID,
               name: this.centerInfo.name,
               province: this.centerInfo.Address.province,
               canton: this.centerInfo.Address.canton,
@@ -66,7 +67,7 @@ export class CenterFormComponent {
               phone: this.centerInfo.phone,
               operating_hours: this.centerInfo.operating_hours,
               administrator_userID: this.centerInfo.administrator_userID,
-              accepted_materials: this.centerInfo.Center_Material.map(
+              Center_Material: this.centerInfo.Center_Material.map(
                 ({ materialID }: { materialID: number }) => materialID
               ),
             });
@@ -86,14 +87,14 @@ export class CenterFormComponent {
       });
   }
 
-  getAcceptedMaterialList() {
-    this.acceptedMaterialList = null;
+  getCenter_MaterialMaterialList() {
+    this.center_MaterialMaterialList = null;
     this.gService
       .list('center/material')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         // console.log(data);
-        this.acceptedMaterialList = data;
+        this.center_MaterialMaterialList = data;
       });
   }
 
@@ -112,24 +113,26 @@ export class CenterFormComponent {
       phone: [null, Validators.compose([Validators.required])],
       operating_hours: [null, Validators.compose([Validators.required])],
       administrator_userID: [null, Validators.required],
-      accepted_materials: [null, Validators.required],
+      Center_Material: [null, Validators.required],
     });
   }
 
   public errorHandling = (control: string, error: string) => {
     return this.centerForm.controls[control].hasError(error);
   };
-  submitVideojuego(): void {
+  submitCenter(): void {
+    debugger;
     this.submitted = true;
+
     if (this.centerForm.invalid) return;
 
     /* ajustar de [1, 3] a [{materialID: 1}, {materialID: 3}] */
     let materialFormat: any =
       this.centerForm
-        ?.get('accepted_materials')
+        ?.get('Center_Material')
         ?.value?.map((x: any) => ({ ['materialID']: x })) ?? [];
 
-    this.centerForm.patchValue({ accepted_materials: materialFormat });
+    this.centerForm.patchValue({ Center_Material: materialFormat });
     console.log(this.centerForm.value);
 
     if (this.isCreate) {
@@ -148,7 +151,32 @@ export class CenterFormComponent {
           console.log(data);
           this.router.navigate(['home/center/']);
         });
+    } else {
+      debugger;
+      if (this.idCenter != undefined && !isNaN(Number(this.idCenter))) {
+        this.gService
+          .update('center', this.centerForm.value)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((data: any) => {
+            //Obtener respuesta
+            debugger;
+            this.respCenter = data;
+            this.noti.mensajeRedirect(
+              'Update center',
+              `Center: ${data.name} updated successfully`,
+              TipoMessage.success,
+              'home/center/'
+            );
+            console.log(data);
+            this.router.navigate(['home/center/']);
+          });
+      }
     }
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.centerForm.reset();
   }
 
   onBack() {

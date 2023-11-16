@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
-    navCap: 'Mantenimientos',
+    navCap: 'Maintenance',
   },
   {
     displayName: 'User',
@@ -23,12 +23,17 @@ export const navItems: NavItem[] = [
     route: 'home/center',
   },
   {
-    displayName: 'Historial de canje',
+    displayName: 'Material',
+    iconName: 'box',
+    route: 'home/material',
+  },
+  {
+    displayName: 'Exchange history',
     iconName: 'checkup-list',
     route: 'home/material-exchange',
   },
   {
-    navCap: 'Autenticar',
+    navCap: 'Authenticate',
   },
   {
     displayName: 'Login',
@@ -41,7 +46,7 @@ export const navItems: NavItem[] = [
     route: '/authentication/register',
   },
   {
-    navCap: 'Adicional',
+    navCap: 'Additional',
   },
   {
     displayName: 'Icons',
