@@ -9,10 +9,9 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./center-detail.component.css'],
 })
 export class CenterDetailComponent {
-  datos: any; //respuesta del API
+  centerData: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  //gService es la variable que hace la solucitud
   constructor(
     private gService: GenericService,
     private router: Router,
@@ -30,7 +29,7 @@ export class CenterDetailComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
-        this.datos = data;
+        this.centerData = data;
       });
   }
 

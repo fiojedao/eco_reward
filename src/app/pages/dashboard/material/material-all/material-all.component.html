@@ -4,8 +4,8 @@
     <mat-card-content>
       <mat-card-title>
         <div class="centered-content">
-          Materials
-          <a mat-fab matTooltip="Create a material" aria-label="Create a material" color="primary" class="custom-fab"
+          Materiales
+          <a mat-fab matTooltip="Crear un material" aria-label="Crear un material" color="primary" class="custom-fab"
             (click)="createMaterial()">
             <mat-icon>add</mat-icon>
           </a>
@@ -14,7 +14,6 @@
     </mat-card-content>
   </mat-card>
 
-
   <mat-card-content>
     <!-- Table -->
     <div class="mat-elevation-z8">
@@ -22,36 +21,30 @@
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-          <td mat-cell *matCellDef="let row">{{row.name}}</td>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
         </ng-container>
 
-
         <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-          <td mat-cell *matCellDef="let row">{{row.description}}</td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+          <td mat-cell *matCellDef="let row">{{ row.description }}</td>
         </ng-container>
 
         <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-          <td mat-cell *matCellDef="let row">{{row.price}} 🪙</td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+          <td mat-cell *matCellDef="let row">{{ row.price }} 🪙</td>
         </ng-container>
 
-
-
-
         <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
           <td mat-cell *matCellDef="let row">
-
-            <button mat-mini-fab color="accent" matTooltip="Material details" aria-label="Material details"
+            <button mat-mini-fab color="accent" matTooltip="Detalles del material" aria-label="Detalles del material"
               color="primary" (click)="materialDetail(row.materialID)">
               <mat-icon class="mat-18">info</mat-icon>
             </button>
-            <button mat-mini-fab color="accent" matTooltip="Edit" aria-label="Edit" color="primary"
+            <button mat-mini-fab color="accent" matTooltip="Editar" aria-label="Editar" color="primary"
               (click)="updateMaterial(row.materialID)">
               <mat-icon class="mat-18">edit</mat-icon>
             </button>
-
           </td>
         </ng-container>
 
@@ -59,8 +52,12 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
+      <div *ngIf="dataSource.data.length === 0" class="no-materials-message">
+        <p>No hay materiales de reciclaje registrados.</p>
+      </div>
+
       <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="3"
-        [pageSizeOptions]="[3, 5, 10]" aria-label="Selecione un página">
+        [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una página">
       </mat-paginator>
     </div>
     <!-- Table -->

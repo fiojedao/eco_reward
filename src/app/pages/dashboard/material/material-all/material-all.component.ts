@@ -13,12 +13,11 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./material-all.component.css'],
 })
 export class MaterialAllComponent {
-  datos: any; //respuesta del API
+  datos: any; // respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  /*   @ViewChild(MatTable) table!: MatTable<VideojuegoAllItem>; */
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -39,7 +38,6 @@ export class MaterialAllComponent {
   listMaterial() {
     this.gService
       .list('material/')
-      // pipe
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         console.log(response);
@@ -57,6 +55,7 @@ export class MaterialAllComponent {
   createMaterial() {
     this.router.navigate(['home', 'material', 'create']);
   }
+
   updateMaterial(id: number) {
     this.router.navigate(['home', 'material', 'update', id]);
   }

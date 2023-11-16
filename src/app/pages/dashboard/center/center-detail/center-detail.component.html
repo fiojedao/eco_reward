@@ -1,17 +1,33 @@
-<mat-card class="dashboard-card" *ngIf="datos">
+<mat-card class="dashboard-card" *ngIf="centerData">
   <mat-card-header>
     <mat-card-title>
-      {{datos.name }}
+      <h2>{{ centerData.name }}</h2>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
-    <p><b>Administrador: </b>{{datos.User.name}}</p>
-    <p><b>Horario: </b>{{datos.operating_hours}}</p>
-    <p><b>Dirección: </b> {{datos.Address.province}} - {{datos.Address.canton}} - {{datos.Address.district}}</p>
-    <!--  <p><b>Provincia: </b>{{datos.Address.province}}</p>
-    <p><b>Cantón: </b>{{datos.Address.canton}}</p>
-    <p><b>Distrito: </b>{{datos.Address.district}}</p> -->
-    <p><b>Dirección exacta: </b>{{datos.Address.exact_address }}</p>
-    <p><b>Teléfono: </b>{{datos.phone}}</p>
+    <div class="center-detail-container">
+      <div class="center-info">
+        <p><b>Teléfono:</b> {{ centerData.phone }}</p>
+        <p><b>Horario de operación:</b> {{ centerData.operating_hours }}</p>
+        <p><b>Estado:</b> {{ centerData.status }}</p>
+        <p><b>Administrador:</b> {{ centerData.User.name }}</p>
+        <p><b>Dirección:</b> {{ centerData.Address.exact_address }}, {{ centerData.Address.district }}, {{ centerData.Address.canton }}, {{ centerData.Address.province }}</p>
+      </div>
+      <div class="recyclable-material-list">
+        <h3>Detalles de Materiales Reciclables</h3>
+        <div *ngIf="centerData.Recyclable_Material.length > 0; else noMaterials" class="material-grid">
+          <div *ngFor="let recyclableMaterial of centerData.Recyclable_Material" class="material-item">
+            <div class="material-detail">
+              <p><b>Material ID:</b> {{ recyclableMaterial.materialID }}</p>
+              <p><b>Nombre:</b> {{ recyclableMaterial.name }}</p>
+              <p><b>Descripción:</b> {{ recyclableMaterial.description }}</p>
+            </div>
+          </div>
+        </div>
+        <ng-template #noMaterials>
+          <p>No hay materiales de reciclaje registrados.</p>
+        </ng-template>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>

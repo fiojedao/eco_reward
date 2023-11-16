@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { GenericService } from 'src/app/share/generic.service';
 
 @Component({
@@ -8,23 +9,24 @@ import { GenericService } from 'src/app/share/generic.service';
   templateUrl: './material-detail.component.html',
   styleUrls: ['./material-detail.component.css'],
 })
-export class MaterialDetailComponent {
-  datos: any; //respuesta del API
-  destroy$: Subject<boolean> = new Subject<boolean>();
+export class MaterialDetailComponent implements OnInit, OnDestroy {
+  datos: any; // respuesta del API
+  private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  //gService es la variable que hace la solucitud
   constructor(
     private gService: GenericService,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    let id = this.route.snapshot.paramMap.get('id');
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
     if (!isNaN(Number(id))) {
-      this.getCenter(Number(id));
+      this.getMaterial(Number(id));
     }
   }
 
-  getCenter(id: any) {
+  getMaterial(id: any): void {
     this.gService
       .get('material', id)
       .pipe(takeUntil(this.destroy$))
@@ -34,7 +36,7 @@ export class MaterialDetailComponent {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }

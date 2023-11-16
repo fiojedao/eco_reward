@@ -1,17 +1,15 @@
 <mat-card class="dashboard-card" *ngIf="datos">
   <mat-card-header>
     <mat-card-title>
-      {{datos.name }}
+      {{ datos.name }}
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
     <div [style.background-color]="datos.color_representation" class="colorRepresentation text-white">
-      <b>Color:
-        {{datos.color_representation}}
-      </b>
+      <b>Color: {{ datos.color_representation }}</b>
     </div>
-    <p><b>Description: </b>{{datos.description}}</p>
-    <p><b>Unit of measure: </b>{{datos.unit_of_measure}}</p>
-    <p><b>Price: </b> {{datos.price}}</p>
+    <p><b>Description:</b> {{ datos.description }}</p>
+    <p><b>Unit of measure:</b> {{ datos.unit_of_measure }}</p>
+    <p><b>Price:</b> {{ datos.price }}</p>
   </mat-card-content>
 </mat-card>
