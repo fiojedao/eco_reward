@@ -45,7 +45,6 @@ import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations';
-import { MatColorPickerModule } from 'mat-color-picker';
 
 @NgModule({
   declarations: [],

@@ -14,6 +14,7 @@ import { ExchangeAllComponent } from './pages/dashboard/material/exchange/exchan
 import { MaterialAllComponent } from './pages/dashboard/material/material-all/material-all.component';
 import { MaterialFormComponent } from './pages/dashboard/material/material-form/material-form.component';
 import { MaterialDetailComponent } from './pages/dashboard/material/material-detail/material-detail.component';
+import { ExchangeDetailComponent } from './pages/dashboard/material/exchange/exchange-detail/exchange-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -64,6 +65,10 @@ const routes: Routes = [
       {
         path: 'material-exchange',
         component: ExchangeAllComponent,
+      },
+      {
+        path: 'material-exchange/:id',
+        component: ExchangeDetailComponent,
       },
       {
         path: 'material',

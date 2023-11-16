@@ -37,5 +37,8 @@ export class GenericService {
       objUpdate
     );
   }
-
+  // Eliminar
+  delete(endpoint: string, id: number): Observable<any | any[]> {
+    return this.http.delete<any | any[]>(this.urlAPI + endpoint + `/${id}`);
+  }
 }

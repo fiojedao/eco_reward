@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExchangeAllComponent } from './exchange-all/exchange-all.component';
+import { ExchangeDetailComponent } from './exchange-detail/exchange-detail.component';
 
-const routes: Routes = [
-  {
-    path: 'material-exchange',
-    component: ExchangeAllComponent,
-  },
-];
+const routes: Routes = []
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

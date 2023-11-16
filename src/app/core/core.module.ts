@@ -24,7 +24,6 @@ import { DashTemplateComponent } from './dash-template/dash-template.component';
 import { HeaderLandingComponent } from './header-landing/header-landing.component';
 
 import { MatMenuModule } from '@angular/material/menu';
-import { navItems } from './sidebar/sidebar-data';
 import { AppNavItemComponent } from './sidebar/nav-item/nav-item.component';
 import { MaterialImports } from '../materialImports.module';
 
