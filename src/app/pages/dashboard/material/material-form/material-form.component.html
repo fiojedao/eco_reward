@@ -34,13 +34,22 @@
             </mat-error>
           </mat-form-field>
 
+          <img *ngIf="base64String" [src]="base64String">
           <mat-form-field class="full-width">
             <label for="imagenInput">Choose an image: </label>
-            <input matInput formControlName="image" id="imagenInput" type="text" readonly />
+            <input matInput formControlName="fileName" id="imagenInput" type="text" readonly />
             <button mat-button (click)="fileInput.click()">Select Image</button>
-            <input type="file" #fileInput style="display:none" accept="image/*" />
+            <input type="file" #fileInput style="display:none" accept="image/*" (change)="handleFileInput($event)" />
           </mat-form-field>
 
+
+
+          <mat-form-field class="full-width">
+            <input matInput formControlName="price" placeholder="Price">
+            <mat-error *ngIf="errorHandling('price','required')">
+              Price is <b>required</b>
+            </mat-error>
+          </mat-form-field>
 
 
           <mat-form-field class="full-width">

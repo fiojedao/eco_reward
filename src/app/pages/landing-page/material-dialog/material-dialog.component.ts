@@ -27,11 +27,6 @@ export class MaterialDialogComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.datos = data;
-
-        if (this.datos && this.datos.image) {
-          this.datos.image = `http://localhost:3000/${this.datos.image}`;
-        }
-        console.log(this.datos);
       });
   }
 

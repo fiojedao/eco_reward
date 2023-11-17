@@ -44,8 +44,8 @@ export class HomeComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.materialData = response;
+        debugger
         this.materialData.forEach((mate: any) => {
-          mate.image = `http://localhost:3000/${mate.image}`;
         });
         console.log(this.materialData);
       });
