@@ -55,7 +55,6 @@ export class CenterFormComponent {
           .subscribe((data: any) => {
             this.centerInfo = data;
             console.log(this.centerInfo);
-            debugger;
             //Precargar los datos en el formulario
             this.centerForm.patchValue({
               id: this.centerInfo.centerID,
@@ -166,7 +165,6 @@ export class CenterFormComponent {
     return this.centerForm.controls[control].hasError(error);
   };
   submitCenter(): void {
-    debugger;
     this.submitted = true;
 
     if (this.centerForm.invalid) return;
@@ -197,14 +195,12 @@ export class CenterFormComponent {
           this.router.navigate(['home/center/']);
         });
     } else {
-      debugger;
       if (this.idCenter != undefined && !isNaN(Number(this.idCenter))) {
         this.gService
           .update('center', this.centerForm.value)
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
             //Obtener respuesta
-            debugger;
             this.respCenter = data;
             this.noti.mensajeRedirect(
               'Update center',

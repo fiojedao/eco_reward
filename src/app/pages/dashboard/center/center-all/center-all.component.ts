@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-center-all',
@@ -13,6 +14,7 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./center-all.component.css'],
 })
 export class CenterAllComponent {
+  isSuperAdmin: boolean = false
   datos: any; //respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -27,13 +29,32 @@ export class CenterAllComponent {
   constructor(
     private gService: GenericService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {
     this.listCenter();
   }
 
   ngAfterViewInit(): void {
     this.listCenter();
+    this.userService.userChanges().subscribe((data) => {
+      const { user } = data;
+      debugger
+      if(user && user.role === 1){
+        this.router.navigate(['home', 'center']);
+      } else if(user){
+        if(user){
+          this.gService
+          .list(`center/user/${user.userID}`)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((response: any) => {
+            this.centerDetail(response.centerID);
+          });
+        } else {
+          this.router.navigate(['home']);
+        }
+      }
+    });
   }
 
   listCenter() {

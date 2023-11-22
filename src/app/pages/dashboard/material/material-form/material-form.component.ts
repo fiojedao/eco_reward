@@ -166,7 +166,6 @@ export class MaterialFormComponent {
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
             //Obtener respuesta
-            debugger;
             this.respMaterial = data;
             this.noti.mensajeRedirect(
               'Update material',

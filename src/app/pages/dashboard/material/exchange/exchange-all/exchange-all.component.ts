@@ -49,7 +49,6 @@ export class ExchangeAllComponent {
   }
 
   dropDownMenu(id: number) {
-    debugger;
     console.log('Usuario seleccionado:', id);
     this.userId = id;
     this.listCenter();

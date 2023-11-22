@@ -17,7 +17,7 @@ import { GenericService } from 'src/app/share/generic.service';
 })
 export class HeaderComponent {
   userList: any[] = [];
-  selectedUser: any;
+  userLogin: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   @Input() showToggle = true;
   @Input() toggleChecked = false;
@@ -51,11 +51,22 @@ export class HeaderComponent {
   }
 
   getUserDetails(user: any) {
-    this.userService.setSelectedUser(user);
+    if(user){
+      if(user.role === 1 || user.role === 3){
+        this.userService.setUser(user, undefined);
+      } else {
+        this.gService
+          .list(`center/user/${user.userID}`)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((center: any) => {
+            this.userService.setUser(user, center);
+        });
+      }
+    }
     this.loadUser();
   }
 
   loadUser(){
-    this.selectedUser = this.userService.getSelectedUser();
+    this.userLogin = this.userService.getInfo();
   }
 }

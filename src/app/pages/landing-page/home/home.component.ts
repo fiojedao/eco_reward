@@ -44,7 +44,6 @@ export class HomeComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.materialData = response;
-        debugger
         this.materialData.forEach((mate: any) => {
         });
         console.log(this.materialData);

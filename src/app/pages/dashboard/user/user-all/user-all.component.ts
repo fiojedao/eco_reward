@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-all',
@@ -13,6 +14,7 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./user-all.component.css'],
 })
 export class UserAllComponent implements AfterViewInit {
+  isSuperAdmin: boolean = false
   datos: any; //respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -27,22 +29,25 @@ export class UserAllComponent implements AfterViewInit {
   constructor(
     private gService: GenericService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {
     this.listUser();
+    this.isSuperAdmin = this.userService.getInfo().isSuperAdmin
   }
 
   ngAfterViewInit(): void {
     this.listUser();
+    this.userService.userChanges().subscribe((data) => {
+      this.isSuperAdmin = data.isSuperAdmin
+    });
   }
 
   listUser() {
     this.gService
       .list('user/')
-      // pipe
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
-        console.log(response);
         this.datos = response;
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;

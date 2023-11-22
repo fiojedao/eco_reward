@@ -23,7 +23,7 @@
       <mat-icon class="d-flex align-items-center">
         <i-tabler name="user" class="icon-18 d-flex"></i-tabler>
       </mat-icon>
-      {{ selectedUser && selectedUser.name ? selectedUser.name : 'My Profile' }}
+      {{ userLogin && userLogin.user && userLogin.user.name ? userLogin.user.name : 'My Profile' }}
     </button>
     
     <button mat-menu-item [matMenuTriggerFor]="userMenu">
