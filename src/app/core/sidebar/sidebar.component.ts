@@ -31,7 +31,8 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  filterNavItem(user: any){
+  filterNavItem(data: any){
+    const { user } = data;
     if(user && user.role && user.role == 1){
       this.navItems = navItems;
     } else {
