@@ -11,12 +11,13 @@ import { MaterialExchangeModel } from 'src/models/MaterialExchangeModel';
 @Component({
   selector: 'app-exchange-all',
   templateUrl: './exchange-all.component.html',
-  styleUrls: ['./exchange-all.component.css']
+  styleUrls: ['./exchange-all.component.css'],
 })
 export class ExchangeAllComponent {
   userId: number = 3;
   userIRole: number = 3;
   datos: any; //respuesta del API
+  users: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,13 +26,19 @@ export class ExchangeAllComponent {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['Recycling_Center', 'Exchange_Material_Details', 'exchange_date', 'acciones'];
+  displayedColumns = [
+    'Recycling_Center',
+    'Exchange_Material_Details',
+    'exchange_date',
+    'acciones',
+  ];
   constructor(
     private gService: GenericService,
     private router: Router,
     private route: ActivatedRoute
   ) {
     this.listCenter();
+    this.listUser();
   }
 
   ngAfterViewInit() {
@@ -39,6 +46,13 @@ export class ExchangeAllComponent {
     this.dataSource.paginator = this.paginator;
     this.paginator.length = this.datos.length;
     this.paginator.pageSizeOptions = [5, 10, 25];
+  }
+
+  dropDownMenu(id: number) {
+    debugger;
+    console.log('Usuario seleccionado:', id);
+    this.userId = id;
+    this.listCenter();
   }
 
   listCenter() {
@@ -52,9 +66,18 @@ export class ExchangeAllComponent {
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
       });
-  } 
-   
-  
+  }
+
+  listUser() {
+    this.gService
+      .list(`user`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        console.log(response); // Verifica la respuesta en la consola
+        this.users = response;
+      });
+  }
+
   exchangeDetail(id: number) {
     this.router.navigate(['home', 'material-exchange', id]);
   }

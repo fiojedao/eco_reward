@@ -75,13 +75,14 @@ const routes: Routes = [
         component: MaterialAllComponent,
       },
       {
-        path: 'material/:id',
-        component: MaterialDetailComponent,
-      },
-      {
         path: 'material/create',
         component: MaterialFormComponent,
       },
+      {
+        path: 'material/:id',
+        component: MaterialDetailComponent,
+      },
+
       {
         path: 'material/update/:id',
         component: MaterialFormComponent,

@@ -79,11 +79,31 @@ export class MaterialFormComponent {
         null,
         Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
-      description: [null, Validators.required],
-      image: [null, Validators.compose([Validators.required])],
-      file: [null, Validators.compose([Validators.required])],
-      unit_of_measure: [null, Validators.compose([Validators.required])],
-      price: [null, Validators.compose([Validators.required])],
+      description: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(15),
+          Validators.maxLength(150),
+        ]),
+      ],
+      image: [null],
+      unit_of_measure: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(15),
+        ]),
+      ],
+      price: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[0-9]+$/), // Acepta números con hasta dos decimales
+          Validators.min(0), // Asegura que el valor sea positivo o cero
+        ]),
+      ],
       color_representation: [null, Validators.compose([Validators.required])],
     });
   }
@@ -121,20 +141,32 @@ export class MaterialFormComponent {
   };
   submitMaterial(): void {
     this.submitted = true;
-  
-    if (this.materialForm.invalid) {
-      return;
-    }
-  
-    var materialData = this.materialForm.value;
-    materialData.image = this.base64String;
-    if (this.idMaterial != undefined && !isNaN(Number(this.idMaterial))) {
-      // Actualización de material
-      this.gService
-        .update('material', materialData)
+    console.log(this.materialForm.value);
+    if (this.materialForm.invalid) return;
+    if (this.isCreate) {
+      /* this.gService
+        .create('material', this.materialForm.value)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          (data: any) => {
+        .subscribe((data: any) => {
+          //Obtener respuesta
+          this.respMaterial = data;
+          this.noti.mensajeRedirect(
+            'Create material',
+            `Materal: ${data.name} created successfully`,
+            TipoMessage.success,
+            'home/material/'
+          );
+          console.log(data);
+          this.router.navigate(['home/material/']);
+        }); */
+    } else {
+      if (this.idMaterial != undefined && !isNaN(Number(this.idMaterial))) {
+        /*   this.gService
+          .update('material', this.materialForm.value)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((data: any) => {
+            //Obtener respuesta
+            debugger;
             this.respMaterial = data;
             this.noti.mensajeRedirect(
               'Update material',
@@ -144,34 +176,8 @@ export class MaterialFormComponent {
             );
             console.log(data);
             this.router.navigate(['home/material/']);
-          },
-          (error) => {
-            console.error('Error updating material:', error);
-            // Puedes mostrar un mensaje de error o realizar acciones específicas en caso de error.
-          }
-        );
-    } else {
-      // Creación de material
-      this.gService
-        .create('material', materialData)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          (data: any) => {
-            this.respMaterial = data;
-            this.noti.mensajeRedirect(
-              'Create material',
-              `Material: ${data.name} created successfully`,
-              TipoMessage.success,
-              'home/material/'
-            );
-            console.log(data);
-            this.router.navigate(['home/material/']);
-          },
-          (error) => {
-            console.error('Error creating material:', error);
-            // Puedes mostrar un mensaje de error o realizar acciones específicas en caso de error.
-          }
-        );
+          }); */
+      }
     }
   }
   
