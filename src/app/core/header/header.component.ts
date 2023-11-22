@@ -31,10 +31,16 @@ export class HeaderComponent {
     public dialog: MatDialog,
     private gService: GenericService,
     private userService: UserService) {
-      this.loadUsers();
+      this.loadAllUsers();
+      this.loadUser();
   }
 
-  loadUsers(){
+  ngAfterViewInit(): void {
+    this.loadAllUsers();
+    this.loadUser();
+  }
+
+  loadAllUsers(){
     this.gService
       .list('user/')
       .pipe(takeUntil(this.destroy$))

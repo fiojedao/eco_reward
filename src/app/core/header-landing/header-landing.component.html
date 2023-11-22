@@ -49,16 +49,13 @@
         <a mat-button class="mat-focus-indicator hometop-btn icon-button mat-button mat-button-base">
           <span style="display: flex; justify-content: center; align-items: center;">
             <mat-icon>person</mat-icon>
-            <strong> My Account (Dashboard)</strong>
+            <strong> My Account</strong>
           </span>
         </a>
       </span>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Item 1</button>
-      <!-- <button mat-menu-item><strong>My coupon exchanges</strong> (user 1)</button> -->
       <button mat-menu-item [routerLink]="'/home'"><strong> Dashboard</strong></button>
-
     </mat-menu>
 
 

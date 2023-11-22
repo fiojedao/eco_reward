@@ -5,13 +5,16 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UserService {
-  selectedUser: any;
+  private selectedUser: any;
+  private localStorageKey = 'selectedUser';
 
   setSelectedUser(user: any) {
     this.selectedUser = user;
+    localStorage.setItem(this.localStorageKey, JSON.stringify(user));
   }
 
   getSelectedUser() {
-    return this.selectedUser;
+    const storedUser = localStorage.getItem(this.localStorageKey);
+    return storedUser ? JSON.parse(storedUser) : null;
   }
 }
