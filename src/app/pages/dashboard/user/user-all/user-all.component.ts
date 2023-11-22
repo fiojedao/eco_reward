@@ -56,9 +56,7 @@ export class UserAllComponent implements AfterViewInit {
   }
 
   userDetail(id: number) {
-    this.router.navigate(['/user', id], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(['home','user', id]);
   }
 
   ngOnDestroy() {
