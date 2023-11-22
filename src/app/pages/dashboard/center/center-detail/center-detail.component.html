@@ -1,4 +1,4 @@
-<mat-card class="dashboard-card" *ngIf="centerData">
+<mat-card class="dashboard-card" *ngIf="centerData" style="min-height: 83vh !important;">
   <mat-card-header>
     <mat-card-title>
       <h2>{{ centerData.name }}</h2>
@@ -11,7 +11,8 @@
         <p><b>Horario de operación:</b> {{ centerData.operating_hours }}</p>
         <p><b>Estado:</b> {{ centerData.status }}</p>
         <p><b>Administrador:</b> {{ centerData.User.name }}</p>
-        <p><b>Dirección:</b> {{ centerData.Address.exact_address }}, {{ centerData.Address.district }}, {{ centerData.Address.canton }}, {{ centerData.Address.province }}</p>
+        <p><b>Dirección:</b> {{ centerData.Address.exact_address }}, {{ centerData.Address.district }}, {{
+          centerData.Address.canton }}, {{ centerData.Address.province }}</p>
       </div>
       <div class="recyclable-material-list">
         <h3>Detalles de Materiales Reciclables</h3>

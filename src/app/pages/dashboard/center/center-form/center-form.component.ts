@@ -104,14 +104,59 @@ export class CenterFormComponent {
       id: [null, null],
       name: [
         null,
-        Validators.compose([Validators.required, Validators.minLength(3)]),
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(40),
+        ]),
       ],
-      province: [null, Validators.required],
-      canton: [null, Validators.compose([Validators.required])],
-      district: [null, Validators.compose([Validators.required])],
-      exact_address: [null, Validators.compose([Validators.required])],
-      phone: [null, Validators.compose([Validators.required])],
-      operating_hours: [null, Validators.compose([Validators.required])],
+      province: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ]),
+      ],
+      canton: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ]),
+      ],
+      district: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ]),
+      ],
+      exact_address: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(150),
+        ]),
+      ],
+      phone: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^\d{4}-\d{4}$/), // Acepta el formato 0000-0000
+        ]),
+      ],
+      operating_hours: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(150),
+        ]),
+      ],
       administrator_userID: [null, Validators.required],
       Center_Material: [null, Validators.required],
     });

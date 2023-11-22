@@ -74,10 +74,31 @@ export class MaterialFormComponent {
         null,
         Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
-      description: [null, Validators.required],
-      image: [null, Validators.compose([Validators.required])],
-      unit_of_measure: [null, Validators.compose([Validators.required])],
-      price: [null, Validators.compose([Validators.required])],
+      description: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(15),
+          Validators.maxLength(150),
+        ]),
+      ],
+      image: [null],
+      unit_of_measure: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(15),
+        ]),
+      ],
+      price: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[0-9]+$/), // Acepta números con hasta dos decimales
+          Validators.min(0), // Asegura que el valor sea positivo o cero
+        ]),
+      ],
       color_representation: [null, Validators.compose([Validators.required])],
     });
   }
@@ -87,10 +108,10 @@ export class MaterialFormComponent {
   };
   submitMaterial(): void {
     this.submitted = true;
+    console.log(this.materialForm.value);
     if (this.materialForm.invalid) return;
-
     if (this.isCreate) {
-      this.gService
+      /* this.gService
         .create('material', this.materialForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
@@ -104,10 +125,10 @@ export class MaterialFormComponent {
           );
           console.log(data);
           this.router.navigate(['home/material/']);
-        });
+        }); */
     } else {
       if (this.idMaterial != undefined && !isNaN(Number(this.idMaterial))) {
-        this.gService
+        /*   this.gService
           .update('material', this.materialForm.value)
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
@@ -122,7 +143,7 @@ export class MaterialFormComponent {
             );
             console.log(data);
             this.router.navigate(['home/material/']);
-          });
+          }); */
       }
     }
   }

@@ -1,73 +1,106 @@
 <form [formGroup]="materialForm" (ngSubmit)="submitMaterial()" novalidate>
   <input type="hidden" formControlName="id" />
-  <mat-card class="shipping-card">
-    <div class="text-center m-t-20 " style="padding-bottom: 1rem;">
-      <h1>{{titleForm}}</h1>
+  <mat-card style="min-height: 83vh !important; display: flex; justify-content: center;">
+    <div class="text-center m-t-20 " style="padding-bottom: 1rem; padding-bottom: 1rem; font-size: 1.2rem;">
+      <h1 style="color: #707a82;">{{titleForm}}</h1>
     </div>
 
     <!--     <mat-card-header>
       <mat-card-title class="or-border m-t-30 "> New Center </mat-card-title>
     </mat-card-header> -->
-    <mat-card-content class="card-content">
-      <div class="row">
-        <div class="col">
+
+
+    <div class="form-container">
+      <div style="width: 100%;">
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 1.5%;">
           <!-- NAME -->
-          <mat-form-field class="full-width">
-            <input matInput #centerName formControlName="name" maxlength="30" placeholder="Name">
+          <mat-form-field style="width: 30%;">
+            <input matInput #centerName formControlName="name" maxlength="30" placeholder="Name" maxlength="30">
             <mat-hint align="end">{{centerName.value.length}} / 30</mat-hint>
             <mat-error *ngIf="errorHandling('name','required')">
               Name is <b>required</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('name','minlength')">
-              Name is required <b>al least 3 characters</b>
+              3 characters <b>minimum</b>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <input matInput #centerName formControlName="description" maxlength="60" placeholder="Description">
-            <mat-hint align="end">{{centerName.value.length}} / 60</mat-hint>
-            <mat-error *ngIf="errorHandling('name','required')">
-              Description is <b>required</b>
-            </mat-error>
-            <mat-error *ngIf="errorHandling('name','minlength')">
-              Name is required <b>al least 3 characters</b>
-            </mat-error>
+          <mat-form-field style="width: 30%;">
+            <input matInput formControlName="color_representation" placeholder="Color" type="color">
           </mat-form-field>
+        </div>
 
-          <mat-form-field class="full-width">
-            <label for="imagenInput">Choose an image: </label>
-            <input matInput formControlName="image" id="imagenInput" type="text" readonly />
-            <button mat-button (click)="fileInput.click()">Select Image</button>
-            <input type="file" #fileInput style="display:none" accept="image/*" />
-          </mat-form-field>
-
-
-
-          <mat-form-field class="full-width">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 1.5%;">
+          <!-- Unit of measure -->
+          <mat-form-field style="width: 30%;">
             <input matInput formControlName="unit_of_measure" placeholder="Unit of measure">
             <mat-error *ngIf="errorHandling('unit_of_measure','required')">
               Unit of measure is <b>required</b>
             </mat-error>
+            <mat-error *ngIf="errorHandling('unit_of_measure','minlength')">
+              3 characters <b>minimum</b>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('unit_of_measure','maxlength')">
+              10 characters <b>maximum</b>
+            </mat-error>
+
           </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <input matInput formControlName="color_representation" placeholder="Color">
+          <!-- Price -->
+          <mat-form-field style="width: 30%;">
+            <input matInput formControlName="price" placeholder="Price">
+            <mat-error *ngIf="errorHandling('price','required')">
+              Price is <b>required</b>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('price','pattern')">
+              <b>Only positive integer numbers</b>
+            </mat-error>
           </mat-form-field>
-
         </div>
       </div>
-      <div class="row">
-        <div class="col">
 
+      <div style="display: flex; justify-content: center; align-items: center; ">
+
+        <!-- Image -->
+        <mat-form-field style="width: 62%;">
+          <label for="imagenInput">Choose an image: </label>
+          <input matInput formControlName="image" id="imagenInput" type="text" readonly />
+          <button mat-button (click)="fileInput.click()">Select Image</button>
+          <input type="file" #fileInput style="display:none" accept="image/*" />
+        </mat-form-field>
+
+
+      </div>
+
+      <div style="display: flex; justify-content: center; align-items: center; ">
+
+        <!-- Description -->
+        <mat-form-field style="width: 62%; ">
+          <input matInput #centerDescription formControlName="description" placeholder="Description" maxlength="150">
+          <mat-hint align="end">{{centerDescription.value.length}} / 150</mat-hint>
+          <mat-error *ngIf="errorHandling('description','required')">
+            Description is <b>required</b>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('description','maxLength')">
+            150 characters <b>maximum</b>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('description','minlength')">
+            3 characters <b>minimum</b>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+      <mat-card-actions>
+        <div class="container-actions">
+          <button mat-raised-button color="primary" (click)="onBack()" style="margin-right: 8px;">Return</button>
+          <button mat-raised-button color="accent" (click)="onReset()" style="margin-right: 8px;">Reset</button>
+          <button mat-raised-button style="background-color: #3ec256; color: white;" type="submit">Save</button>
         </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <div class="container-actions">
-        <button mat-raised-button color="primary" (click)="onBack()">Regresar</button>
-        <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
-        <button mat-raised-button color="accent" type="submit">Save</button>
-      </div>
-    </mat-card-actions>
+      </mat-card-actions>
+    </div>
+
   </mat-card>
 </form>

@@ -53,9 +53,4 @@ export const navItems: NavItem[] = [
     iconName: 'mood-smile',
     route: '/extra/icons',
   },
-  {
-    displayName: 'Sample Page',
-    iconName: 'aperture',
-    route: '/extra/sample-page',
-  },
 ];
