@@ -34,7 +34,7 @@
       <b>Operating hours: </b> {{ datos.operating_hours }}
     </span>
     <span style="display: block;">
-      <b>Materials: </b>
+      <b>Materiales: </b>
       <span *ngFor="let material of datos.Center_Material; let last = last">
         {{ material.Recyclable_Material.name }}
         <ng-container *ngIf="!last">,</ng-container>

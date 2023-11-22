@@ -10,15 +10,15 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
-    navCap: 'Maintenance',
+    navCap: 'Mantenimientos',
   },
   {
-    displayName: 'User',
+    displayName: 'Usuario',
     iconName: 'list',
     route: 'home/user',
   },
   {
-    displayName: 'Center',
+    displayName: 'Centro',
     iconName: 'layout-navbar-expand',
     route: 'home/center',
   },
@@ -28,12 +28,12 @@ export const navItems: NavItem[] = [
     route: 'home/material',
   },
   {
-    displayName: 'Exchange history',
+    displayName: 'Historial de Canje',
     iconName: 'checkup-list',
     route: 'home/material-exchange',
   },
   {
-    navCap: 'Authenticate',
+    navCap: 'Autenticación',
   },
   {
     displayName: 'Login',
@@ -41,20 +41,20 @@ export const navItems: NavItem[] = [
     route: '/authentication/login',
   },
   {
-    displayName: 'Register',
+    displayName: 'Registro',
     iconName: 'user-plus',
     route: '/authentication/register',
   },
   {
-    navCap: 'Additional',
+    navCap: 'Adicional',
   },
   {
-    displayName: 'Icons',
+    displayName: 'Iconos',
     iconName: 'mood-smile',
     route: '/extra/icons',
   },
   {
-    displayName: 'Sample Page',
+    displayName: 'Pagina Simple',
     iconName: 'aperture',
     route: '/extra/sample-page',
   },

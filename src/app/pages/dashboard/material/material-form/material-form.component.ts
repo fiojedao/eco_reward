@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
+import { ImageUploadService } from '../../../../../../service/image-upload.service';
 import {
   NotificacionService,
   TipoMessage,
@@ -34,7 +35,8 @@ export class MaterialFormComponent {
     private gService: GenericService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private noti: NotificacionService
+    private noti: NotificacionService,
+    private imageUploadService: ImageUploadService
   ) {
     this.formularioReactive();
   }
@@ -79,7 +81,7 @@ export class MaterialFormComponent {
       ],
       description: [null, Validators.required],
       image: [null, Validators.compose([Validators.required])],
-      fileName: [null, Validators.compose([Validators.required])],
+      file: [null, Validators.compose([Validators.required])],
       unit_of_measure: [null, Validators.compose([Validators.required])],
       price: [null, Validators.compose([Validators.required])],
       color_representation: [null, Validators.compose([Validators.required])],
@@ -87,49 +89,32 @@ export class MaterialFormComponent {
   }
 
   handleFileInput(event: any): void {
-  const file = event.target.files[0];
+    const file: File = event.target.files[0];
+
     if (file) {
-      this.materialForm.get('fileName')?.setValue(file.name);
-      this.file = file;
-      this.convertToBase64(file);
+      this.imageUploadService.uploadImage(file).subscribe(
+        (response: any) => {
+          console.log(response);
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
     }
   }
 
-  convertToBase64(file: File, quality: number = 0.7): Promise<void> {
-    return new Promise<void>((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx: any = canvas.getContext('2d');
-  
-          // Configurar el tamaño del lienzo para la imagen reducida
-          canvas.width = img.width;
-          canvas.height = img.height;
-  
-          // Dibujar la imagen en el lienzo
-          ctx.drawImage(img, 0, 0);
-  
-          // Obtener la cadena Base64 del lienzo con calidad reducida
-          const base64String = canvas.toDataURL('image/jpeg', quality);
-  
-          // Almacenar la cadena Base64
-          this.base64String = base64String;
-          console.log(this.base64String);
-  
-          resolve();
-        };
-  
-        // Cargar la imagen para obtener sus dimensiones
-        img.src = e.target.result;
-      };
-  
-      // Leer el archivo como una URL de datos (cadena Base64)
-      reader.readAsDataURL(file);
-    });
+  convertToBase64(file: File): void {
+    const reader = new FileReader();
+
+    reader.onload = async (e: any) => {
+      // 'e.target.result' contiene la cadena Base64
+      this.base64String = e.target.result;
+      console.log(this.base64String);
+    };
+
+    // Lee el archivo como una URL de datos (cadena Base64)
+    reader.readAsDataURL(file);
   }
-  
 
   public errorHandling = (control: string, error: string) => {
     return this.materialForm.controls[control].hasError(error);
