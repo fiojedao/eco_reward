@@ -20,7 +20,6 @@ import { CenterDetailComponent } from './center-detail/center-detail.component';
 import { CenterFormComponent } from './center-form/center-form.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { ExchangingFormComponent } from './exchanging-form/exchanging-form.component';
 import { MaterialManagementComponent } from './material-management/material-management.component';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
@@ -30,7 +29,6 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
     CenterAllComponent,
     CenterDetailComponent,
     CenterFormComponent,
-    ExchangingFormComponent,
     MaterialManagementComponent,
   ],
   imports: [
