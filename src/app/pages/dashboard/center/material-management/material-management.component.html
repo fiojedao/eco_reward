@@ -1,0 +1,51 @@
+<mat-card class="box header rounded" *ngIf="center">
+  <mat-card-title>
+    <h1>
+      {{center?.name}}
+    </h1>
+  </mat-card-title>
+  <mat-card-subtitle>
+    <h3 class="">
+      Administrador: {{center?.User?.name}}
+    </h3>
+  </mat-card-subtitle>
+  <mat-card-subtitle>
+    <h3>
+      Fecha: {{fecha | date: 'dd/MM/yyyy'}}
+    </h3>
+  </mat-card-subtitle>
+  <mat-card-content>
+
+
+    <mat-card class="users">
+      <div>
+
+        <div *ngIf="userSelected">
+          <h3>Usuario:</h3>
+          <p>Correo: {{userSelected.email}}</p>
+          <p>Identificación: {{userSelected.identification}}</p>
+          <p>Nombre completo: {{userSelected.name}}</p>
+        </div>
+
+
+
+
+        <button mat-menu-item [matMenuTriggerFor]="userMenu" class="btn-users">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="users" class="icon-18 d-flex"></i-tabler>
+          </mat-icon>
+          Usuarios
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <ng-container *ngFor="let user of userList">
+            <button mat-menu-item (click)="getUserDetails(user)">
+              {{ user.name }}
+              <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+
+    </mat-card>
+  </mat-card-content>
+</mat-card>

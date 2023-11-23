@@ -1,0 +1,39 @@
+.footer-row {
+  font-weight: bold;
+}
+.box {
+  padding: 2em 2em;
+  box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
+}
+.header {
+  background-color: #0083db77;
+  color: white;
+}
+.mat-mdc-card-subtitle {
+  color: white !important;
+}
+
+.mat-mdc-card-content {
+  padding: 0;
+}
+
+.users {
+  padding: 2rem;
+  color: rgb(82, 82, 82);
+}
+
+.btn-users {
+  background-color: rgba(128, 128, 128, 0.295);
+  border-radius: 7px;
+}
+.btn-users:hover {
+  background-color: rgba(0, 113, 219, 0.185) !important;
+}
+
+/* .footer-row {
+  background-color: #6d6d6d;
+}
+.footer-total {
+  font-size: 1.2em;
+  font-weight: bolder;
+} */
