@@ -3,6 +3,7 @@ import { navItems } from './sidebar-data';
 import { NavService } from '../../services/nav.service';
 import { UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,7 @@ export class SidebarComponent implements OnInit {
   constructor(
     public navService: NavService,
     private userService: UserService,
-    private cdr: ChangeDetectorRef
+    private router: Router
   ) {
     this.loadUser();
   }
@@ -27,30 +28,25 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.userChanges().subscribe((data) => {
-      this.filterNavItem(data.user);
+      this.filterNavItem(data);
     });
   }
 
   filterNavItem(data: any){
     const { user, center, isSuperAdmin, isCenterAdmin } = data;
+    var items: any[] = navItems;
     if(user){
       if(isSuperAdmin){
         this.navItems = navItems;
       } else if(center && isCenterAdmin){
-        var items: any[] = [];
-        navItems.map((u:any)=>{
-          var item = u;
+        var items: any[] = navItems;
+        items.map((item:any)=>{
           if(item.route === 'home/center'){
             item.route = `home/center/${center.centerID}`
-            items.push(item);
-          } else {
-            items.push(item);
           }
         })
-        this.navItems = items;
-      } else {
-        this.navItems = navItems.filter((u:any) => u.route !== "home/user");
-      }
+        this.navItems = items.filter((u:any) => u.route !== "home/user");
+      }   
     }
   }
 

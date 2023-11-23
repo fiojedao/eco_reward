@@ -1,18 +1,13 @@
 // user.service.ts
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { SelectedUser } from '../../models/SelectUser'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private selectedUser: {
-    user: any;
-    center: any;
-    isSuperAdmin: boolean;
-    isCenterAdmin: boolean;
-    isClient: boolean;
-  } = {
+  private selectedUser: SelectedUser = {
     user: undefined,
     center: undefined,
     isSuperAdmin: false,
@@ -25,22 +20,19 @@ export class UserService {
   setUser(user: any, center: any) {
     this.selectedUser.user = user;
     this.selectedUser.center = center;
-    this.selectedUser.isSuperAdmin = user && user.role && user.role === 1;
-    this.selectedUser.isCenterAdmin = user && user.role && user.role === 2;
-    this.selectedUser.isClient = user && user.role && user.role === 3;
-    localStorage.setItem(
-      this.localStorageKey,
-      JSON.stringify(this.selectedUser)
-    );
+    this.selectedUser.isSuperAdmin = user?.role === 1;
+    this.selectedUser.isCenterAdmin = user?.role === 2;
+    this.selectedUser.isClient = user?.role === 3;
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.selectedUser));
     this.userChangeSubject.next(this.selectedUser);
   }
 
-  getInfo() {
+  getInfo(): any {
     const storedUser = localStorage.getItem(this.localStorageKey);
     return storedUser ? JSON.parse(storedUser) : null;
   }
 
-  userChanges() {
+  userChanges(): Observable<any> {
     return this.userChangeSubject.asObservable();
   }
 }

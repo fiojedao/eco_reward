@@ -9,14 +9,16 @@
   <!-- Notification Dropdown -->
   <!-- --------------------------------------------------------------- -->
 
-  <button mat-icon-button aria-label="Notifications">
+
+  <span class="m-l-5 nav-caption">{{ userLogin && userLogin.user && userLogin.user.name ? userLogin.user.name : 'Guest' }}</span>
+  <button mat-icon-button aria-label="Notifications" class="d-flex align-items-center">
     <i-tabler class="d-flex" name="bell" matBadge="9" matBadgeColor="primary"></i-tabler>
   </button>
-
+  
+  
   <span class="flex-1-auto"></span>
   <button mat-icon-button [matMenuTriggerFor]="profilemenu" aria-label="Notifications" class="m-l-10">
-    <img src="https://brandemia.org/contenido/subidas/2017/01/nintendo_switch_logo.jpg"
-      class="rounded-circle object-cover" width="35" />
+    <i-tabler name="user-circle" class="icon-45 d-flex"></i-tabler>
   </button>
   <mat-menu #profilemenu="matMenu" xPosition="before" class="topbar-dd cardWithShadow">
     <button mat-menu-item>
@@ -35,7 +37,7 @@
     
     <mat-menu #userMenu="matMenu">
       <ng-container *ngFor="let user of userList">
-        <button mat-menu-item (click)="getUserDetails(user)">
+        <button mat-menu-item (click)="setUser(user)">
           {{ user.name }}
           <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
         </button>

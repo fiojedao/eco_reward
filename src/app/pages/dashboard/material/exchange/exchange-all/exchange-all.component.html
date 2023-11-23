@@ -6,23 +6,6 @@
         <div class="centered-content">
           Historial de canje
         </div>
-        <div>
-          <button mat-button [matMenuTriggerFor]="menu" class="right">
-            <span style="display: flex; justify-content: center; align-items: center;">
-              <a mat-button class="mat-focus-indicator hometop-btn icon-button mat-button mat-button-base">
-                <span style="display: flex; justify-content: center; align-items: center;">
-                  <mat-icon>person</mat-icon>
-                  <strong> Usuarios</strong>
-                </span>
-              </a>
-            </span>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item *ngFor="let user of users" (click)="dropDownMenu(user.userID)">
-              {{ user.name }}
-            </button>
-          </mat-menu>
-        </div>
 
       </mat-card-title>
     </mat-card-content>

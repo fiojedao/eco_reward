@@ -31,13 +31,12 @@ export class HeaderComponent {
     public dialog: MatDialog,
     private gService: GenericService,
     private userService: UserService) {
+      this.userLogin = this.userService.getInfo();
       this.loadAllUsers();
-      this.loadUser();
   }
 
   ngAfterViewInit(): void {
-    this.loadAllUsers();
-    this.loadUser();
+    this.userService.userChanges().subscribe((data) => this.userLogin = data);
   }
 
   loadAllUsers(){
@@ -47,10 +46,9 @@ export class HeaderComponent {
       .subscribe((response: any) => {
         this.userList = response;
       });
-      this.loadUser();
   }
 
-  getUserDetails(user: any) {
+  setUser(user: any) {
     if(user){
       if(user.role === 1 || user.role === 3){
         this.userService.setUser(user, undefined);
@@ -63,10 +61,6 @@ export class HeaderComponent {
         });
       }
     }
-    this.loadUser();
   }
 
-  loadUser(){
-    this.userLogin = this.userService.getInfo();
-  }
 }

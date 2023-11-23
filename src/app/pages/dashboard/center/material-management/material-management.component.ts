@@ -10,9 +10,10 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./material-management.component.css'],
 })
 export class MaterialManagementComponent {
-  userList: any[] = [];
+  customers: any[] = [];
+  centerAdmin: any[] = [];
   userLogin: any;
-  userSelected: any;
+  selectedCustomer: any;
   fecha = new Date();
   isSuperAdmin: boolean = false;
   center: any;
@@ -22,52 +23,64 @@ export class MaterialManagementComponent {
   constructor(
     private gService: GenericService,
     private router: Router,
-    private route: ActivatedRoute,
     private userService: UserService
   ) {
-    this.loadAllUsers();
+    this.userLogin = this.userService.getInfo();
+    this.loadUser(this.userLogin);
+    this.loadCustomers();
+    this.loadCenterAdmin();
   }
 
-  ngAfterViewInit() {
-    this.userService.userChanges().subscribe((data) => {
-      const { user } = data;
-      if (user && user.role === 1) {
-        this.router.navigate(['home', 'exchanging']);
-      } else if (user) {
-        if (user) {
-          this.gService
-            .list(`center/user/2`)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((response: any) => {
-              this.center = response;
-              debugger;
-            });
-          console.log(this.center);
-        } else {
-          this.router.navigate(['home']);
-        }
+  loadUser(data: any){
+    const { user, center, isSuperAdmin, isCenterAdmin, isClient} = data;
+    if (isSuperAdmin) {
+      this.center = undefined;
+      this.selectedCustomer = undefined;
+    } else if (isCenterAdmin) {
+      if (center) {
+        this.center = center;
+      } else {
+        this.router.navigate(['home']);
       }
+    }
+  }
+
+  loadCenterAdmin(){
+    this.gService
+    .list('user/role/2')
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response: any) => {
+      this.centerAdmin = response;
     });
   }
-
-  loadAllUsers() {
+  loadCustomers() {
     this.gService
-      .list('user/')
+      .list('user/role/3')
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
-        this.userList = response;
+        this.customers = response;
       });
   }
 
-  getUserDetails(user: any) {
-    debugger;
+  setSelectedCenter(user: any) {
     if (user) {
-      this.userSelected = user;
+      this.gService
+      .get('center/user', user.userID)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.center = data;
+      });
     }
-    this.loadUser();
   }
 
-  loadUser() {
-    this.userLogin = this.userService.getInfo();
+  setSelectedCustomer(user: any) {
+    if (user) {
+      this.selectedCustomer = user;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.userService.userChanges().subscribe((data) => this.loadUser(data));
   }
 }

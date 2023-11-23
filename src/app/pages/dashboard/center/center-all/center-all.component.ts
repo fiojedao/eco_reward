@@ -29,7 +29,6 @@ export class CenterAllComponent {
   constructor(
     private gService: GenericService,
     private router: Router,
-    private route: ActivatedRoute,
     private userService: UserService
   ) {
     this.listCenter();
@@ -42,9 +41,8 @@ export class CenterAllComponent {
   }
 
   realoadUser(data: any){
-    const { user } = data;
-    debugger
-    if(user && user.role === 1){
+    const { user, isSuperAdmin } = data;
+    if(isSuperAdmin){
       this.router.navigate(['home', 'center']);
     } else if(user){
       if(user){
@@ -63,7 +61,6 @@ export class CenterAllComponent {
   listCenter() {
     this.gService
       .list('center/')
-      // pipe
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         console.log(response);

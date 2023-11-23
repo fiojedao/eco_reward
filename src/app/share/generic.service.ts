@@ -14,10 +14,8 @@ export class GenericService {
   currentUser: any;
 
   //Inyectar cliente HTTP para las solicitudes al API
-  constructor(private http: HttpClient) {
-   
-  }
- 
+  constructor(private http: HttpClient) {}
+
   // Listar
   list(endopoint: string): Observable<any> {
     return this.http.get<any>(this.urlAPI + endopoint);

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { MaterialExchangeModel } from 'src/models/MaterialExchangeModel';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-exchange-all',
@@ -14,10 +15,8 @@ import { MaterialExchangeModel } from 'src/models/MaterialExchangeModel';
   styleUrls: ['./exchange-all.component.css'],
 })
 export class ExchangeAllComponent {
-  userId: number = 3;
-  userIRole: number = 3;
+  userLogin: any
   datos: any; //respuesta del API
-  users: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,29 +34,29 @@ export class ExchangeAllComponent {
   constructor(
     private gService: GenericService,
     private router: Router,
-    private route: ActivatedRoute
+    private userService: UserService
   ) {
+    this.userLogin =  this.userService.getInfo();
     this.listCenter();
-    this.listUser();
   }
 
   ngAfterViewInit() {
-    // Move the paginator setup here
     this.dataSource.paginator = this.paginator;
-    this.paginator.length = this.datos.length;
+    this.paginator.length =  this.datos ? this.datos.length: 0;
     this.paginator.pageSizeOptions = [5, 10, 25];
-  }
 
-  dropDownMenu(id: number) {
-    console.log('Usuario seleccionado:', id);
-    this.userId = id;
-    this.listCenter();
+    this.userService.userChanges().subscribe((data) => {
+      this.userLogin = data;
+      this.listCenter();
+    });
+    
   }
 
   listCenter() {
-    this.gService
-      .list(`materialexchange/exchangesByUserid/${this.userId}`)
-      // pipe
+    const { user } = this.userLogin;
+    if(user){
+      this.gService
+      .list(`materialexchange/exchangesByUserid/${user.userID}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         console.log(response);
@@ -65,16 +64,7 @@ export class ExchangeAllComponent {
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
       });
-  }
-
-  listUser() {
-    this.gService
-      .list(`user`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        console.log(response); // Verifica la respuesta en la consola
-        this.users = response;
-      });
+    }
   }
 
   exchangeDetail(id: number) {
