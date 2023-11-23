@@ -1,64 +1,144 @@
-<mat-card class="box header rounded" *ngIf="userLogin">
-  <div *ngIf="center; else noCenterData">
-    <mat-card-title>
-      <h1>
-        {{center?.name}}
-      </h1>
-    </mat-card-title>
-    <mat-card-subtitle>
-      <h3 class="">
-        Administrador: {{center?.User?.name}}
-      </h3>
-    </mat-card-subtitle>
-    <mat-card-subtitle>
-      <h3>
-        Fecha: {{fecha | date: 'dd/MM/yyyy'}}
-      </h3>
-    </mat-card-subtitle>
-  </div>
-  
-    <ng-template #noCenterData>
-      <mat-card class="users">
-      <button mat-menu-item [matMenuTriggerFor]="userMenu" class="btn-users">
-        <mat-icon class="d-flex align-items-center">
-          <i-tabler name="users" class="icon-18 d-flex"></i-tabler>
-        </mat-icon>
-        Centros
-      </button>
-      <mat-menu #userMenu="matMenu">
-        <ng-container *ngFor="let user of centerAdmin">
-          <button mat-menu-item (click)="setSelectedCenter(user)">
-            {{ user.name }}
-            <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
-          </button>
-        </ng-container>
-      </mat-menu>
-      </mat-card>
-    </ng-template>
+<mat-card class="full-width" style="min-height: 83vh !important;">
 
-    <mat-card class="users">
-      <div>
-        <div *ngIf="selectedCustomer">
-          <h3>Usuario:</h3>
-          <p>Correo: {{selectedCustomer.email}}</p>
-          <p>Identificación: {{selectedCustomer.identification}}</p>
-          <p>Nombre completo: {{selectedCustomer.name}}</p>
+  <div *ngIf="!isClient; else noPermissionMessage" class="container-box">
+    <mat-card class="box header rounded" *ngIf="userLogin">
+      <div *ngIf="center; else noCenterData">
+        <mat-card-title>
+          <h1>
+            {{center?.name}}
+          </h1>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <h3 class="">
+            Administrador: {{center?.User?.name}}
+          </h3>
+        </mat-card-subtitle>
+        <mat-card-subtitle>
+          <h3>
+            Fecha: {{fecha | date: 'dd/MM/yyyy'}}
+          </h3>
+        </mat-card-subtitle>
+      </div>
+
+      <ng-template #noCenterData>
+        <mat-card class="users">
+          <button mat-menu-item [matMenuTriggerFor]="userMenu" class="btn-users">
+            <mat-icon class="d-flex align-items-center">
+              <i-tabler name="users" class="icon-18 d-flex"></i-tabler>
+            </mat-icon>
+            Centros
+          </button>
+          <mat-menu #userMenu="matMenu">
+            <ng-container *ngFor="let user of centerAdmin">
+              <button mat-menu-item (click)="setSelectedCenter(user)">
+                {{ user.name }}
+                <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </mat-card>
+      </ng-template>
+
+      <mat-card class="users">
+        <div>
+          <div *ngIf="selectedCustomer">
+            <h3>Usuario:</h3>
+            <p>Correo: {{selectedCustomer.email}}</p>
+            <p>Identificación: {{selectedCustomer.identification}}</p>
+            <p>Nombre completo: {{selectedCustomer.name}}</p>
+          </div>
+
+          <button mat-menu-item [matMenuTriggerFor]="userMenu" class="btn-users">
+            <mat-icon class="d-flex align-items-center">
+              <i-tabler name="users" class="icon-18 d-flex"></i-tabler>
+            </mat-icon>
+            Usuarios
+          </button>
+          <mat-menu #userMenu="matMenu">
+            <ng-container *ngFor="let user of customers">
+              <button mat-menu-item (click)="setSelectedCustomer(user)">
+                {{ user.name }}
+                <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </div>
+      </mat-card>
+    </mat-card>
+
+
+
+    <mat-card class="detailContent">
+      <section class="materialsCheck">
+        <div *ngFor="let material of materials">
+          <mat-checkbox class="materialCheck" [id]="material.materialID"
+            (change)="onCheckboxChange($event, material.materialID)"><b>{{ material.name }}</b></mat-checkbox>
         </div>
 
-        <button mat-menu-item [matMenuTriggerFor]="userMenu" class="btn-users">
-          <mat-icon class="d-flex align-items-center">
-            <i-tabler name="users" class="icon-18 d-flex"></i-tabler>
-          </mat-icon>
-          Usuarios
-        </button>
-        <mat-menu #userMenu="matMenu">
-          <ng-container *ngFor="let user of customers">
-            <button mat-menu-item (click)="setSelectedCustomer(user)">
-              {{ user.name }}
-              <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
-            </button>
+      </section>
+
+      <mat-card-content *ngIf="dataSource">
+
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="material">
+            <mat-header-cell *matHeaderCellDef> Material </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.material.name}}
+            </mat-cell>
+
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
           </ng-container>
-        </mat-menu>
-      </div>
+
+          <ng-container matColumnDef="precio">
+            <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 🪙{{element.price}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cantidad">
+            <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-form-field appearance="fill">
+                <input matInput id="cantidad " type="number" class="form-control mb-2" [(ngModel)]="element.amount"
+                  (change)="actualizarCantidad(element)">
+              </mat-form-field>
+
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer-total">Total </mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="subtotal">
+            <mat-header-cell *matHeaderCellDef> Subtotal </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 🪙 {{element.subtotal}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer-total">🪙 {{total }} </mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef> Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns" class="header"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-footer-row *matFooterRowDef="displayedColumns" class="footer-row"></mat-footer-row>
+        </mat-table>
+
+      </mat-card-content>
+      <mat-card-actions class="btn-actions">
+        <button mat-flat-button style="background-color: black; color: white">
+          Canjear
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+      </mat-card-actions>
+      <!-- Table -->
     </mat-card>
+  </div>
+  <ng-template #noPermissionMessage>
+    <h2 style="text-align: center;font-size: 1.5em;margin: auto;">No cuentas con los permisos necesarios</h2>
+  </ng-template>
 </mat-card>

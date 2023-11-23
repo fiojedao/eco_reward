@@ -19,10 +19,11 @@ import { CenterAllComponent } from './center-all/center-all.component';
 import { CenterDetailComponent } from './center-detail/center-detail.component';
 import { CenterFormComponent } from './center-form/center-form.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialManagementComponent } from './material-management/material-management.component';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
+    MatCheckboxModule,
     TablerIconsModule.pick(TablerIcons),
+    FormsModule,
   ],
 })
 export class CenterModule {}

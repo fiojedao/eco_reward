@@ -22,7 +22,7 @@ export class SidebarComponent implements OnInit {
     this.loadUser();
   }
 
-  loadUser(){
+  loadUser() {
     this.filterNavItem(this.userService.getInfo());
   }
 
@@ -32,21 +32,23 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  filterNavItem(data: any){
+  filterNavItem(data: any) {
     const { user, center, isSuperAdmin, isCenterAdmin } = data;
     var items: any[] = navItems;
-    if(user){
-      if(isSuperAdmin){
+    if (user) {
+      if (isSuperAdmin) {
         this.navItems = navItems;
-      } else if(center && isCenterAdmin){
+      } else if (center && isCenterAdmin) {
         var items: any[] = navItems;
-        items.map((item:any)=>{
-          if(item.route === 'home/center'){
-            item.route = `home/center/${center.centerID}`
+        items.map((item: any) => {
+          if (item.route === 'home/center') {
+            item.route = `home/center/${center.centerID}`;
           }
-        })
-        this.navItems = items.filter((u:any) => u.route !== "home/user");
-      }   
+        });
+        this.navItems = items.filter((u: any) => u.route !== 'home/user');
+      } else {
+        this.navItems = [];
+      }
     }
   }
 

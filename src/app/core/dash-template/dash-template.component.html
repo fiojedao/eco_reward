@@ -4,8 +4,7 @@
   <!-- ============================================================== -->
 
   <mat-sidenav #leftsidenav [mode]="isOver ? 'over' : 'side'" [opened]="!isOver"
-    (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav"
-    style="height: 93.5vh !important;">
+    (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
     <app-sidebar></app-sidebar>
   </mat-sidenav>
   <!-- ============================================================== -->
