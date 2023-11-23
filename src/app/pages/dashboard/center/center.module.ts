@@ -20,12 +20,16 @@ import { CenterDetailComponent } from './center-detail/center-detail.component';
 import { CenterFormComponent } from './center-form/center-form.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialManagementComponent } from './material-management/material-management.component';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import * as TablerIcons from 'angular-tabler-icons/icons';
 
 @NgModule({
   declarations: [
     CenterAllComponent,
     CenterDetailComponent,
     CenterFormComponent,
+    MaterialManagementComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
+    TablerIconsModule.pick(TablerIcons),
   ],
 })
 export class CenterModule {}

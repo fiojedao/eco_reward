@@ -33,6 +33,11 @@ export const navItems: NavItem[] = [
     route: 'home/material-exchange',
   },
   {
+    displayName: 'Gestión de materiales',
+    iconName: 'ticket',
+    route: 'home/exchanging',
+  },
+  {
     navCap: 'Autenticación',
   },
   {
