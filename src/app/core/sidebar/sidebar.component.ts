@@ -42,9 +42,9 @@ export class SidebarComponent implements OnInit {
           var item = u;
           if(item.route === 'home/center'){
             item.route = `home/center/${center.centerID}`
-            item.push(item);
+            items.push(item);
           } else {
-            item.push(item);
+            items.push(item);
           }
         })
         this.navItems = items;
