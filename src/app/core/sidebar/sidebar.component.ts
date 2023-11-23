@@ -32,11 +32,25 @@ export class SidebarComponent implements OnInit {
   }
 
   filterNavItem(data: any){
-    const { user } = data;
-    if(user && user.role && user.role == 1){
-      this.navItems = navItems;
-    } else {
-      this.navItems = navItems.filter((u:any) => u.route !== "home/user");
+    const { user, center, isSuperAdmin, isCenterAdmin } = data;
+    if(user){
+      if(isSuperAdmin){
+        this.navItems = navItems;
+      } else if(center && isCenterAdmin){
+        var items: any[] = [];
+        navItems.map((u:any)=>{
+          var item = u;
+          if(item.route === 'home/center'){
+            item.route = `home/center/${center.centerID}`
+            item.push(item);
+          } else {
+            item.push(item);
+          }
+        })
+        this.navItems = items;
+      } else {
+        this.navItems = navItems.filter((u:any) => u.route !== "home/user");
+      }
     }
   }
 

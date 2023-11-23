@@ -33,28 +33,31 @@ export class CenterAllComponent {
     private userService: UserService
   ) {
     this.listCenter();
+    this.realoadUser(this.userService.getInfo());
   }
 
   ngAfterViewInit(): void {
     this.listCenter();
-    this.userService.userChanges().subscribe((data) => {
-      const { user } = data;
-      debugger
-      if(user && user.role === 1){
-        this.router.navigate(['home', 'center']);
-      } else if(user){
-        if(user){
-          this.gService
-          .list(`center/user/${user.userID}`)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((response: any) => {
-            this.centerDetail(response.centerID);
-          });
-        } else {
-          this.router.navigate(['home']);
-        }
+    this.userService.userChanges().subscribe((data) => this.realoadUser(data));
+  }
+
+  realoadUser(data: any){
+    const { user } = data;
+    debugger
+    if(user && user.role === 1){
+      this.router.navigate(['home', 'center']);
+    } else if(user){
+      if(user){
+        this.gService
+        .list(`center/user/${user.userID}`)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((response: any) => {
+          this.centerDetail(response.centerID);
+        });
+      } else {
+        this.router.navigate(['home']);
       }
-    });
+    }
   }
 
   listCenter() {
