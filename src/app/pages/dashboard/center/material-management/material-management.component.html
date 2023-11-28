@@ -102,7 +102,7 @@
             <mat-cell *matCellDef="let element">
               <mat-form-field appearance="fill">
                 <input matInput id="amount " type="number" class="form-control mb-2" [(ngModel)]="element.amount"
-                  (change)="actualizarCantidad(element)">
+                  (change)="updateAmout(element)">
               </mat-form-field>
 
             </mat-cell>

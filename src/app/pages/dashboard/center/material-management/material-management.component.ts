@@ -106,9 +106,13 @@ export class MaterialManagementComponent {
     this.destroy$.unsubscribe();
   }
 
-  actualizarCantidad(item: any) {
+  updateAmout(item: any) {
+    const data = this.exchangeService.getData();
     this.exchangeService.addItemToExchange(item, false);
     this.total = this.exchangeService.getTotalAmount();
+    this.materials.forEach(material => {
+      material.checked = !!data.find(x => x.materialID === material.materialID);
+    });  
   }
 
   /* center's materials */
