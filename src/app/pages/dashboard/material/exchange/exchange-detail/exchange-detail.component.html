@@ -1,6 +1,13 @@
 <mat-card style="min-height: 83vh !important;">
   <mat-card-header>
-    <mat-card-title>Detalle del Canje de Materiales</mat-card-title>
+    <div>
+      <mat-card-title>Detalle del Canje de Materiales</mat-card-title>
+    </div>
+    <div style="margin: 0 0 0 auto;">
+      <button mat-flat-button (click)="openInvoiceDialog()">
+        <mat-icon>assignment</mat-icon>Factura
+      </button>
+    </div>
   </mat-card-header>
   <mat-card-content>
     <!-- Columna 1 -->

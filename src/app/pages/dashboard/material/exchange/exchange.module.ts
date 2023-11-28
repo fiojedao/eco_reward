@@ -18,9 +18,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ExchangeDetailComponent } from './exchange-detail/exchange-detail.component';
+import { InvoiceComponent } from 'src/app/core/modal/invoice.component';
 
 @NgModule({
-  declarations: [ExchangeAllComponent, ExchangeDetailComponent],
+  declarations: [ExchangeAllComponent, ExchangeDetailComponent, InvoiceComponent],
   imports: [
     CommonModule,
     ExchangeRoutingModule,

@@ -1,0 +1,46 @@
+.invoice {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+p {
+  margin: 3px 0;
+}
+
+.invoice-details {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.center-info h2 {
+  margin-top: 0;
+}
+
+.material-details {
+  padding-top: 5px;
+  margin-top: 10px;
+  padding-left: 5px;
+}
+
+.material-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.material-info img {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.material-description h4 {
+  margin-top: 0;
+}
+
+hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}

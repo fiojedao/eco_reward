@@ -3,10 +3,12 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
+import { InvoiceComponent } from 'src/app/core/modal/invoice.component';
 
 @Component({
   selector: 'app-exchange-detail',
@@ -14,7 +16,7 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./exchange-detail.component.css']
 })
 export class ExchangeDetailComponent implements AfterViewInit { // Implement AfterViewInit
-
+  exchangeID: any = 0;
   exchangeData: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -28,14 +30,21 @@ export class ExchangeDetailComponent implements AfterViewInit { // Implement Aft
   constructor(
     private gService: GenericService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
-    let id = this.route.snapshot.paramMap.get('id');
-    if (!isNaN(Number(id))) {
-      this.loadData(Number(id));
+    this.exchangeID = this.route.snapshot.paramMap.get('id');
+    if (!isNaN(Number(this.exchangeID))) {
+      this.loadData(Number(this.exchangeID));
     }
   }
 
+  openInvoiceDialog(): void {
+    const dialogRef = this.dialog.open(InvoiceComponent, {
+      data: this.exchangeData  // Pasar los detalles de la factura al diálogo
+    });
+  }
+  
   ngAfterViewInit() {
     // Move the paginator setup here
     this.dataSource.paginator = this.paginator;
