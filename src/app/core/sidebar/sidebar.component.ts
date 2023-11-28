@@ -33,21 +33,37 @@ export class SidebarComponent implements OnInit {
   }
 
   filterNavItem(data: any) {
-    const { user, center, isSuperAdmin, isCenterAdmin } = data;
-    var items: any[] = navItems;
-    if (user) {
-      if (isSuperAdmin) {
-        this.navItems = navItems;
-      } else if (center && isCenterAdmin) {
-        var items: any[] = navItems;
-        items.map((item: any) => {
-          if (item.route === 'home/center') {
-            item.route = `home/center/${center.centerID}`;
-          }
-        });
-        this.navItems = items.filter((u: any) => u.route !== 'home/user');
-      } else {
-        this.navItems = [];
+    if(data){
+      const { user, center, isSuperAdmin, isCenterAdmin, isClient } = data;
+      var items: any[] = navItems;
+      debugger
+      if (user) {
+        if (isSuperAdmin) {
+          this.navItems = navItems;
+        } else if (center && isCenterAdmin) {
+          var items: any[] = navItems;
+          items.map((item: any) => {
+            if (item.route === 'home/center') {
+              item.route = `home/center/${center.centerID}`;
+            }
+          });
+          this.navItems = items.filter((u: any) => u.route !== 'home/user');
+        } else if(isClient){
+          var items: any[] = navItems;
+          this.navItems = items.filter(item => {
+            return (
+              item.navCap === 'Inicio' ||
+              item.displayName === 'Dashboard' ||
+              item.navCap === 'Mantenimientos' ||
+              item.displayName === 'Historial de Canje' ||
+              item.navCap === 'Autenticación' ||
+              item.displayName === 'Login' ||
+              item.displayName === 'Registro'
+            );
+          });
+        } else {
+          this.navItems = [];
+        }
       }
     }
   }

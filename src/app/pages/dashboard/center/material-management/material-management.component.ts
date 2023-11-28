@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ExchangeService } from 'src/app/services/exchanging.service';
 import { UserService } from 'src/app/services/user.service';
 import { GenericService } from 'src/app/share/generic.service';
+import { NotificacionService } from 'src/app/share/notificacion.service';
+import { TipoMessage } from 'src/app/share/notification.service';
+import { ExchangeRequest } from 'src/models/MaterialExchangeModel';
+import { CenterMaterial } from 'src/models/MaterialModel';
 
 @Component({
   selector: 'app-material-management',
@@ -13,7 +17,7 @@ import { GenericService } from 'src/app/share/generic.service';
 })
 export class MaterialManagementComponent {
   customers: any[] = [];
-  materials: any[] = [];
+  materials: CenterMaterial[] = [];
   centerAdmin: any[] = [];
   userLogin: any;
   selectedCustomer: any;
@@ -38,10 +42,12 @@ export class MaterialManagementComponent {
   dataSource = new MatTableDataSource<any>();
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private exchangeService: ExchangeService,
     private gService: GenericService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private noti: NotificacionService
   ) {
     this.userLogin = this.userService.getInfo();
     this.loadUser(this.userLogin);
@@ -50,11 +56,49 @@ export class MaterialManagementComponent {
     this.loadMaterials();
   }
 
+  performRedeem() {
+    const { user, center, isSuperAdmin } = this.userLogin;
+    const centerAux = isSuperAdmin ? this.center: center;
+    const { selectedCustomer } = this
+    const data = this.exchangeService.getData();
+
+    const exchangeRequest: ExchangeRequest = {
+      userId: selectedCustomer.userID,
+      exchangeDetails: {
+        centerID: centerAux.centerID,
+        Exchange_Material_Details: data.map((item: any) => ({
+          materialID: item.materialID,
+          quantity: item.amount,
+          eco_coins: item.price * item.amount
+        }))
+      }
+    };
+    console.log(exchangeRequest, selectedCustomer);
+
+    if(selectedCustomer){
+      this.gService
+      .create('materialexchange', exchangeRequest)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        //Obtener respuesta
+        this.noti.mensajeRedirect(
+          'Canje creado',
+          `Cliente: ${selectedCustomer.name}`,
+          TipoMessage.success,
+          'home/exchanging/'
+        );
+        console.log(data);
+        this.exchangeService.clearExchange();
+      });
+    }
+
+  }
+
   ngOnInit(): void {
-    this.exchangeService.currentDataExchange$.subscribe((data) => {
+    this.exchangeService.currentExchangeData$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
+      this.total = this.exchangeService.getTotalAmount();
     });
-    this.total = this.exchangeService.getTotal();
   }
 
   ngOnDestroy() {
@@ -63,25 +107,32 @@ export class MaterialManagementComponent {
   }
 
   actualizarCantidad(item: any) {
-    this.exchangeService.addExchange(item);
-    this.total = this.exchangeService.getTotal();
+    this.exchangeService.addItemToExchange(item, false);
+    this.total = this.exchangeService.getTotalAmount();
   }
 
   /* center's materials */
   loadMaterials() {
-    this.gService
-      .list('material/')
+    const { center, isSuperAdmin} = this.userLogin;
+    const data = this.exchangeService.getData();
+    const centerAux = isSuperAdmin ? this.center: center;
+
+    if(centerAux){
+      this.gService
+      .list(`material/center/${centerAux.centerID}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.materials = response;
+        this.materials.forEach(material => {
+          material.checked = !!data.find(x => x.materialID === material.materialID);
+        });  
       });
-    console.log(this.materials);
+    } else {
+      this.exchangeService.clearExchange();
+    }
   }
 
   loadUser(data: any) {
-    this.isSuperAdmin = false;
-    this.isCenterAdmin = false;
-    this.isClient = false;
     const { user, center, isSuperAdmin, isCenterAdmin, isClient } = data;
     if (isSuperAdmin) {
       this.center = undefined;
@@ -121,8 +172,8 @@ export class MaterialManagementComponent {
         .get('center/user', user.userID)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
-          console.log(data);
           this.center = data;
+          this.loadMaterials();
         });
     }
   }
@@ -137,13 +188,29 @@ export class MaterialManagementComponent {
     this.userService.userChanges().subscribe((data) => this.loadUser(data));
   }
 
-  onCheckboxChange(event: any, materialId: number) {
-    if (event.checked) {
-      console.log(`Checkbox con ID ${materialId} fue marcado.`);
+  onCheckboxChange(checked: boolean, materialId: number) {
+    if (checked) {
       this.loadMaterial(materialId);
-    } else {
-      this.exchangeService.removeFromCart(materialId);
+    } else{
+      this.materials.forEach(material => {
+        if (material.materialID === materialId) {
+          material.checked = false;
+        }
+      });    
+      this.exchangeService.removeFromExchange(materialId);
     }
+  }
+
+  onDeleteMaterial(element: any){
+    if(element){
+      this.materials.forEach(material => {
+        if (material.materialID === element.materialID) {
+          material.checked = false;
+        }
+      });      
+      this.exchangeService.removeFromExchange(element.materialID);
+      this.cdr.detectChanges();
+    }  
   }
 
   loadMaterial(id: any) {
@@ -151,9 +218,7 @@ export class MaterialManagementComponent {
       .get('material/', id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
-        /* this.materials = response; */
-        this.exchangeService.addExchange(response);
+        this.exchangeService.addItemToExchange(response, true);
       });
-    console.log(this.materials);
   }
 }

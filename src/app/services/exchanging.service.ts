@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-export class ItemExchange {
+export class ExchangeItem {
   materialID: number = 0;
-  material: any;
+  materialDetails: any;
   amount: number = 0;
   price: number = 0;
   subtotal: number = 0;
@@ -13,124 +13,116 @@ export class ItemExchange {
   providedIn: 'root',
 })
 export class ExchangeService {
-  private dataExchange = new BehaviorSubject<ItemExchange[]>([]);
-  public currentDataExchange$ = this.dataExchange.asObservable();
-  public qtyItems = new Subject<number>();
+  private exchangeData = new BehaviorSubject<ExchangeItem[]>([]);
+  public currentExchangeData$ = this.exchangeData.asObservable();
+  public itemsQuantity = new Subject<number>();
 
   constructor() {
-    const storedData = localStorage.getItem('dataExchange');
+    const storedData = localStorage.getItem('exchangeData');
     const parsedData = storedData ? JSON.parse(storedData) : null;
 
-    this.dataExchange = new BehaviorSubject<any>(parsedData || []);
-    this.currentDataExchange$ = this.dataExchange.asObservable();
+    this.exchangeData = new BehaviorSubject<any>(parsedData || []);
+    this.currentExchangeData$ = this.exchangeData.asObservable();
   }
 
   saveExchange(): void {
     localStorage.setItem(
-      'dataExchange',
-      JSON.stringify(this.dataExchange.getValue())
+      'exchangeData',
+      JSON.stringify(this.exchangeData.getValue())
     );
   }
 
-  addExchange(material: any): void {
-    debugger;
-    const newItem = new ItemExchange();
+  getData(){
+    return this.exchangeData.getValue()
+  }
 
+  addItemToExchange(material: any, isNew: boolean): void {
+    const newItem = new ExchangeItem();
     newItem.materialID = material.materialID;
     newItem.price = material.price;
-    newItem.amount = 1;
-    newItem.subtotal = this.calculoSubtotal(newItem);
-    newItem.material = material;
+    newItem.amount = isNew? 1: material.amount;
+    newItem.materialDetails = material;
+    newItem.subtotal = this.calculateSubtotal(newItem);
 
-    let listExchange = this.dataExchange.getValue();
+    let exchangeList = this.exchangeData.getValue();
 
-    if (listExchange) {
-      let objIndex = listExchange.findIndex(
+    if (exchangeList) {
+      let objIndex = exchangeList.findIndex(
         (obj) => obj.materialID == newItem.materialID
       );
 
       if (objIndex != -1) {
-        //Verificar que el producto tenga la propiedad cantidad
-        if (material.hasOwnProperty('cantidad')) {
-          //Si la cantidad es menor o igual a 0 se elimina del carrito
-          if (material.cantidad <= 0) {
-            this.removeFromCart(newItem);
+        if (material.hasOwnProperty('amount')) {
+          if (material.amount <= 0) {
+            this.removeFromExchange(newItem.materialID);
             return;
           } else {
-            //Actualizar cantidad
-            listExchange[objIndex].amount = material.amount;
+            exchangeList[objIndex].amount = newItem.amount;
+            exchangeList[objIndex].subtotal = newItem.subtotal;
           }
         } else {
-          //Actualizar la cantidad de un producto existente
-          listExchange[objIndex].amount += 1;
+          exchangeList[objIndex].amount += 1;
         }
       } else {
-        listExchange.push(newItem);
+        exchangeList.push(newItem);
       }
     } else {
-      listExchange = [];
-      listExchange.push(newItem);
+      exchangeList = [];
+      exchangeList.push(newItem);
     }
-    this.dataExchange.next(listExchange);
-    this.qtyItems.next(this.quantityItems());
+    this.exchangeData.next(exchangeList);
+    this.itemsQuantity.next(this.calculateTotalItems());
     this.saveExchange();
   }
 
-  public removeFromCart(materialID: any) {
-    //Obtenemos el valor actual de carrito
-    let listExchange = this.dataExchange.getValue();
-    //Buscamos el item del carrito para eliminar
-    let objIndex = listExchange.findIndex(
+  public removeFromExchange(materialID: any) {
+    let exchangeList = this.exchangeData.getValue();
+    let objIndex = exchangeList.findIndex(
       (obj) => obj.materialID == materialID
     );
     if (objIndex != -1) {
-      listExchange.splice(objIndex, 1);
+      exchangeList.splice(objIndex, 1);
     }
-    this.dataExchange.next(listExchange);
-    //Actualizar la cantidad total de items del carrito
-    this.qtyItems.next(this.quantityItems());
+    this.exchangeData.next(exchangeList);
+    this.itemsQuantity.next(this.calculateTotalItems());
     this.saveExchange();
   }
 
-  get countItems(): Observable<number> {
-    this.qtyItems.next(this.quantityItems());
-    return this.qtyItems.asObservable();
+  get totalItemsCount(): Observable<number> {
+    this.itemsQuantity.next(this.calculateTotalItems());
+    return this.itemsQuantity.asObservable();
   }
 
-  quantityItems() {
-    let listCart = this.dataExchange.getValue();
+  calculateTotalItems() {
+    let exchangeList = this.exchangeData.getValue();
     let sum = 0;
-    if (listCart != null) {
-      //Sumando las cantidades de cada uno de los items del carrito
-      listCart.forEach((obj) => {
+    if (exchangeList != null) {
+      exchangeList.forEach((obj) => {
         sum += obj.amount;
       });
     }
     return sum;
   }
 
-  public deleteExchange() {
-    this.dataExchange.next([]);
-    this.qtyItems.next(0);
+  public clearExchange() {
+    this.exchangeData.next([]);
+    this.itemsQuantity.next(0);
     this.saveExchange();
   }
 
-  public getTotal(): number {
-    //Total antes de impuestos
+  public getTotalAmount(): number {
     let total = 0;
-    let listCart = this.dataExchange.getValue();
-    if (listCart != null) {
-      //Sumando los subtotales de cada uno de los items del carrito
-
-      listCart.forEach((item: ItemExchange, index) => {
-        total += item.subtotal;
+    let exchangeList = this.exchangeData.getValue();
+    if (exchangeList != null) {
+      exchangeList.forEach((item: ExchangeItem) => {
+        total += item.amount * item.price;
       });
     }
 
     return total;
   }
 
-  private calculoSubtotal(item: ItemExchange) {
+  private calculateSubtotal(item: ExchangeItem) {
     return item.price * item.amount;
   }
 }

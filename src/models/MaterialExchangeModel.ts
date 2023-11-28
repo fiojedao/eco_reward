@@ -18,3 +18,18 @@ export interface ExchangeMaterialDetailModel {
     eco_coins: number;
     Recycling_Material: RecyclingMaterialModel;
   }
+
+  export  interface ExchangeRequest {
+    userId: number;
+    exchangeDetails: {
+      centerID: number;
+      Exchange_Material_Details: ExchangeMaterialDetail[];
+    };
+  }
+  
+  export  interface ExchangeMaterialDetail {
+    materialID: number;
+    quantity: number;
+    eco_coins: number;
+  }
+  

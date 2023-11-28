@@ -47,14 +47,16 @@
 /* styles.css (o tu archivo de estilos) */
 
 .materialsCheck {
+  background-color: #f0f0f0;
   display: flex;
   justify-content: start;
   gap: 10%;
   align-items: center;
   margin-bottom: 1rem;
+  border-radius: 5px;
 }
 
-.materialCheck .mat-checkbox-inner-container {
+.materialCheck{
   width: 44px; /* Ajusta el tamaño del check según tus necesidades */
   height: 44px;
 }
@@ -80,3 +82,13 @@
   font-size: 1.2em;
   font-weight: bolder;
 } */
+
+.mat-header-row {
+  background-color: #f0f0f0; /* Cambia el color de fondo del encabezado */
+  color: #333; /* Cambia el color del texto del encabezado */
+}
+
+.custom-table .mat-header-row {
+  background-color: #f0f0f0; /* Cambia el color de fondo del encabezado */
+  color: #333; /* Cambia el color del texto del encabezado */
+}

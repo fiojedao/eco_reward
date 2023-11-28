@@ -42,7 +42,7 @@
       <mat-card class="users">
         <div>
           <div *ngIf="selectedCustomer">
-            <h3>Usuario:</h3>
+            <h3>Cliente: {{selectedCustomer.name}}</h3>
             <p>Correo: {{selectedCustomer.email}}</p>
             <p>Identificación: {{selectedCustomer.identification}}</p>
             <p>Nombre completo: {{selectedCustomer.name}}</p>
@@ -68,22 +68,24 @@
 
 
 
-    <mat-card class="detailContent">
+    <mat-card class="box header rounded">
       <section class="materialsCheck">
         <div *ngFor="let material of materials">
-          <mat-checkbox class="materialCheck" [id]="material.materialID"
-            (change)="onCheckboxChange($event, material.materialID)"><b>{{ material.name }}</b></mat-checkbox>
+          <mat-checkbox class="custom-checkbox materialCheck" [(ngModel)]="material.checked"
+            (change)="onCheckboxChange(material.checked ,material.materialID)"><b>{{ material.Recyclable_Material.name }}</b></mat-checkbox>
         </div>
-
       </section>
 
       <mat-card-content *ngIf="dataSource">
-
-        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
+        <mat-table [dataSource]="dataSource" class="custom-table">
           <ng-container matColumnDef="material">
             <mat-header-cell *matHeaderCellDef> Material </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.material.name}}
+            <mat-cell *matCellDef="let element"> {{element.materialDetails.name}}
+            </mat-cell>
+            <mat-cell *matCellDef="let element">
+              <!-- Usa [(ngModel)] para enlazar el estado del checkbox al campo checked del elemento -->
+              <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+              {{element.materialDetails.name}}
             </mat-cell>
 
             <mat-footer-cell *matFooterCellDef></mat-footer-cell>
@@ -99,7 +101,7 @@
             <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <mat-form-field appearance="fill">
-                <input matInput id="cantidad " type="number" class="form-control mb-2" [(ngModel)]="element.amount"
+                <input matInput id="amount " type="number" class="form-control mb-2" [(ngModel)]="element.amount"
                   (change)="actualizarCantidad(element)">
               </mat-form-field>
 
@@ -109,14 +111,14 @@
 
           <ng-container matColumnDef="subtotal">
             <mat-header-cell *matHeaderCellDef> Subtotal </mat-header-cell>
-            <mat-cell *matCellDef="let element"> 🪙 {{element.subtotal}} </mat-cell>
-            <mat-footer-cell *matFooterCellDef class="footer-total">🪙 {{total }} </mat-footer-cell>
+            <mat-cell *matCellDef="let element"> 🪙 {{ element.subtotal}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer-total">🪙 {{ total }} </mat-footer-cell>
           </ng-container>
 
           <ng-container matColumnDef="acciones">
             <mat-header-cell *matHeaderCellDef> Acciones</mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <button mat-icon-button>
+              <button mat-icon-button (click)="onDeleteMaterial(element)">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-cell>
@@ -130,11 +132,12 @@
 
       </mat-card-content>
       <mat-card-actions class="btn-actions">
-        <button mat-flat-button style="background-color: black; color: white">
-          Canjear
-          <mat-icon>check_circle_outline</mat-icon>
+        <button mat-flat-button (click)="performRedeem()">
+          <mat-icon>check_circle_outline</mat-icon> Canjear
         </button>
       </mat-card-actions>
+      
+      
       <!-- Table -->
     </mat-card>
   </div>
