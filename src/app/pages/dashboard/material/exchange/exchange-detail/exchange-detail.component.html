@@ -40,17 +40,17 @@
         </ng-container>
         <ng-container matColumnDef="material_price">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Precio del Material </mat-header-cell>
-          <mat-cell *matCellDef="let detail"> {{ detail.material_price }} </mat-cell>
+          <mat-cell *matCellDef="let detail"> {{ detail.material_price }} 🪙</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="subtotal">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Subtotal </mat-header-cell>
-          <mat-cell *matCellDef="let detail"> {{ detail.subtotal }} </mat-cell>
+          <mat-cell *matCellDef="let detail"> {{ detail.subtotal }} 🪙</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="eco_coins">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Eco Coins </mat-header-cell>
-          <mat-cell *matCellDef="let detail"> {{ detail.eco_coins }} </mat-cell>
+          <mat-cell *matCellDef="let detail"> {{ detail.eco_coins }} 🪙</mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
