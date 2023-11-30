@@ -2,20 +2,11 @@
   width: 100%;
 }
 
-.header {
-  background-color: #fafafa;
-  color: #666666;
+/* .mat-mdc-card-title {
+  padding: 1.5rem;
 }
-.box {
-  padding: 0.2rem 2rem 2rem 2.3rem;
-  box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
-}
-
-.container-box {
-  padding: 1rem;
-}
-
-*/ .custom-fab {
+ */
+.custom-fab {
   width: 30px;
   height: 30px;
   margin-left: 1rem;
@@ -31,5 +22,5 @@
 .centered-content {
   display: flex;
   align-items: center;
-  padding: 1rem 4rem 0 4rem;
+  padding-top: 1rem;
 }

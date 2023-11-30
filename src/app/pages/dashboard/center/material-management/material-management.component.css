@@ -11,20 +11,11 @@
   box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
 }
 .header {
-  background-color: #fafafa;
-  color: #666666;
+  background-color: #0083db77;
+  color: white;
 }
-.box-detail {
-  background-color: #fafafa;
-  padding: 2rem 0;
-  color: #666666;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-
 .mat-mdc-card-subtitle {
-  color: #979797 !important;
+  color: white !important;
 }
 
 .mat-mdc-card-content {
@@ -32,13 +23,8 @@
 }
 
 .users {
-  padding: 0 2rem 0 2rem;
+  padding: 2rem;
   color: rgb(82, 82, 82);
-  background-color: #fafafa;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  margin: 1rem 0 0 0;
 }
 
 .btn-users {
@@ -50,19 +36,18 @@
 }
 
 .detailContent {
-  /*  padding: 2rem; */
+  padding: 2rem;
   background-color: rgba(128, 128, 128, 0.295);
 }
 
 .mdc-data-table__header-row {
   background-color: black;
-  color: white;
 }
 
 /* styles.css (o tu archivo de estilos) */
 
 .materialsCheck {
-  background-color: #000 !important;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: start;
   gap: 10%;
@@ -71,20 +56,16 @@
   border-radius: 5px;
 }
 
-.materialCheck {
+.materialCheck{
   width: 44px; /* Ajusta el tamaño del check según tus necesidades */
   height: 44px;
-  color: white;
-}
-.mat-mdc-checkbox-1-input {
-  color: white !important;
 }
 
 .mdc-checkbox__background {
-  background-color: white !important;
+  background-color: black !important;
 }
 .mdc-checkbox__native-control {
-  background-color: white !important;
+  background-color: black !important;
 }
 
 .btn-actions {

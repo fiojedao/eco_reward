@@ -1,58 +1,34 @@
 <mat-card class="dashboard-card" *ngIf="centerData" style="min-height: 83vh !important;">
-  <div class="container-box">
-    <mat-card class="box header rounded">
-      <mat-card-header>
-        <mat-card-title style="margin-bottom: 2rem;">
-          <h1>{{ centerData.name }}</h1>
-        </mat-card-title>
-        <mat-card-subtitle>
-          <h3 class="">
-            Administrador: {{centerData?.User?.name}}
-          </h3>
-        </mat-card-subtitle>
-        <mat-card-subtitle>
-          <h3>
-            Teléfono: {{ centerData.phone }}
-          </h3>
-        </mat-card-subtitle>
-        <mat-card-subtitle>
-          <h3>
-            {{ centerData.operating_hours }}
-          </h3>
-        </mat-card-subtitle>
-        <mat-card-subtitle>
-          <h3>
-            Estado: {{ centerData?.status }}
-          </h3>
-        </mat-card-subtitle>
-        <mat-card-subtitle>
-          <h3>
-            <b>Dirección:</b> {{ centerData.Address.exact_address }}, {{ centerData.Address.district }}, {{
-            centerData.Address.canton }}, {{ centerData.Address.province }}
-          </h3>
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-card-content class="dashboard-card-content">
-        <div class="center-detail-container">
-
-          <div class="recyclable-material-list">
-            <h2 style="color: #5d5d5d;">Detalles de Materiales Reciclables</h2>
-            <div *ngIf="centerData.Recyclable_Material.length > 0; else noMaterials" class="material-grid">
-              <div *ngFor="let recyclableMaterial of centerData.Recyclable_Material" class="material-item">
-                <div class="material-detail">
-                  <p><b>Material ID:</b> {{ recyclableMaterial.materialID }}</p>
-                  <p><b>Nombre:</b> {{ recyclableMaterial.name }}</p>
-                  <p><b>Descripción:</b> {{ recyclableMaterial.description }}</p>
-                </div>
-              </div>
+  <mat-card-header>
+    <mat-card-title>
+      <h2>{{ centerData.name }}</h2>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="dashboard-card-content">
+    <div class="center-detail-container">
+      <div class="center-info">
+        <p><b>Teléfono:</b> {{ centerData.phone }}</p>
+        <p><b>Horario de operación:</b> {{ centerData.operating_hours }}</p>
+        <p><b>Estado:</b> {{ centerData.status }}</p>
+        <p><b>Administrador:</b> {{ centerData.User.name }}</p>
+        <p><b>Dirección:</b> {{ centerData.Address.exact_address }}, {{ centerData.Address.district }}, {{
+          centerData.Address.canton }}, {{ centerData.Address.province }}</p>
+      </div>
+      <div class="recyclable-material-list">
+        <h3>Detalles de Materiales Reciclables</h3>
+        <div *ngIf="centerData.Recyclable_Material.length > 0; else noMaterials" class="material-grid">
+          <div *ngFor="let recyclableMaterial of centerData.Recyclable_Material" class="material-item">
+            <div class="material-detail">
+              <p><b>Material ID:</b> {{ recyclableMaterial.materialID }}</p>
+              <p><b>Nombre:</b> {{ recyclableMaterial.name }}</p>
+              <p><b>Descripción:</b> {{ recyclableMaterial.description }}</p>
             </div>
-            <ng-template #noMaterials>
-              <p>No hay materiales de reciclaje registrados.</p>
-            </ng-template>
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+        <ng-template #noMaterials>
+          <p>No hay materiales de reciclaje registrados.</p>
+        </ng-template>
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>
