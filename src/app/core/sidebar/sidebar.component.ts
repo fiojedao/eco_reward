@@ -36,14 +36,13 @@ export class SidebarComponent implements OnInit {
     if(data){
       const { user, center, isSuperAdmin, isCenterAdmin, isClient } = data;
       var items: any[] = navItems;
-      debugger
       if (user) {
         if (isSuperAdmin) {
           this.navItems = navItems;
         } else if (center && isCenterAdmin) {
           var items: any[] = navItems;
           items.map((item: any) => {
-            if (item.route === 'home/center') {
+            if (item?.route && item.route.includes('home/center')) {
               item.route = `home/center/${center.centerID}`;
             }
           });
