@@ -75,7 +75,7 @@ export class MaterialManagementComponent {
     };
     console.log(exchangeRequest, selectedCustomer);
 
-    if(selectedCustomer){
+    if(selectedCustomer && data && data.length){
       this.gService
       .create('materialexchange', exchangeRequest)
       .pipe(takeUntil(this.destroy$))
@@ -89,7 +89,15 @@ export class MaterialManagementComponent {
         );
         console.log(data);
         this.exchangeService.clearExchange();
+        this.loadMaterials();
       });
+    } else {
+      this.noti.mensajeRedirect(
+        'Verificar datos',
+        `Se deben de agregar material al canje`,
+        TipoMessage.warning,
+        'home/exchanging/'
+      );
     }
 
   }

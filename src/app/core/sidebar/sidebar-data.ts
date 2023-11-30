@@ -49,18 +49,5 @@ export const navItems: NavItem[] = [
     displayName: 'Registro',
     iconName: 'user-plus',
     route: '/authentication/register',
-  },
-  {
-    navCap: 'Adicional',
-  },
-  {
-    displayName: 'Iconos',
-    iconName: 'mood-smile',
-    route: '/extra/icons',
-  },
-  {
-    displayName: 'Pagina Simple',
-    iconName: 'aperture',
-    route: '/extra/sample-page',
-  },
+  }
 ];

@@ -38,7 +38,6 @@ export class SidebarComponent implements OnInit {
       var items: any[] = navItems;
       if (user) {
         if (isSuperAdmin) {
-          debugger
           var items: any[] = navItems; 
           items.map((item: any) => {
             if (item?.route && item.route.includes('home/center')) {
@@ -67,12 +66,21 @@ export class SidebarComponent implements OnInit {
               item.displayName === 'Registro'
             );
           });
-        } else {
-          this.navItems = [];
         }
       }
-      this.router.navigate(['home']);
+      
+    } else {
+      debugger
+      var items: any[] = navItems;
+      this.navItems = items.filter(item => {
+        return (
+          item.navCap === 'Autenticación' ||
+          item.displayName === 'Login' ||
+          item.displayName === 'Registro'
+        );
+      });
     }
+    this.router.navigate(['home']);
   }
 
   ngOnDestroy() {
