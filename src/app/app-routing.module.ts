@@ -18,6 +18,7 @@ import { ExchangeDetailComponent } from './pages/dashboard/material/exchange/exc
 import { MaterialManagementComponent } from './pages/dashboard/center/material-management/material-management.component';
 import { LoginComponent } from './pages/authenticate/login/login.component';
 import { RegisterComponent } from './pages/authenticate/register/register.component';
+import { UserFormComponent } from './pages/dashboard/user/user-form/user-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -56,6 +57,10 @@ const routes: Routes = [
       {
         path: 'user/:id',
         component: UserDetailComponent,
+      },
+      {
+        path: 'user/form/:id',
+        component: UserFormComponent,
       },
       {
         path: 'user/1/coupon',

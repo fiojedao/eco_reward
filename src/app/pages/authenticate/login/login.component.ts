@@ -37,32 +37,32 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       this.gService
-      .login(`user/login`, this.loginForm.value)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        if(response && response.token && response.user){
-          if(response.user.role == 2){
-            this.gService
-            .get(`center/user`, response.user.userID)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((center: any) => {
-              if(center){
-                this.userService.setToken(response.token);
-                this.userService.setUser(response.user, center);
-                this.router.navigate(['home']);
-              } 
+        .login(`user/login`, this.loginForm.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((response: any) => {
+          if(response && response.token && response.user){
+            if(response.user.role == 2){
+              this.gService
+              .get(`center/user`, response.user.userID)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe((center: any) => {
+                if(center){
+                  this.userService.setToken(response.token);
+                  this.userService.setUser(response.user, center);
+                  this.router.navigate(['home']);
+                } 
+              }
+            );
+            } else {
+              this.userService.setToken(response.token);
+              this.userService.setUser(response.user, null);
+              this.router.navigate(['home']);
             }
-          );
-          } else {
-            this.userService.setToken(response.token);
-            this.userService.setUser(response.user, null);
-            this.router.navigate(['home']);
-          }
-        } 
-      },(error: any) => {
-        this.noti.mensaje('Error de acceso', error, TipoMessage.error);
-      }
-      );
+          } 
+        },(error: any) => {
+          this.noti.mensaje('Error de acceso', error, TipoMessage.error);
+        }
+        );
     } else {
       this.markFormGroupTouched(this.loginForm);
     }

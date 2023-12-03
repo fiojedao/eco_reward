@@ -17,11 +17,14 @@ export class UserAllComponent implements AfterViewInit {
   isSuperAdmin: boolean = false;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginatorUser!: MatPaginator;
+  @ViewChild(MatSort) sortUser!: MatSort;
 
-  userDataSource = new MatTableDataSource<any>(); // DataSource para usuarios
-  centerDataSource = new MatTableDataSource<any>(); // DataSource para centros
+  @ViewChild(MatPaginator) paginatorCenter!: MatPaginator;
+  @ViewChild(MatSort) sortCenter!: MatSort;
+
+  userDataSource = new MatTableDataSource<any>();
+  centerDataSource = new MatTableDataSource<any>();
 
   displayedColumns = ['identification', 'name', 'phone', 'status', 'actions'];
 
@@ -49,8 +52,8 @@ export class UserAllComponent implements AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.userDataSource = new MatTableDataSource(response);
-        this.userDataSource.sort = this.sort;
-        this.userDataSource.paginator = this.paginator;
+        this.userDataSource.sort = this.sortUser;
+        this.userDataSource.paginator = this.paginatorUser;
       });
 
       this.gService
@@ -58,14 +61,17 @@ export class UserAllComponent implements AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.centerDataSource = new MatTableDataSource(response);
-        this.centerDataSource.sort = this.sort;
-        this.centerDataSource.paginator = this.paginator;
+        this.centerDataSource.sort = this.sortCenter;
+        this.centerDataSource.paginator = this.paginatorCenter;
       });
   }
 
   userDetail(id: number) {
-    console.log(id)
     this.router.navigate(['home', 'user', id]);
+  }
+
+  userUpdate(id: number) {
+    this.router.navigate(['home/user/form', id]);
   }
 
   toggleStatus(status: boolean, user: any) {

@@ -21,9 +21,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { UserCouponComponent } from './user-coupon/user-coupon.component';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @NgModule({
-  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent],
+  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
