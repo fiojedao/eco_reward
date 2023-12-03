@@ -59,28 +59,14 @@ export class SidebarComponent implements OnInit {
             return (
               item.navCap === 'Inicio' ||
               item.displayName === 'Dashboard' ||
-              item.navCap === 'Mantenimientos' ||
-              item.displayName === 'Historial de Canje' ||
-              item.navCap === 'Autenticación' ||
-              item.displayName === 'Login' ||
-              item.displayName === 'Registro'
+              item.navCap === 'Módulos' ||
+              item.displayName === 'Historial de Canje'
             );
           });
         }
       }
-      
-    } else {
-      debugger
-      var items: any[] = navItems;
-      this.navItems = items.filter(item => {
-        return (
-          item.navCap === 'Autenticación' ||
-          item.displayName === 'Login' ||
-          item.displayName === 'Registro'
-        );
-      });
-    }
-    this.router.navigate(['home']);
+      this.router.navigate(['home']);
+    } else this.router.navigate(['']);
   }
 
   ngOnDestroy() {

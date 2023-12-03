@@ -1,0 +1,45 @@
+<mat-card class="full-width blank-layout-container justify-content-center align-items-center bg-light-primary"
+style="min-height: 83vh !important; margin-bottom: 0 !important;">
+    <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
+        <div class="col-lg-4 d-flex align-items-center">
+            <mat-card class="cardWithShadow boxed-auth">
+                <mat-card-content class="p-32">
+                    <div class="text-center">
+                        <a>
+                            <img class="align-middle m-2" src="../../../../../assets/images/EcoRewardsTransparent invoice.svg" width="40px" alt="logo" />
+                        </a>
+                    </div>
+                    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="m-t-30">
+                        <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nombre completo</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                            <input matInput formControlName="fullName" />
+                            <mat-error *ngIf="registroForm.get('fullName')?.invalid && registroForm.get('fullName')?.touched">
+                              Nombre completo es requerido
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Correo electrónico</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                            <input matInput type="email" formControlName="email" />
+                            <mat-error *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched">
+                              Ingresa un correo electrónico válido
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Contraseña</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                            <input matInput type="password" formControlName="password" />
+                            <mat-error *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
+                              La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial
+                            </mat-error>
+                        </mat-form-field>
+                        <button mat-flat-button color="primary" class="w-100 m-t-24" type="submit" [disabled]="!registroForm.valid">
+                            Crear cuenta
+                        </button>
+                    </form>
+                    <span class="d-block f-w-500 text-center m-t-24">¿Ya tienes una cuenta?
+                        <a class="text-decoration-none text-primary f-w-500 f-s-14" href="/login">Inicia sesión</a>
+                    </span>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</mat-card>
