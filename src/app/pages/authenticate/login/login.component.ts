@@ -41,9 +41,18 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         if(response && response.token && response.user){
-          this.userService.setToken(response.token);
-          this.userService.setUser(response.user, null);
-          this.router.navigate(['home']);
+          this.gService
+            .get(`center/user`, response.user.userID)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((center: any) => {
+              debugger
+              if(center){
+                this.userService.setToken(response.token);
+                this.userService.setUser(response.user, center);
+                this.router.navigate(['home']);
+              } 
+            }
+            );
         } 
       },(error: any) => {
         this.noti.mensaje('Error al iniciar sesión', error, TipoMessage.error);
