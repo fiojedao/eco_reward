@@ -29,25 +29,9 @@
       </mat-icon>
       {{ userLogin && userLogin.user && userLogin.user.name ? userLogin.user.name : 'My Profile' }}
     </button>
-    
-    <button mat-menu-item [matMenuTriggerFor]="userMenu">
-      <mat-icon class="d-flex align-items-center">
-        <i-tabler name="list-check" class="icon-18 d-flex"></i-tabler>
-      </mat-icon>
-      Account
-    </button>
-    
-    <mat-menu #userMenu="matMenu">
-      <ng-container *ngFor="let user of userList">
-        <button mat-menu-item (click)="setUser(user)">
-          {{ user.name }}
-          <span class="user-id" *ngIf="user.id">({{ user.id }})</span>
-        </button>
-      </ng-container>
-    </mat-menu>
 
     <div class="p-x-12 m-t-12">
-      <a [routerLink]="['/authentication/login']" mat-flat-button color="primary" class="w-100">Logout</a>
-    </div>
+      <a (click)="logout()" mat-flat-button color="primary" class="w-100">Logout</a>
+    </div>    
   </mat-menu>
 </mat-toolbar>

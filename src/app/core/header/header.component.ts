@@ -6,7 +6,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { GenericService } from 'src/app/share/generic.service';
 
@@ -16,7 +17,6 @@ import { GenericService } from 'src/app/share/generic.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
-  userList: any[] = [];
   userLogin: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   @Input() showToggle = true;
@@ -29,39 +29,13 @@ export class HeaderComponent {
 
   constructor(
     public dialog: MatDialog,
-    private gService: GenericService,
-    private userService: UserService) {
+    private userService: UserService,
+    private router: Router) {
       this.userLogin = this.userService.getInfo();
-      this.loadAllUsers();
   }
 
-  ngAfterViewInit(): void {
-    this.userService.userChanges().subscribe((data) => this.userLogin = data);
+  logout(){
+    this.userService.setToken('');
+    this.router.navigate(['']);
   }
-
-  loadAllUsers(){
-    this.gService
-      .list('user/')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        this.userList = response;
-        console.log(response)
-      });
-  }
-
-  setUser(user: any) {
-    if(user){
-      if(user.role === 1 || user.role === 3){
-        this.userService.setUser(user, undefined);
-      } else {
-        this.gService
-          .list(`center/user/${user.userID}`)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((center: any) => {
-            this.userService.setUser(user, center);
-        });
-      }
-    }
-  }
-
 }
