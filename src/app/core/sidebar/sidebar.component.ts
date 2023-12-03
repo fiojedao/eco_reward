@@ -33,10 +33,9 @@ export class SidebarComponent implements OnInit {
   }
 
   filterNavItem(data: any) {
-    if(data){
+    if (data) {
       const { user, center, isSuperAdmin, isCenterAdmin, isClient } = data;
       var items: any[] = navItems;
-      debugger
       if (user) {
         if (isSuperAdmin) {
           this.navItems = navItems;
@@ -48,9 +47,9 @@ export class SidebarComponent implements OnInit {
             }
           });
           this.navItems = items.filter((u: any) => u.route !== 'home/user');
-        } else if(isClient){
+        } else if (isClient) {
           var items: any[] = navItems;
-          this.navItems = items.filter(item => {
+          this.navItems = items.filter((item) => {
             return (
               item.navCap === 'Inicio' ||
               item.displayName === 'Dashboard' ||

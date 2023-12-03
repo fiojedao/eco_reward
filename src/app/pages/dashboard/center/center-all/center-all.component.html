@@ -13,15 +13,44 @@
                 style="width: 35px; height: 35px;" (click)="createCenter()">
                 <mat-icon>add</mat-icon>
               </a>
-
-
             </div>
           </mat-card-title>
         </mat-card-content>
       </mat-card>
 
 
+
       <mat-card-content style="margin-top: 1rem; padding: 0 6rem;">
+        <mat-card class="custom-card">
+          <mat-card-content style="  padding: 0; display: flex; justify-content: space-between;">
+            <mat-form-field>
+              <mat-label>Nombre del centro</mat-label>
+              <input matInput #filterName>
+              <button (click)="filterNameCenter(filterName.value)" mat-icon-button matSuffix color="primary">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+
+
+
+            <mat-form-field>
+              <mat-label>Provincia</mat-label>
+              <input matInput #filterProvince>
+              <button (click)="filterProvinceCenter(filterProvince.value)" mat-icon-button matSuffix color="primary">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Tipo de material</mat-label>
+              <input matInput #filterMaterial>
+              <button (click)="filterMaterialCenter(filterMaterial.value)" mat-icon-button matSuffix color="primary">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+
+          </mat-card-content>
+        </mat-card>
         <!-- Table -->
         <div class="mat-elevation-z8">
           <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">

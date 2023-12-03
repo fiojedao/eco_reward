@@ -23,6 +23,7 @@ import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { ExchangeModule } from './pages/dashboard/material/exchange/exchange.module';
 import { MaterialImports } from './materialImports.module';
 import { MaterialModule } from './pages/dashboard/material/material.module';
+import { AuthModuleModule } from './pages/auth-module/auth-module.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,6 +46,7 @@ import { MaterialModule } from './pages/dashboard/material/material.module';
     UserModule,
     LandingPageModule,
     ExchangeModule,
+    AuthModuleModule,
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

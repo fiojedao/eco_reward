@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService, IndividualConfig } from 'ngx-toastr';
-export enum TipoMessage{
+export enum TipoMessage {
   error,
   info,
   success,
@@ -9,7 +9,6 @@ export enum TipoMessage{
 @Injectable({
   providedIn: 'root',
 })
-
 export class NotificacionService {
   options: IndividualConfig;
   constructor(private toastr: ToastrService) {
@@ -21,7 +20,7 @@ export class NotificacionService {
     /* Top Right, Bottom Right, Bottom Left, Top Left, Top Full Width, Bottom Full Width, Top Center, Bottom Center */
     this.options.positionClass = 'toast-top-center';
     //Tiempo que se presenta el mensaje
-    // this.options.timeOut = 5000;
+    this.options.timeOut = 4000;
     this.options.disableTimeOut = true;
     this.options.closeButton = true;
   }
@@ -29,9 +28,12 @@ export class NotificacionService {
 Presentar mensaje de notificación
 Toast Type: success, info, warning, error
  */
-  public mensaje(titulo: string, mensaje: string, tipo:TipoMessage) {
-    this.toastr.show(mensaje, titulo, this.options, 'toast-'+TipoMessage[tipo]);
- 
+  public mensaje(titulo: string, mensaje: string, tipo: TipoMessage) {
+    this.toastr.show(
+      mensaje,
+      titulo,
+      this.options,
+      'toast-' + TipoMessage[tipo]
+    );
   }
-  
 }

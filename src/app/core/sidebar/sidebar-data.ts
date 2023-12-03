@@ -50,7 +50,7 @@ export const navItems: NavItem[] = [
     iconName: 'user-plus',
     route: '/authentication/register',
   },
-  {
+  /* {
     navCap: 'Adicional',
   },
   {
@@ -62,5 +62,5 @@ export const navItems: NavItem[] = [
     displayName: 'Pagina Simple',
     iconName: 'aperture',
     route: '/extra/sample-page',
-  },
+  }, */
 ];

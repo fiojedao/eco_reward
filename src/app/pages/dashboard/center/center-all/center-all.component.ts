@@ -14,13 +14,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./center-all.component.css'],
 })
 export class CenterAllComponent {
-  isSuperAdmin: boolean = false
-  datos: any; //respuesta del API
+  isSuperAdmin: boolean = false;
+  datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  filteredNameCenter: any;
+  filteredProvinceCenter: any;
+  filteredMaterialCenter: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  /*   @ViewChild(MatTable) table!: MatTable<VideojuegoAllItem>; */
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -40,18 +42,18 @@ export class CenterAllComponent {
     this.userService.userChanges().subscribe((data) => this.realoadUser(data));
   }
 
-  realoadUser(data: any){
+  realoadUser(data: any) {
     const { user, isSuperAdmin } = data;
-    if(isSuperAdmin){
+    if (isSuperAdmin) {
       this.router.navigate(['home', 'center']);
-    } else if(user){
-      if(user){
+    } else if (user) {
+      if (user) {
         this.gService
-        .list(`center/user/${user.userID}`)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((response: any) => {
-          this.centerDetail(response.centerID);
-        });
+          .list(`center/user/${user.userID}`)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((response: any) => {
+            this.centerDetail(response.centerID);
+          });
       } else {
         this.router.navigate(['home']);
       }
@@ -63,12 +65,61 @@ export class CenterAllComponent {
       .list('center/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
-        console.log(response);
         this.datos = response;
-        this.dataSource = new MatTableDataSource(this.datos);
+        this.filteredNameCenter = this.datos;
+        this.dataSource = new MatTableDataSource(this.filteredNameCenter);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        console.log(this.datos);
       });
+  }
+
+  filterNameCenter(text: string) {
+    if (!text) {
+      this.filteredNameCenter = this.datos;
+    } else {
+      this.filteredNameCenter = this.datos.filter((center: any) =>
+        center?.name?.toLowerCase().includes(text.toLowerCase())
+      );
+    }
+
+    if (this.filteredNameCenter.length > 0) {
+      this.dataSource.data = this.filteredNameCenter;
+    }
+  }
+
+  filterProvinceCenter(text: string) {
+    if (!text) {
+      this.filteredProvinceCenter = this.datos;
+    } else {
+      this.filteredProvinceCenter = this.datos.filter((center: any) =>
+        center?.Address?.province.toLowerCase().includes(text.toLowerCase())
+      );
+    }
+
+    debugger;
+    if (this.filteredProvinceCenter.length > 0) {
+      this.dataSource.data = this.filteredProvinceCenter;
+    }
+  }
+
+  filterMaterialCenter(text: string) {
+    if (!text) {
+      this.filteredMaterialCenter = this.datos;
+    } else {
+      this.filteredMaterialCenter = this.datos.filter((center: any) => {
+        // Verifica si hay materiales y utiliza some para verificar si al menos uno coincide
+        return center?.Center_Material?.some((material: any) =>
+          material?.Recyclable_Material?.name
+            ?.toLowerCase()
+            .includes(text.toLowerCase())
+        );
+      });
+    }
+
+    if (this.filteredMaterialCenter.length > 0) {
+      this.dataSource.data = this.filteredMaterialCenter;
+    }
   }
 
   centerDetail(id: number) {
