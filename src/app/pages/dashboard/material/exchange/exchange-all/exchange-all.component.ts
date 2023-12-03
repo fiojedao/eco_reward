@@ -15,6 +15,9 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./exchange-all.component.css'],
 })
 export class ExchangeAllComponent {
+  isSuperAdmin!: boolean;
+  isCenterAdmin!: boolean;
+  isClient!: boolean;
   userLogin: any
   datos: any; //respuesta del API
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -22,12 +25,29 @@ export class ExchangeAllComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   /*   @ViewChild(MatTable) table!: MatTable<VideojuegoAllItem>; */
-  dataSource = new MatTableDataSource<any>();
+  dataSourceUser = new MatTableDataSource<any>();
+  dataSourceCenter = new MatTableDataSource<any>();
+  dataSourceAdmin = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = [
+  displayedColumnsUser = [
     'Recycling_Center',
     'Exchange_Material_Details',
+    'exchange_date',
+    'acciones',
+  ];
+  displayedColumnsCenter = [
+    'client_user',
+    'Exchange_Material_Details',
+    'total_eco_coins',
+    'exchange_date',
+    'acciones',
+  ];
+  displayedColumnsAdmin = [
+    'Recycling_Center',
+    'client_user',
+    'Exchange_Material_Details',
+    'total_eco_coins',
     'exchange_date',
     'acciones',
   ];
@@ -37,11 +57,14 @@ export class ExchangeAllComponent {
     private userService: UserService
   ) {
     this.userLogin =  this.userService.getInfo();
+    this.isSuperAdmin = this.userLogin.isSuperAdmin;
+    this.isCenterAdmin = this.userLogin.isCenterAdmin;
+    this.isClient = this.userLogin.isClient;
     this.listCenter();
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataSourceUser.paginator = this.paginator;
     this.paginator.length =  this.datos ? this.datos.length: 0;
     this.paginator.pageSizeOptions = [5, 10, 25];
 
@@ -53,16 +76,36 @@ export class ExchangeAllComponent {
   }
 
   listCenter() {
-    const { user } = this.userLogin;
-    if(user){
+    const { user, center, isSuperAdmin, isCenterAdmin, isClient } = this.userLogin;
+    if(user && isClient){
       this.gService
       .list(`materialexchange/exchangesByUserid/${user.userID}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         console.log(response);
         this.datos = response as MaterialExchangeModel;
-        this.dataSource = new MatTableDataSource(this.datos);
-        this.dataSource.sort = this.sort;
+        this.dataSourceUser = new MatTableDataSource(this.datos);
+        this.dataSourceUser.sort = this.sort;
+      });
+    } else if(center && isCenterAdmin){
+      this.gService
+      .list(`materialexchange/center/${center.centerID}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        console.log(response);
+        this.datos = response as MaterialExchangeModel;
+        this.dataSourceCenter = new MatTableDataSource(this.datos);
+        this.dataSourceCenter.sort = this.sort;
+      });
+    } else if(isSuperAdmin){
+      this.gService
+      .list(`materialexchange/admin/${user.userID}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        console.log(response);
+        this.datos = response as MaterialExchangeModel;
+        this.dataSourceAdmin = new MatTableDataSource(this.datos);
+        this.dataSourceAdmin.sort = this.sort;
       });
     }
   }

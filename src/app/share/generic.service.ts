@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,15 @@ export class GenericService {
   create(endopoint: string, objCreate: any | any): Observable<any | any[]> {
     return this.http.post<any | any[]>(this.urlAPI + endopoint, objCreate);
   }
+  
+  login(endopoint: string, objCreate: any | any): Observable<any | any[]> {
+    return this.http.post<any | any[]>(this.urlAPI + endopoint, objCreate).pipe(
+      catchError((data: HttpErrorResponse) => {
+        const errorMessage = `${data.error.error}`;
+        return throwError(errorMessage);
+      })
+    );
+  }
   // actualizar
   update(endopoint: string, objUpdate: any | any): Observable<any | any[]> {
     return this.http.put<any | any[]>(
@@ -40,3 +50,4 @@ export class GenericService {
     return this.http.delete<any | any[]>(this.urlAPI + endpoint + `/${id}`);
   }
 }
+

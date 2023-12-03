@@ -38,11 +38,17 @@ export class SidebarComponent implements OnInit {
       var items: any[] = navItems;
       if (user) {
         if (isSuperAdmin) {
-          this.navItems = navItems;
+          var items: any[] = navItems; 
+          items.map((item: any) => {
+            if (item?.route && item.route.includes('home/center')) {
+              item.route = `home/center/`;
+            }
+          });
+          this.navItems = items;
         } else if (center && isCenterAdmin) {
           var items: any[] = navItems;
           items.map((item: any) => {
-            if (item.route === 'home/center') {
+            if (item?.route && item.route.includes('home/center')) {
               item.route = `home/center/${center.centerID}`;
             }
           });
@@ -53,19 +59,14 @@ export class SidebarComponent implements OnInit {
             return (
               item.navCap === 'Inicio' ||
               item.displayName === 'Dashboard' ||
-              item.navCap === 'Mantenimientos' ||
-              item.displayName === 'Historial de Canje' ||
-              item.navCap === 'Autenticación' ||
-              item.displayName === 'Login' ||
-              item.displayName === 'Registro'
+              item.navCap === 'Módulos' ||
+              item.displayName === 'Historial de Canje'
             );
           });
-        } else {
-          this.navItems = [];
         }
       }
       this.router.navigate(['home']);
-    }
+    } else this.router.navigate(['']);
   }
 
   ngOnDestroy() {

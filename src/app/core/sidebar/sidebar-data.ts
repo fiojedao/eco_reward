@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
     route: 'home/',
   },
   {
-    navCap: 'Mantenimientos',
+    navCap: 'Módulos',
   },
   {
     displayName: 'Usuario',
@@ -36,31 +36,5 @@ export const navItems: NavItem[] = [
     displayName: 'Gestión de materiales',
     iconName: 'ticket',
     route: 'home/exchanging',
-  },
-  {
-    navCap: 'Autenticación',
-  },
-  {
-    displayName: 'Login',
-    iconName: 'lock',
-    route: '/authentication/login',
-  },
-  {
-    displayName: 'Registro',
-    iconName: 'user-plus',
-    route: '/authentication/register',
-  },
-  /* {
-    navCap: 'Adicional',
-  },
-  {
-    displayName: 'Iconos',
-    iconName: 'mood-smile',
-    route: '/extra/icons',
-  },
-  {
-    displayName: 'Pagina Simple',
-    iconName: 'aperture',
-    route: '/extra/sample-page',
-  }, */
+  }
 ];

@@ -62,20 +62,49 @@ export class MaterialManagementComponent {
     const { selectedCustomer } = this
     const data = this.exchangeService.getData();
 
-    const exchangeRequest: ExchangeRequest = {
-      userId: selectedCustomer.userID,
-      exchangeDetails: {
-        centerID: centerAux.centerID,
-        Exchange_Material_Details: data.map((item: any) => ({
-          materialID: item.materialID,
-          quantity: item.amount,
-          eco_coins: item.price * item.amount
-        }))
-      }
-    };
-    console.log(exchangeRequest, selectedCustomer);
 
-    if(selectedCustomer){
+    if(!centerAux){
+      this.noti.mensajeRedirect(
+        'Verificar datos',
+        `Debe de seleccionar un centro`,
+        TipoMessage.warning,
+        'home/exchanging/'
+      );
+      return;
+    }
+    if(!selectedCustomer){
+      this.noti.mensajeRedirect(
+        'Verificar datos',
+        `Debe de seleccionar a un cliente`,
+        TipoMessage.warning,
+        'home/exchanging/'
+      );
+      return;
+    }
+
+    if(!data || !data?.length){
+      this.noti.mensajeRedirect(
+        'Verificar datos',
+        `Debe de agregar materiales al canje`,
+        TipoMessage.warning,
+        'home/exchanging/'
+      );
+      return;
+    }
+
+    if(selectedCustomer && data && data.length){
+      const exchangeRequest: ExchangeRequest = {
+        userId: selectedCustomer.userID,
+        exchangeDetails: {
+          centerID: centerAux.centerID,
+          Exchange_Material_Details: data.map((item: any) => ({
+            materialID: item.materialID,
+            quantity: item.amount,
+            eco_coins: item.price * item.amount
+          }))
+        }
+      };
+      console.log(exchangeRequest, selectedCustomer);
       this.gService
       .create('materialexchange', exchangeRequest)
       .pipe(takeUntil(this.destroy$))
@@ -89,6 +118,7 @@ export class MaterialManagementComponent {
         );
         console.log(data);
         this.exchangeService.clearExchange();
+        this.loadMaterials();
       });
     }
 
@@ -107,6 +137,9 @@ export class MaterialManagementComponent {
   }
 
   updateAmout(item: any) {
+    if(item && item.amount == null){
+      item.amount = 1;
+    }
     const data = this.exchangeService.getData();
     this.exchangeService.addItemToExchange(item, false);
     this.total = this.exchangeService.getTotalAmount();

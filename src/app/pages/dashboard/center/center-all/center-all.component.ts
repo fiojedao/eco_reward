@@ -44,7 +44,7 @@ export class CenterAllComponent {
 
   realoadUser(data: any) {
     const { user, isSuperAdmin } = data;
-    if (isSuperAdmin) {
+    if(user && isSuperAdmin){
       this.router.navigate(['home', 'center']);
     } else if (user) {
       if (user) {
@@ -57,7 +57,7 @@ export class CenterAllComponent {
       } else {
         this.router.navigate(['home']);
       }
-    }
+    } else this.router.navigate(['']);
   }
 
   listCenter() {

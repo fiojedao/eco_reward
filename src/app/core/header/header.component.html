@@ -10,10 +10,12 @@
   <!-- --------------------------------------------------------------- -->
 
 
-  <span class="m-l-5 nav-caption">{{ userLogin && userLogin.user && userLogin.user.name ? userLogin.user.name : 'Guest' }}</span>
-  <button mat-icon-button aria-label="Notifications" class="d-flex align-items-center">
+  <span class="m-l-5 nav-caption">
+    {{ userLogin && userLogin.user && userLogin.user.name ? userLogin.user.name : 'Invitado' }}
+  </span>
+  <!-- <button mat-icon-button aria-label="Notifications" class="d-flex align-items-center">
     <i-tabler class="d-flex" name="bell" matBadge="9" matBadgeColor="primary"></i-tabler>
-  </button>
+  </button> -->
   
   
   <span class="flex-1-auto"></span>

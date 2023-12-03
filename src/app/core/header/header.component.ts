@@ -45,6 +45,7 @@ export class HeaderComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.userList = response;
+        console.log(response)
       });
   }
 

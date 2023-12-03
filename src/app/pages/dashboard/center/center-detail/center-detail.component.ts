@@ -27,11 +27,13 @@ export class CenterDetailComponent {
 
   ngOnInit(): void {
     this.userService.userChanges().subscribe((data) => {
-      if(data && data.isSuperAdmin){
-        this.router.navigate(['home']);
-      } else {
-        this.setCenterData(data);
-      }
+      if(data && data.user){
+        if(data && data.isSuperAdmin){
+          this.router.navigate(['home']);
+        } else {
+          this.setCenterData(data);
+        }
+      } else this.router.navigate(['']);
     });
   }
 

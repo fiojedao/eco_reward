@@ -16,7 +16,8 @@ import { MaterialFormComponent } from './pages/dashboard/material/material-form/
 import { MaterialDetailComponent } from './pages/dashboard/material/material-detail/material-detail.component';
 import { ExchangeDetailComponent } from './pages/dashboard/material/exchange/exchange-detail/exchange-detail.component';
 import { MaterialManagementComponent } from './pages/dashboard/center/material-management/material-management.component';
-import { LoginComponent } from './pages/auth-module/login/login.component';
+import { LoginComponent } from './pages/authenticate/login/login.component';
+import { RegisterComponent } from './pages/authenticate/register/register.component';
 const routes: Routes = [
   {
     path: '',
@@ -29,6 +30,14 @@ const routes: Routes = [
       {
         path: 'about',
         component: HomeComponent,
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
       },
     ],
   },
