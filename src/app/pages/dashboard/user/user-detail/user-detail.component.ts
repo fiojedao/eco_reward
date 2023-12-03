@@ -36,8 +36,7 @@ export class UserDetailComponent implements AfterViewInit {
       .get('user', id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
-        this.datos = data;
+        this.datos = data.user;
       });
   }
 
