@@ -19,6 +19,7 @@ import { MaterialManagementComponent } from './pages/dashboard/center/material-m
 import { LoginComponent } from './pages/authenticate/login/login.component';
 import { RegisterComponent } from './pages/authenticate/register/register.component';
 import { UserFormComponent } from './pages/dashboard/user/user-form/user-form.component';
+import { authGuard } from './services/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -43,20 +44,24 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
     path: 'home',
     component: DashTemplateComponent,
     children: [
       {
         path: 'user',
         component: UserAllComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'user/:id',
         component: UserDetailComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'user/form/:id',

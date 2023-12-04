@@ -4,6 +4,8 @@ import { NavService } from '../../services/nav.service';
 import { UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { ChangePasswordModalComponent } from 'src/app/pages/dashboard/user/user-password-moda/change.password.modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sidebar',
@@ -25,6 +27,7 @@ export class SidebarComponent implements OnInit {
   loadUser() {
     this.filterNavItem(this.userService.getInfo());
   }
+  
 
   ngOnInit(): void {
     this.userService.userChanges().subscribe((data) => {

@@ -50,6 +50,9 @@
     </div>
   </form>
   <ng-template #updateForm>
+    <div style="margin-left: auto;margin-top: 30px;">
+      <button style="margin-right: 60px;margin-left: auto;" mat-raised-button color="primary" (click)="openChangePasswordModal()">Cambiar contraseña</button>
+    </div>
     <form [formGroup]="userForm" (ngSubmit)="updateUser()">
       <div style="display: grid;margin-top: 25px;">
         <div style="display: flex;justify-content: center;">
@@ -76,7 +79,7 @@
             <input matInput formControlName="identification" />
           </mat-form-field>
         </div>
-        <div style="margin-left: 50px;">
+        <div style="margin-left: 50px;display: flex;" *ngIf="isSuperAdmin">
           <mat-checkbox formControlName="status">Habilitado</mat-checkbox>
         </div>
       </div>

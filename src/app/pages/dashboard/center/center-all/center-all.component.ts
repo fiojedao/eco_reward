@@ -96,8 +96,6 @@ export class CenterAllComponent {
         center?.Address?.province.toLowerCase().includes(text.toLowerCase())
       );
     }
-
-    debugger;
     if (this.filteredProvinceCenter.length > 0) {
       this.dataSource.data = this.filteredProvinceCenter;
     }

@@ -10,6 +10,9 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { UserValidators } from 'src/app/services/user.validators ';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordModalComponent } from '../user-password-moda/change.password.modal.component';
+
 
 
 @Component({
@@ -19,6 +22,7 @@ import { UserValidators } from 'src/app/services/user.validators ';
 })
 export class UserFormComponent {
   [x: string]: any;
+  isSuperAdmin: boolean;
   userData: any;
   userForm: FormGroup;
   userFormCreate: FormGroup;
@@ -33,7 +37,8 @@ export class UserFormComponent {
     private userService: UserService,
     private userValidators: UserValidators,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) { 
     this.id = parseInt(this.route.snapshot.paramMap.get('id') as string);
     this.userData = {
@@ -64,6 +69,8 @@ export class UserFormComponent {
       status: [false],
     });
     this.initData(this.id);
+    
+    this.isSuperAdmin = this.userService.getInfo().isSuperAdmin;
   }
 
   initData(id: number){
@@ -73,6 +80,19 @@ export class UserFormComponent {
       }
     }
   }
+  
+  openChangePasswordModal() {
+    const dialogRef = this.dialog.open(ChangePasswordModalComponent, {
+      width: '400px', // Ancho del modal (ajústalo según tus necesidades)
+      data: { userId: this.id }, // Puedes pasar datos al modal si es necesario
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      // Aquí puedes manejar la lógica después de cerrar el modal, si es necesario
+      console.log(`Modal cerrado. Resultado: ${result}`);
+    });
+  }
+  
 
   ngOnInit(): void {
     this.initData(this.id);
@@ -144,6 +164,7 @@ export class UserFormComponent {
   
 
   setData(user: any){
+
     this.userData = user;
     this.userForm.patchValue({
       name: this.userData.name || '',

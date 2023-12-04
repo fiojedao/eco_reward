@@ -38,6 +38,12 @@ export class GenericService {
       })
     );
   }
+  changePass(endopoint: string, objUpdate: any | any): Observable<any | any[]> {
+    return this.http.put<any | any[]>(
+      this.urlAPI + endopoint + (objUpdate && objUpdate.id?`/${objUpdate.id}`:''),
+      objUpdate
+    );
+  }
   // actualizar
   update(endopoint: string, objUpdate: any | any): Observable<any | any[]> {
     return this.http.put<any | any[]>(

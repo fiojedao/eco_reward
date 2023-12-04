@@ -22,11 +22,15 @@ import { UserCouponComponent } from './user-coupon/user-coupon.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserFormComponent } from './user-form/user-form.component';
+import { ChangePasswordModalComponent } from './user-password-moda/change.password.modal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
-  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent],
+  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent, ChangePasswordModalComponent],
   imports: [
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
     UserRoutingModule,
     MatTableModule,
     MatPaginatorModule,

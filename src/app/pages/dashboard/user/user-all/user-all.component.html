@@ -18,7 +18,7 @@
 
 
     <mat-tab-group>
-      <mat-tab label="Usuarios">
+      <mat-tab label="Clientes">
         <!-- Contenido para usuarios -->
         <mat-card-content style="margin: 1rem; padding: 0 1rem;">
           <div class="mat-elevation-z8">
@@ -69,7 +69,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
-            <mat-paginator #paginator [length]="userDataSource.data.length" [pageIndex]="0" [pageSize]="3"
+            <mat-paginator #paginator [length]="userDataSource.data.length" [pageIndex]="0" [pageSize]="10"
               [pageSizeOptions]="[3, 5, 10]" aria-label="Selecione un página">
             </mat-paginator>
           </div>
@@ -125,7 +125,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
-            <mat-paginator #paginator [length]="centerDataSource.data.length" [pageIndex]="0" [pageSize]="3"
+            <mat-paginator #paginator [length]="centerDataSource.data.length" [pageIndex]="0" [pageSize]="10"
               [pageSizeOptions]="[3, 5, 10]" aria-label="Selecione un página">
             </mat-paginator>
           </div>
