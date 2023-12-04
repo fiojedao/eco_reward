@@ -22,6 +22,8 @@ import { UserFormComponent } from './pages/dashboard/user/user-form/user-form.co
 import { CouponAllComponent } from './pages/dashboard/coupon/coupon-all/coupon-all.component';
 import { CouponFormComponent } from './pages/dashboard/coupon/coupon-form/coupon-form.component';
 import { CouponDetailComponent } from './pages/dashboard/coupon/coupon-detail/coupon-detail.component';
+
+import { authGuard } from './services/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -46,20 +48,24 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
     path: 'home',
     component: DashTemplateComponent,
     children: [
       {
         path: 'user',
         component: UserAllComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'user/:id',
         component: UserDetailComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'user/form/:id',

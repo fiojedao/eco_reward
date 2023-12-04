@@ -19,17 +19,22 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { UserCouponComponent } from './user-coupon/user-coupon.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserFormComponent } from './user-form/user-form.component';
+import { ChangePasswordModalComponent } from './user-password-moda/change.password.modal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
-  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent],
+  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent, ChangePasswordModalComponent],
   imports: [
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
     UserRoutingModule,
     MatTableModule,
     MatPaginatorModule,
+    ReactiveFormsModule ,
     MatSortModule,
     FormsModule,
     MatGridListModule,

@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { NotificacionService, TipoMessage } from 'src/app/share/notificacion.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { UserValidators } from 'src/app/services/user.validators ';
 
 @Component({
   selector: 'app-register',
@@ -20,10 +21,20 @@ export class RegisterComponent {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private noti: NotificacionService,
+    private userValidators: UserValidators,
     private router: Router) {
     this.registroForm = this.formBuilder.group({
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      province: ['', Validators.required],
+      canton: ['', Validators.required],
+      district: ['', Validators.required],
+      phone: ['', Validators.required],
+      identification: ['', Validators.required],
+      email: ['', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [this.userValidators.emailTakenValidator()],
+        updateOn: 'blur'
+      }],  
       password: ['', [Validators.required, Validators.minLength(8), this.validatePasswordStrength]]
     });
   }
@@ -62,9 +73,13 @@ export class RegisterComponent {
       name: formData.fullName, 
       email: formData.email, 
       password: formData.password, 
-      identification: '', 
-      phone: '', 
-      role: 3 };
+      identification: formData.identification, 
+      phone: formData.phone, 
+      role: 3,
+      province: formData.province, 
+      canton: formData.canton, 
+      district: formData.district, 
+    };
 
     this.gService
       .create(`user`, User)

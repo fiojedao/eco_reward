@@ -26,7 +26,7 @@ export class CenterAllComponent {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'operating_hours', 'acciones'];
+  displayedColumns = ['name', 'operating_hours', 'status', 'actions'];
 
   constructor(
     private gService: GenericService,
@@ -74,6 +74,15 @@ export class CenterAllComponent {
       });
   }
 
+  toggleStatus(status: boolean, centerId: any) {
+    this.gService
+    .update(`center/update/status`, {id:centerId, status: status})
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response: any) => {
+      this.listCenter();
+    });
+  }
+
   filterNameCenter(text: string) {
     if (!text) {
       this.filteredNameCenter = this.datos;
@@ -96,8 +105,6 @@ export class CenterAllComponent {
         center?.Address?.province.toLowerCase().includes(text.toLowerCase())
       );
     }
-
-    debugger;
     if (this.filteredProvinceCenter.length > 0) {
       this.dataSource.data = this.filteredProvinceCenter;
     }

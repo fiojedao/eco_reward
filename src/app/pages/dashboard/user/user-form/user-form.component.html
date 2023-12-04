@@ -1,79 +1,92 @@
 <mat-card class="box header rounded">
-  <form (ngSubmit)="updateUser(userForm)" #userForm="ngForm">
-    <div>
-      <label for="name">Nombre:</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        [(ngModel)]="userData.name"
-        required
-        minlength="2"
-        maxlength="50"
-      />
-      <!-- Validaciones para el nombre -->
+  <form *ngIf="id === 0; else updateForm" [formGroup]="userFormCreate" (ngSubmit)="createUser()">
+    <div style="display: grid;margin-top: 25px;">
+      <div style="display: flex;justify-content: center;">
+        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-label>Nombre:</mat-label>
+          <input matInput formControlName="name" />
+          <mat-error *ngIf="userFormCreate.get('name')?.invalid && userFormCreate.get('name')?.touched">El nombre es
+            requerido.</mat-error>
+        </mat-form-field>
+        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-label>Correo electrónico:</mat-label>
+          <input matInput type="email" formControlName="email" />
+          <mat-error *ngIf="userFormCreate.get('email')?.hasError('email') && userFormCreate.get('email')?.touched">
+            El email debe ser válido.
+          </mat-error>
+          <mat-error *ngIf="userFormCreate.get('email')?.pending">
+            Validando correo electrónico...
+          </mat-error>
+          <mat-error *ngIf="userFormCreate.get('email')?.errors?.['emailTaken']">
+            Este correo electrónico ya está en uso.
+          </mat-error>          
+        </mat-form-field>
+      </div>
+      <div style="display: flex;justify-content: center;">
+        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-label>Teléfono:</mat-label>
+          <input matInput formControlName="phone" />
+        </mat-form-field>
+        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-label>Identificación:</mat-label>
+          <input matInput formControlName="identification" />
+        </mat-form-field>
+      </div>
+      <div style="display: flex;justify-content: left;margin-left: 50px;">
+        <mat-form-field class="p-10" appearance="fill" style="width: 48%;">
+          <mat-label>Contraseña:</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="userFormCreate.get('password')?.invalid && userFormCreate.get('password')?.touched">
+            La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div style="margin-left: 50px;">
+        <mat-checkbox formControlName="status">Habilitado</mat-checkbox>
+      </div>
     </div>
-  
-    <div>
-      <label for="email">Correo electrónico:</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="userData.email"
-        required
-        email
-      />
-      <!-- Validaciones para el correo electrónico -->
+    <div style="margin: 20px 0 30px 60px;">
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
     </div>
-  
-    <div>
-      <label for="password">Contraseña:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="userData.password"
-        required
-        minlength="6"
-      />
-      <!-- Validaciones para la contraseña -->
-    </div>
-  
-    <div>
-      <label for="identification">Identificación:</label>
-      <input
-        type="text"
-        id="identification"
-        name="identification"
-        [(ngModel)]="userData.identification"
-      />
-      <!-- Validaciones para la identificación -->
-    </div>
-  
-    <div>
-      <label for="phone">Teléfono:</label>
-      <input
-        type="text"
-        id="phone"
-        name="phone"
-        [(ngModel)]="userData.phone"
-      />
-      <!-- Validaciones para el teléfono -->
-    </div>
-  
-    <div>
-      <label for="status">Habilitado:</label>
-      <input
-        type="checkbox"
-        id="status"
-        name="status"
-        [(ngModel)]="userData.status"
-      />
-      <!-- Validaciones para el estado -->
-    </div>
-  
-    <button type="submit">Guardar</button>
   </form>
+  <ng-template #updateForm>
+    <div style="margin-left: auto;margin-top: 30px;">
+      <button style="margin-right: 60px;margin-left: auto;" mat-raised-button color="primary" (click)="openChangePasswordModal()">Cambiar contraseña</button>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+      <div style="display: grid;margin-top: 25px;">
+        <div style="display: flex;justify-content: center;">
+          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+            <mat-label>Nombre:</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">El nombre es
+              requerido.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+            <mat-label>Correo electrónico:</mat-label>
+            <input matInput type="email" formControlName="email" />
+            <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">El email debe ser
+              válido.</mat-error>
+          </mat-form-field>
+        </div>
+        <div style="display: flex;justify-content: center;">
+          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+            <mat-label>Teléfono:</mat-label>
+            <input matInput formControlName="phone" />
+          </mat-form-field>
+          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+            <mat-label>Identificación:</mat-label>
+            <input matInput formControlName="identification" />
+          </mat-form-field>
+        </div>
+        <div style="margin-left: 50px;display: flex;" *ngIf="isSuperAdmin">
+          <mat-checkbox formControlName="status">Habilitado</mat-checkbox>
+        </div>
+      </div>
+      <div style="margin: 20px 0 30px 60px;">
+        <button mat-raised-button color="primary" type="submit">Guardar</button>
+      </div>
+    </form>
+  </ng-template>
   
 </mat-card>

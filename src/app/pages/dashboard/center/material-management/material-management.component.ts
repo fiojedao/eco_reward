@@ -62,6 +62,14 @@ export class MaterialManagementComponent {
     const { selectedCustomer } = this
     const data = this.exchangeService.getData();
 
+    if(!center.status){
+      this.noti.mensaje(
+        'Acción restringida',
+        `El centro se encuentra deshabilitado`,
+        TipoMessage.warning,
+      );
+      return;
+    }
 
     if(!centerAux){
       this.noti.mensajeRedirect(

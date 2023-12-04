@@ -166,7 +166,6 @@ export class CenterFormComponent {
   };
   submitCenter(): void {
     this.submitted = true;
-    debugger;
     if (this.centerForm.invalid) return;
 
     /* ajustar de [1, 3] a [{materialID: 1}, {materialID: 3}] */

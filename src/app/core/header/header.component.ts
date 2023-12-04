@@ -34,6 +34,11 @@ export class HeaderComponent {
       this.userLogin = this.userService.getInfo();
   }
 
+  currentUser(){
+    console.log(this.userLogin);
+    this.router.navigate(['/home/user/form', this.userLogin.user.userID]);
+  }
+
   logout(){
     this.userService.setToken('');
     this.router.navigate(['']);

@@ -45,6 +45,9 @@ export class UserAllComponent implements AfterViewInit {
     });
   }
 
+  newUser(){
+    this.router.navigate(['home/user/form', 0]);
+  }
   listUser() {
     // Lógica para cargar datos de usuarios
     this.gService
