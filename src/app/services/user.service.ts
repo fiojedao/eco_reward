@@ -3,12 +3,18 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, EMPTY } from 'rxjs';
 import { SelectedUser } from '../../models/SelectUser'
 import { jwtDecode } from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  [x: string]: any;
+  urlAPI: string = environment.apiURL;
+  constructor(private http: HttpClient) {}
+
   private selectedUser: SelectedUser = {
     user: undefined,
     center: undefined,
@@ -68,5 +74,9 @@ export class UserService {
     } catch (error) {
       return false;
     }
+  }
+  
+  checkEmailAvailability(email: string): Observable<boolean> {
+    return this.http.get<boolean>(this.urlAPI+`user/validateEmail/${email}`);
   }
 }
