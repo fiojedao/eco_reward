@@ -58,15 +58,19 @@ export class CouponFormComponent {
             );
             console.log(this.couponInfo);
             //Precargar los datos en el formulario
-            debugger;
+
             this.couponForm.patchValue({
               id: this.couponInfo.couponID,
               name: this.couponInfo.name,
               description: this.couponInfo.description,
               image: this.couponInfo.image,
               category: this.couponInfo.category,
-              startValidityDate: this.couponInfo.startValidityDate,
-              endValidityDate: this.couponInfo.endValidityDate,
+              startValidityDate: this.formatDateForInput(
+                this.couponInfo.start_validity_date
+              ),
+              endValidityDate: this.formatDateForInput(
+                this.couponInfo.end_validity_date
+              ),
               ecoCoinsRequired: this.couponInfo.eco_coins_required,
             });
           });
@@ -106,7 +110,6 @@ export class CouponFormComponent {
 
   submitCoupon(): void {
     this.submitted = true;
-    debugger;
 
     if (this.couponForm.invalid) return;
 
@@ -140,7 +143,7 @@ export class CouponFormComponent {
       if (this.idCoupon != undefined && !isNaN(Number(this.idCoupon))) {
         debugger;
         this.gService
-          .update('center', this.couponForm.value)
+          .update('couponexchange', this.couponForm.value)
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
             //Obtener respuesta
@@ -160,9 +163,14 @@ export class CouponFormComponent {
 
   // Función para formatear la fecha en el formato deseado
   formatDateForSubmission(dateString: string): string {
-    debugger;
     const dateObject = new Date(dateString);
     const formattedDate = dateObject.toISOString(); // Formato: "2023-01-01T00:00:00.000Z"
+    return formattedDate;
+  }
+
+  formatDateForInput(dateString: string): string {
+    const dateObject = new Date(dateString);
+    const formattedDate = dateObject.toISOString().split('T')[0];
     return formattedDate;
   }
 
@@ -181,7 +189,7 @@ export class CouponFormComponent {
   }
 
   onBack() {
-    this.router.navigate(['/home/material']);
+    this.router.navigate(['/home/coupon']);
   }
   ngOnDestroy() {
     this.destroy$.next(true);
