@@ -11,7 +11,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; gap: 1%;">
           <!-- NAME -->
-          <mat-form-field style="width: 38%;">
+          <mat-form-field appearance="outline" color="primary" style="width: 38%;">
             <input matInput #centerName formControlName="name" maxlength="40" placeholder="Name">
             <mat-hint align="end">{{centerName.value.length}} / 40</mat-hint>
             <mat-error *ngIf="errorHandling('name','required')">
@@ -27,7 +27,7 @@
 
 
           <!-- phone -->
-          <mat-form-field style="width: 38%;">
+          <mat-form-field appearance="outline" color="primary" style="width: 38%;">
             <input matInput formControlName="phone" placeholder="Phone">
             <mat-error *ngIf="errorHandling('phone','required')">
               Phone is <b>required</b>
@@ -40,7 +40,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; gap: 1%;">
           <!-- province -->
-          <mat-form-field style="width: 25%;">
+          <mat-form-field appearance="outline" color="primary" style="width: 25%;">
             <input matInput formControlName="province" placeholder="Province">
             <mat-error *ngIf="errorHandling('province','required')">
               Province is <b>required</b>
@@ -54,7 +54,7 @@
           </mat-form-field>
 
           <!-- Canton -->
-          <mat-form-field style="width: 25%;">
+          <mat-form-field appearance="outline" color="primary" style="width: 25%;">
             <input matInput formControlName="canton" placeholder="Canton">
             <mat-error *ngIf="errorHandling('canton','required')">
               Canton is <b>required</b>
@@ -68,7 +68,7 @@
           </mat-form-field>
 
           <!-- district -->
-          <mat-form-field style="width: 25%;">
+          <mat-form-field appearance="outline" color="primary" style="width: 25%;">
             <input matInput formControlName="district" placeholder="District">
             <mat-error *ngIf="errorHandling('district','required')">
               District is <b>required</b>
@@ -84,7 +84,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- exact_address -->
-          <mat-form-field style="width: 77.3%;">
+          <mat-form-field appearance="outline" color="primary" style="width: 77.3%;">
             <input matInput formControlName="exact_address" placeholder="Exact address">
             <mat-error *ngIf="errorHandling('exact_address','required')">
               Exact address is <b>required</b>
@@ -100,7 +100,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- operating_hours -->
-          <mat-form-field style="width: 77.3%;;">
+          <mat-form-field appearance="outline" color="primary" style="width: 77.3%;;">
             <input matInput formControlName="operating_hours" placeholder="Operating hours">
             <mat-error *ngIf="errorHandling('operating_hours','required')">
               Operating hours are <b>required</b>
@@ -116,7 +116,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- administradores -->
-          <mat-form-field style="width: 77.3%;;">
+          <mat-form-field appearance="outline" color="primary" style="width: 77.3%;;">
             <mat-select placeholder="Administrator" formControlName="administrator_userID">
               <mat-option *ngFor="let item of administratorList" [value]="item.userID">
                 {{item.name}}
@@ -128,7 +128,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- accepted_materials -->
-          <mat-form-field style="width: 77.3%;;">
+          <mat-form-field appearance="outline" color="primary" style="width: 77.3%;;">
             <mat-select placeholder="Accepted material" formControlName="Center_Material" multiple>
               <mat-option *ngFor="let item of center_MaterialMaterialList" [value]="item.materialID">
                 {{item.name}}

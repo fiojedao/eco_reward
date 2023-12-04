@@ -1,0 +1,67 @@
+<form [formGroup]="couponForm" (ngSubmit)="submitCoupon()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card style="min-height: 83vh !important; display: flex; justify-content: center;">
+    <div class="text-center m-t-20 " style="padding-bottom: 1rem; padding-bottom: 1rem; font-size: 1.2rem;">
+      <h1 style="color: #707a82;">{{titleForm}}</h1>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+
+      <div style="width: 65%; ">
+
+        <div class="grid-container">
+
+          <mat-form-field appearance="outline" color="primary" class="item">
+            <input matInput #couponName formControlName="name" placeholder="Nombre" maxlength="50">
+            <mat-hint align="end">{{couponName.value.length}} / 50</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="primary" class="item" style="max-height: 100px;">
+            <button mat-button (click)="fileInput.click()">Imagen</button>
+            <input matInput formControlName="image" id="imagenInput" type="text" readonly />
+            <input type="file" #fileInput style="display:none" accept="image/*" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="primary" class="item">
+            <input matInput formControlName="category" placeholder="Categoria" maxlength="150">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="primary" class="item">
+            <input type="number" matInput formControlName="ecoCoinsRequired" placeholder="Eco Coins Required" min="0">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline" color="primary" class="item">
+            <mat-label>Fecha de inicio</mat-label>
+            <input type="date" matInput formControlName="startValidityDate" maxlength="150">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="primary" class="item">
+            <mat-label>Fecha de caducidad</mat-label>
+            <input type="date" matInput formControlName="endValidityDate" maxlength="150">
+          </mat-form-field>
+
+
+
+          <mat-form-field appearance="outline" color="primary" class="item" style="grid-column: span 2;">
+            <textarea matInput #couponDescription formControlName="description" placeholder="Descripción"></textarea>
+            <mat-hint align="end">{{couponDescription.value.length}} / 150</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+      <mat-card-actions>
+        <div class="container-actions">
+          <button mat-raised-button color="primary" (click)="onBack()" style="margin-right: 8px;">Return</button>
+          <button mat-raised-button color="accent" (click)="onReset()" style="margin-right: 8px;">Reset</button>
+          <button mat-raised-button style="background-color: #3ec256; color: white;" type="submit">Save</button>
+        </div>
+      </mat-card-actions>
+    </div>
+
+  </mat-card>
+</form>

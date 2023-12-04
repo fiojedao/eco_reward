@@ -34,7 +34,12 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Gestión de materiales',
-    iconName: 'ticket',
+    iconName: 'list-details',
     route: 'home/exchanging',
-  }
+  },
+  {
+    displayName: 'Cupones',
+    iconName: 'ticket',
+    route: 'home/coupon',
+  },
 ];

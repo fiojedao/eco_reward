@@ -7,7 +7,7 @@
       <button mat-button [routerLink]="'/'" class="mat-focus-indicator hometop-btn mat-button mat-button-base"
         style="color: rgb(57, 57, 196);">
         <span class="mat-button-wrapper">
-          <strong>Ecowards</strong>
+          <h1>Ecowards</h1>
         </span>
       </button>
     </div>
@@ -24,19 +24,27 @@
         </a>
       </span>
     </button>
-    
+
     <mat-menu #loggedMenu="matMenu">
       <button mat-menu-item [routerLink]="'/home'"><strong> Dashboard</strong></button>
     </mat-menu>
-    
+
     <mat-menu #opcionesLoginRegistro="matMenu">
       <div style="display: grid;">
-        <button mat-button [routerLink]="'/login'">Login</button>
-        <button mat-button [routerLink]="'/register'">Registro</button>
+        <button mat-button [routerLink]="'/login'" style="display: flex; justify-content: flex-start;">
+          <mat-icon aria-hidden="false" aria-label="login icon" fontIcon="login" [ariaSetSize]="50" color="primary">
+          </mat-icon> Login
+        </button>
+
+        <button mat-button [routerLink]="'/register'" style="display: flex; justify-content: flex-start;">
+          <mat-icon aria-hidden="false" aria-label="login icon" fontIcon="perm_identity" [ariaSetSize]="50"
+            color="primary">
+          </mat-icon> Registro
+        </button>
       </div>
     </mat-menu>
-    
-    
+
+
 
 
 

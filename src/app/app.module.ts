@@ -24,6 +24,7 @@ import { ExchangeModule } from './pages/dashboard/material/exchange/exchange.mod
 import { MaterialImports } from './materialImports.module';
 import { MaterialModule } from './pages/dashboard/material/material.module';
 import { AuthenticateModule } from './pages/authenticate/authenticate.module';
+import { CouponModule } from './pages/dashboard/coupon/coupon.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,8 @@ import { AuthenticateModule } from './pages/authenticate/authenticate.module';
     CenterModule,
     UserModule,
     LandingPageModule,
-    ExchangeModule
+    ExchangeModule,
+    CouponModule,
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

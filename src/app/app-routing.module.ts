@@ -19,6 +19,9 @@ import { MaterialManagementComponent } from './pages/dashboard/center/material-m
 import { LoginComponent } from './pages/authenticate/login/login.component';
 import { RegisterComponent } from './pages/authenticate/register/register.component';
 import { UserFormComponent } from './pages/dashboard/user/user-form/user-form.component';
+import { CouponAllComponent } from './pages/dashboard/coupon/coupon-all/coupon-all.component';
+import { CouponFormComponent } from './pages/dashboard/coupon/coupon-form/coupon-form.component';
+import { CouponDetailComponent } from './pages/dashboard/coupon/coupon-detail/coupon-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -110,6 +113,23 @@ const routes: Routes = [
       {
         path: 'exchanging',
         component: MaterialManagementComponent,
+      },
+      {
+        path: 'coupon',
+        component: CouponAllComponent,
+      },
+      {
+        path: 'coupon/create',
+        component: CouponFormComponent,
+      },
+      {
+        path: 'coupon/:id',
+        component: CouponDetailComponent,
+      },
+
+      {
+        path: 'coupon/update/:id',
+        component: CouponFormComponent,
       },
     ],
   },
