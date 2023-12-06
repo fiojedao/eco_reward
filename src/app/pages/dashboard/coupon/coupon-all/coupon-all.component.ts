@@ -62,13 +62,13 @@ export class CouponAllComponent {
       });
   }
   createCoupon() {
-    this.router.navigate(['home', 'coupon', 'create']);
+    this.router.navigate(['home/coupon/form', 0]);
   }
   couponDetail(id: number) {
     this.router.navigate(['home', 'coupon', id]);
   }
   updateCoupon(id: number) {
-    this.router.navigate(['home', 'coupon', 'form', id]);
+    this.router.navigate(['home/coupon/form', id]);
   }
 
   formattedDate(date: string): string {
