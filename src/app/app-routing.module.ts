@@ -105,17 +105,16 @@ const routes: Routes = [
         component: MaterialAllComponent,
       },
       {
-        path: 'material/create',
+        path: 'material/form/:id',
         component: MaterialFormComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'material/:id',
-        component: MaterialDetailComponent,
-      },
-
-      {
-        path: 'material/update/:id',
-        component: MaterialFormComponent,
+        component: MaterialDetailComponent
       },
       {
         path: 'exchanging',
@@ -128,14 +127,6 @@ const routes: Routes = [
       {
         path: 'coupon/user',
         component: CouponAllClientCouponComponent,
-      },
-      {
-        path: 'coupon/create',
-        component: CouponFormComponent,
-        canActivate:[authGuard],
-        data:{
-          roles:[1]
-        },
       },
       {
         path: 'coupon/:id',

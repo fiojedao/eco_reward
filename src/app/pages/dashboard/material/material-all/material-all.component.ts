@@ -53,11 +53,11 @@ export class MaterialAllComponent {
   }
 
   createMaterial() {
-    this.router.navigate(['home', 'material', 'create']);
+    this.router.navigate(['home/material/form',0]);
   }
 
   updateMaterial(id: number) {
-    this.router.navigate(['home', 'material', 'update', id]);
+    this.router.navigate(['home/material/form', id]);
   }
 
   ngOnDestroy() {
