@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ImageUploadService } from 'service/image-upload.service';
@@ -117,7 +117,20 @@ export class CouponFormComponent {
       ],
       startValidityDate: [null, Validators.compose([Validators.required])],
       endValidityDate: [null, Validators.compose([Validators.required])],
-      ecoCoinsRequired: [null, Validators.compose([Validators.required, Validators.min(0)])]
+      ecoCoinsRequired: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.min(0),
+          (control: AbstractControl) => {
+            const value = control.value;
+            if (value !== null && value <= 0) {
+              return { lessThanZero: true };
+            }
+            return null;
+          }
+        ])
+      ]
     });
     
   }
