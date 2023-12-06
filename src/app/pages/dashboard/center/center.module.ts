@@ -24,6 +24,7 @@ import { MaterialManagementComponent } from './material-management/material-mana
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CenterRoutingModule,
     MatGridListModule,
     MatCardModule,
+    MatFormFieldModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,

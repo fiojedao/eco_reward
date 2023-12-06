@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ImageUploadService } from 'service/image-upload.service';
+import { UserService } from 'src/app/services/user.service';
 import { GenericService } from 'src/app/share/generic.service';
 import {
   NotificacionService,
@@ -15,76 +16,89 @@ import {
   styleUrls: ['./coupon-form.component.css'],
 })
 export class CouponFormComponent {
+  id: number = 0;
+  imageSrc: string | ArrayBuffer | null = null;
   destroy$: Subject<boolean> = new Subject<boolean>();
   titleForm: string = 'New Coupon';
   couponInfo: any;
-  file: any;
-  fileName: any;
   base64String: string = '';
-  //Respuesta del API crear/modificar
   respCoupon: any;
+  file: File = new File([], '');
 
-  //Sí es submit
+  errImg: boolean = false;
   submitted = false;
   isCreate: boolean = true;
   idCoupon: number = 0;
   couponForm!: FormGroup;
+  couponData: any;
+  isSuperAdmin: boolean;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private gService: GenericService,
     private router: Router,
-    private activeRouter: ActivatedRoute,
-    private noti: NotificacionService
+    private userService: UserService,
+    private noti: NotificacionService,
+    private route: ActivatedRoute,
   ) {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id') as string);
+    this.isSuperAdmin = this.userService.getInfo().isSuperAdmin;
     this.formularioReactive();
+    this.initData(this.id);
   }
 
-  ngOnInit(): void {
-    this.activeRouter.params.subscribe((params: Params) => {
-      this.idCoupon = params['id'];
-
-      if (this.idCoupon != undefined && !isNaN(Number(this.idCoupon))) {
-        this.isCreate = false;
-        this.titleForm = 'Update Center';
-
-        this.gService
-          .get('couponexchange', this.idCoupon)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            this.couponInfo = data;
-            let newStart = this.formatDateUpdate(
-              this.couponInfo.start_validity_date
-            );
-            console.log(this.couponInfo);
-            //Precargar los datos en el formulario
-
-            this.couponForm.patchValue({
-              id: this.couponInfo.couponID,
-              name: this.couponInfo.name,
-              description: this.couponInfo.description,
-              image: this.couponInfo.image,
-              category: this.couponInfo.category,
-              startValidityDate: this.formatDateForInput(
-                this.couponInfo.start_validity_date
-              ),
-              endValidityDate: this.formatDateForInput(
-                this.couponInfo.end_validity_date
-              ),
-              ecoCoinsRequired: this.couponInfo.eco_coins_required,
-            });
-          });
+  initData(id: number){
+    if (!isNaN(Number(id))) {
+      if(Number(id)){
+        this.getCoupon(Number(id));
       }
+    }
+  }
+  
+  getCoupon(id: any) {
+    this.gService
+      .get('couponexchange', id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.setData(data);
+      });
+  }
+
+  getBase64ToFile(base64Image: string){
+    if(base64Image){
+      const byteCharacters = atob(base64Image);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const uniqueFileName = `file_${Date.now()}.png`;
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray]);
+  
+      return new File([blob], uniqueFileName, { type: 'image/png' }); // Ajusta el tipo de archivo según corresponda (p. ej. 'image/png' o 'image/jpeg')
+  
+    } 
+    return new File([], '');;
+  }
+  setData(coupon: any){
+    this.couponData = coupon;
+    this.couponForm.patchValue({
+      name: this.couponData.name || '',
+      description: this.couponData.description || '',
+      category: this.couponData.category || '',
+      startValidityDate: this.couponData.start_validity_date.split("T")[0] || '',
+      endValidityDate: this.couponData.end_validity_date.split("T")[0] || '',
+      ecoCoinsRequired: this.couponData.eco_coins_required || 0,
     });
+    // Crear un archivo File
+    this.file = this.getBase64ToFile(this.couponData.base64Image);
+    this.cdr.detectChanges();
   }
 
   formularioReactive() {
     this.couponForm = this.fb.group({
-      id: [null, null],
-      name: [
-        null,
-        Validators.compose([Validators.required, Validators.minLength(3)]),
-      ],
+      name: [null, Validators.compose([Validators.required, Validators.minLength(3)])],
       description: [
         null,
         Validators.compose([
@@ -93,7 +107,6 @@ export class CouponFormComponent {
           Validators.maxLength(150),
         ]),
       ],
-      image: [null],
       category: [
         null,
         Validators.compose([
@@ -104,96 +117,102 @@ export class CouponFormComponent {
       ],
       startValidityDate: [null, Validators.compose([Validators.required])],
       endValidityDate: [null, Validators.compose([Validators.required])],
-      ecoCoinsRequired: [null, Validators.compose([Validators.required])],
+      ecoCoinsRequired: [null, Validators.compose([Validators.required, Validators.min(0)])]
     });
+    
   }
 
   submitCoupon(): void {
-    this.submitted = true;
-
-    if (this.couponForm.invalid) return;
-
-    const startValidityDate = this.couponForm.get('startValidityDate')?.value;
-    const startFormattedDate = this.formatDateForSubmission(startValidityDate);
-    this.couponForm.get('startValidityDate')?.setValue(startFormattedDate);
-
-    const endValidityDate = this.couponForm.get('endValidityDate')?.value;
-    const endFormattedDate = this.formatDateForSubmission(endValidityDate);
-    this.couponForm.get('endValidityDate')?.setValue(endFormattedDate);
-
-    console.log(this.couponForm.value);
-
-    if (this.isCreate) {
-      this.gService
-        .create('couponexchange', this.couponForm.value)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          // Obtener respuesta
-          this.respCoupon = data;
-          this.noti.mensajeRedirect(
-            'Create coupon',
-            `Coupon: ${data.name} created successfully`,
-            TipoMessage.success,
-            'home/coupon/'
-          );
-          console.log(data);
-          this.router.navigate(['home/coupon/']);
-        });
-    } else {
-      if (this.idCoupon != undefined && !isNaN(Number(this.idCoupon))) {
-        debugger;
-        this.gService
-          .update('couponexchange', this.couponForm.value)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            //Obtener respuesta
-            this.respCoupon = data;
-            this.noti.mensajeRedirect(
-              'Update coupon',
-              `Coupon: ${data.name} updated successfully`,
-              TipoMessage.success,
-              'home/coupon/'
-            );
-            console.log(data);
-            this.router.navigate(['home/coupon/']);
-          });
-      }
+    if (this.couponForm.invalid || !this.file.name) {
+      this.markFormGroupTouched(this.couponForm);
+      if(!this.file.name) this.errImg = true
+      return;
     }
+    const form = this.couponForm.value;
+    this.errImg = false
+    const fileReader = new FileReader();
+    const gService = this.gService;
+    const destroy$ = this.destroy$;
+    const noti = this.noti;
+    const id = this.id;
+
+
+    fileReader.onload = function(event: any) {
+      if (event.target && event.target.result) {
+        const base64String = event.target.result.split(',')[1];
+
+        var body = {
+          name: form.name,
+          description: form.description,
+          category: form.category,
+          startValidityDate: form.startValidityDate,
+          endValidityDate: form.endValidityDate,
+          ecoCoinsRequired: form.ecoCoinsRequired,
+          image: base64String
+        }
+
+        if(!id){
+          gService
+          .create('couponexchange', body)
+          .pipe(takeUntil(destroy$))
+          .subscribe((data: any) => {
+            noti.mensajeRedirect(
+              'Registrado',
+              `Cupón: ${data.name} creado correctamente`,
+              TipoMessage.success,
+              'home/coupon'
+            );
+          });
+        } else {
+          gService
+          .update(`couponexchange/${id}`, body)
+          .pipe(takeUntil(destroy$))
+          .subscribe((data: any) => {
+            noti.mensajeRedirect(
+              'Actualizado',
+              `Cupón: ${data.name} actualizado correctamente`,
+              TipoMessage.success,
+              'home/coupon'
+            );
+          });
+
+        }
+      }
+    };
+
+    fileReader.readAsDataURL(this.file);
   }
 
-  // Función para formatear la fecha en el formato deseado
-  formatDateForSubmission(dateString: string): string {
-    const dateObject = new Date(dateString);
-    const formattedDate = dateObject.toISOString(); // Formato: "2023-01-01T00:00:00.000Z"
-    return formattedDate;
-  }
-
-  formatDateForInput(dateString: string): string {
-    const dateObject = new Date(dateString);
-    const formattedDate = dateObject.toISOString().split('T')[0];
-    return formattedDate;
+  markFormGroupTouched(formGroup: FormGroup) {
+    (Object as any).values(formGroup.controls).forEach((control: any) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 
   onReset() {
-    this.submitted = false;
     this.couponForm.reset();
-  }
-
-  formatDateUpdate(inputDate: string): string {
-    const dateObject = new Date(inputDate);
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const year = dateObject.getFullYear().toString();
-
-    return `${month}/${day}/${year}`;
+    this.formularioReactive();
   }
 
   onBack() {
     this.router.navigate(['/home/coupon']);
   }
+
   ngOnDestroy() {
     this.destroy$.next(true);
-    // Desinscribirse
     this.destroy$.unsubscribe();
+  }
+
+  onSelect(event:any) {
+    this.errImg = false
+    const file = event.addedFiles[0]
+    this.file = file;
+  }
+  
+  onRemove() {
+    this.file = new File([], '');
   }
 }
