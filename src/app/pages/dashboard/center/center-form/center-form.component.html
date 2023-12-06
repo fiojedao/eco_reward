@@ -12,28 +12,28 @@
         <div style="display: flex; justify-content: center; align-items: center; gap: 1%;">
           <!-- NAME -->
           <mat-form-field appearance="outline" color="primary" style="width: 38%;">
-            <input matInput #centerName formControlName="name" maxlength="40" placeholder="Name">
+            <input matInput #centerName formControlName="name" maxlength="40" placeholder="Nombre">
             <mat-hint align="end">{{centerName.value.length}} / 40</mat-hint>
             <mat-error *ngIf="errorHandling('name','required')">
-              Name is <b>required</b>
+              El nombre es <b>obligatorio</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('name','minlength')">
-              5 characters <b>minimum</b>
+              5 caracteres <b>mínimo</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('name','maxlength')">
-              40 characters <b>maximun</b>
+              40 caracteres <b> máxima </b>
             </mat-error>
           </mat-form-field>
 
 
           <!-- phone -->
           <mat-form-field appearance="outline" color="primary" style="width: 38%;">
-            <input matInput formControlName="phone" placeholder="Phone">
+            <input matInput formControlName="phone" placeholder="Teléfono">
             <mat-error *ngIf="errorHandling('phone','required')">
-              Phone is <b>required</b>
+              El teléfono es <b>obligatorio</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('phone','pattern')">
-              Invalid format! <b>0000-0000 </b>
+              ¡Formato inválido! <b>0000-0000</b>
             </mat-error>
           </mat-form-field>
         </div>
@@ -41,43 +41,43 @@
         <div style="display: flex; justify-content: center; align-items: center; gap: 1%;">
           <!-- province -->
           <mat-form-field appearance="outline" color="primary" style="width: 25%;">
-            <input matInput formControlName="province" placeholder="Province">
+            <input matInput formControlName="province" placeholder="Provincia">
             <mat-error *ngIf="errorHandling('province','required')">
-              Province is <b>required</b>
+              La provincia es <b>obligatoria</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('province','minlength')">
-              5 characters <b>minimum</b>
+              5 caracteres <b>mínimo</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('province','maxlength')">
-              30 characters <b>maximun</b>
+              30 caracteres <b>máximo</b>
             </mat-error>
           </mat-form-field>
 
           <!-- Canton -->
           <mat-form-field appearance="outline" color="primary" style="width: 25%;">
-            <input matInput formControlName="canton" placeholder="Canton">
+            <input matInput formControlName="canton" placeholder="Cantón">
             <mat-error *ngIf="errorHandling('canton','required')">
-              Canton is <b>required</b>
+              Cantón es <b>obligatorio</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('canton','minlength')">
-              5 characters <b>minimum</b>
+              5 caracteres <b>mínimo</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('canton','maxlength')">
-              30 characters <b>maximun</b>
+              30 caracteres <b>máximo</b>
             </mat-error>
           </mat-form-field>
 
           <!-- district -->
           <mat-form-field appearance="outline" color="primary" style="width: 25%;">
-            <input matInput formControlName="district" placeholder="District">
+            <input matInput formControlName="district" placeholder="Distrito">
             <mat-error *ngIf="errorHandling('district','required')">
-              District is <b>required</b>
+              El distrito es <b>obligatorio</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('district','minlength')">
-              5 characters <b>minimum</b>
+              5 caracteres <b>mínimo</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('district','maxlength')">
-              30 characters <b>maximun</b>
+              30 caracteres <b>máximo</b>
             </mat-error>
           </mat-form-field>
         </div>
@@ -85,15 +85,15 @@
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- exact_address -->
           <mat-form-field appearance="outline" color="primary" style="width: 77.3%;">
-            <input matInput formControlName="exact_address" placeholder="Exact address">
+            <input matInput formControlName="exact_address" placeholder="Dirección exacta">
             <mat-error *ngIf="errorHandling('exact_address','required')">
-              Exact address is <b>required</b>
+              La dirección exacta es <b>obligatoria</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('exact_address','minlength')">
-              5 characters <b>minimum</b>
+              5 caracteres <b>mínimo</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('exact_address','maxlength')">
-              150 characters <b>maximun</b>
+              150 caracteres <b>máximo</b>
             </mat-error>
           </mat-form-field>
         </div>
@@ -101,15 +101,15 @@
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- operating_hours -->
           <mat-form-field appearance="outline" color="primary" style="width: 77.3%;;">
-            <input matInput formControlName="operating_hours" placeholder="Operating hours">
+            <input matInput formControlName="operating_hours" placeholder="Horario de atención">
             <mat-error *ngIf="errorHandling('operating_hours','required')">
-              Operating hours are <b>required</b>
+              El horario de atención es <b>obligatorio</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('operating_hours','minlength')">
-              5 characters <b>minimum</b>
+              5 caracteres <b>mínimo</b>
             </mat-error>
             <mat-error *ngIf="errorHandling('operating_hours','maxlength')">
-              150 characters <b>maximun</b>
+              150 caracteres <b>máximo</b>
             </mat-error>
           </mat-form-field>
         </div>
@@ -117,7 +117,7 @@
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- administradores -->
           <mat-form-field appearance="outline" color="primary" style="width: 77.3%;;">
-            <mat-select placeholder="Administrator" formControlName="administrator_userID">
+            <mat-select placeholder="Administrador" formControlName="administrator_userID">
               <mat-option *ngFor="let item of administratorList" [value]="item.userID">
                 {{item.name}}
               </mat-option>
@@ -129,7 +129,7 @@
         <div style="display: flex; justify-content: center; align-items: center; ">
           <!-- accepted_materials -->
           <mat-form-field appearance="outline" color="primary" style="width: 77.3%;;">
-            <mat-select placeholder="Accepted material" formControlName="Center_Material" multiple>
+            <mat-select placeholder="Material aceptado" formControlName="Center_Material" multiple>
               <mat-option *ngFor="let item of center_MaterialMaterialList" [value]="item.materialID">
                 {{item.name}}
               </mat-option>
