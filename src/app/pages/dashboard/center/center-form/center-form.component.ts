@@ -78,7 +78,7 @@ export class CenterFormComponent {
   getAdministratorList() {
     this.administratorList = null;
     this.gService
-      .list('user/role/2')
+      .list('user/whithout/2')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         // console.log(data);
@@ -188,10 +188,8 @@ export class CenterFormComponent {
             'Create center',
             `Center: ${data.name} created successfully`,
             TipoMessage.success,
-            'home/center/'
+            'home/center'
           );
-          console.log(data);
-          this.router.navigate(['home/center/']);
         });
     } else {
       if (this.idCenter != undefined && !isNaN(Number(this.idCenter))) {
@@ -205,10 +203,8 @@ export class CenterFormComponent {
               'Update center',
               `Center: ${data.name} updated successfully`,
               TipoMessage.success,
-              'home/center/'
+              'home/center'
             );
-            console.log(data);
-            this.router.navigate(['home/center/']);
           });
       }
     }
