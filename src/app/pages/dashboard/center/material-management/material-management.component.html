@@ -105,18 +105,24 @@
               <ng-container matColumnDef="precio">
                 <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
                 <mat-cell *matCellDef="let element"> 🪙{{element.price}} </mat-cell>
-                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                <mat-footer-cell *matFooterCellDef>
+                  <span *ngIf="errorAmount" style="
+                  font-size: 14px;
+              ">
+                    <span class="mat-mdc-form-field-error mat-mdc-form-field-bottom-align ng-star-inserted" aria-live="polite">Por favor, ingrese solo valores números</span>
+                  </span> 
+                </mat-footer-cell>
               </ng-container>
 
               <ng-container matColumnDef="cantidad">
                 <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <mat-form-field appearance="fill">
-                    <input matInput id="amount " type="number" class="form-control mb-2" [(ngModel)]="element.amount"
-                      (change)="updateAmout(element)">
+                    <input matInput id="amount " type="number" class="form-control mb-2" [(ngModel)]="element.amount" (change)="onInputChange($event, element)">
                   </mat-form-field>
-
                 </mat-cell>
+                
+
                 <mat-footer-cell *matFooterCellDef class="footer-total">Total </mat-footer-cell>
               </ng-container>
 

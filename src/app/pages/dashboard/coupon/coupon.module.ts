@@ -6,6 +6,7 @@ import { CouponDetailComponent } from './coupon-detail/coupon-detail.component';
 import { CouponFormComponent } from './coupon-form/coupon-form.component';
 import { MaterialImports } from 'src/app/materialImports.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 /* import {} from '@angular/'; */
 
 @NgModule({
@@ -14,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CouponDetailComponent,
     CouponFormComponent,
   ],
-  imports: [CommonModule, MaterialImports, ReactiveFormsModule],
+  imports: [CommonModule, MaterialImports, ReactiveFormsModule, NgxDropzoneModule ],
   providers: [DatePipe],
 })
 export class CouponModule {}

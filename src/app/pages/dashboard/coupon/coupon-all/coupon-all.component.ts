@@ -63,7 +63,7 @@ export class CouponAllComponent {
     this.router.navigate(['home', 'coupon', id]);
   }
   updateCoupon(id: number) {
-    this.router.navigate(['home', 'coupon', 'update', id]);
+    this.router.navigate(['home', 'coupon', 'form', id]);
   }
 
   formattedDate(date: string): string {

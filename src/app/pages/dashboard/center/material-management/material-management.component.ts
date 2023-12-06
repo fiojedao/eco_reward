@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,6 +17,8 @@ import { CenterMaterial } from 'src/models/MaterialModel';
   styleUrls: ['./material-management.component.css'],
 })
 export class MaterialManagementComponent {
+  errorAmount: boolean = false;
+  form: FormGroup;
   customers: any[] = [];
   materials: CenterMaterial[] = [];
   centerAdmin: any[] = [];
@@ -47,8 +50,12 @@ export class MaterialManagementComponent {
     private gService: GenericService,
     private router: Router,
     private userService: UserService,
-    private noti: NotificacionService
+    private noti: NotificacionService,
+    private fb: FormBuilder
   ) {
+    this.form = this.fb.group({
+      amount: ['', [Validators.required, Validators.pattern('^[0-9]*$')]]
+    });
     this.userLogin = this.userService.getInfo();
     this.loadUser(this.userLogin);
     this.loadCustomers();
@@ -156,6 +163,18 @@ export class MaterialManagementComponent {
     });  
   }
 
+  onInputChange(event: any, element: any) {
+    const inputValue = element.amount;
+    const numericRegex = /^[0-9]*$/; // Expresión regular para permitir solo números
+    if (numericRegex.test(inputValue)) {
+      //event.target.value = inputValue.replace(/[^0-9]/g, ''); // Remover caracteres no numéricos
+      this.updateAmout(element);
+      this.errorAmount = false;
+    } else {
+      this.errorAmount = true;
+    }
+  }
+  
   /* center's materials */
   loadMaterials() {
     const { center, isSuperAdmin} = this.userLogin;

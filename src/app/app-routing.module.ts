@@ -123,19 +123,35 @@ const routes: Routes = [
       {
         path: 'coupon',
         component: CouponAllComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'coupon/create',
         component: CouponFormComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
       {
         path: 'coupon/:id',
         component: CouponDetailComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
 
       {
-        path: 'coupon/update/:id',
+        path: 'coupon/form/:id',
         component: CouponFormComponent,
+        canActivate:[authGuard],
+        data:{
+          roles:[1]
+        },
       },
     ],
   },
