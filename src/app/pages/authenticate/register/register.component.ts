@@ -109,7 +109,7 @@ export class RegisterComponent {
     .subscribe((response: any) => {
       this.userService.setToken(response.token);
       this.userService.setUser(response.user, null);
-      this.router.navigate(['home']);
+      this.router.navigate(['home/dashboard']);
     });
   }
   

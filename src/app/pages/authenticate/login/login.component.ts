@@ -49,14 +49,14 @@ export class LoginComponent implements OnInit {
                 if(center){
                   this.userService.setToken(response.token);
                   this.userService.setUser(response.user, center);
-                  this.router.navigate(['home']);
+                  this.router.navigate(['home/dashboard']);
                 } 
               }
             );
             } else {
               this.userService.setToken(response.token);
               this.userService.setUser(response.user, null);
-              this.router.navigate(['home']);
+              this.router.navigate(['home/dashboard']);
             }
           } 
         },(error: any) => {

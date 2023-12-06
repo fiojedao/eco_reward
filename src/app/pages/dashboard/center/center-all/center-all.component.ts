@@ -55,7 +55,7 @@ export class CenterAllComponent {
             this.centerDetail(response.centerID);
           });
       } else {
-        this.router.navigate(['home']);
+        this.router.navigate(['home/dashboard']);
       }
     } else this.router.navigate(['']);
   }

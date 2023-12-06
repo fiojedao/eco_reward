@@ -25,6 +25,7 @@ import { MaterialImports } from './materialImports.module';
 import { MaterialModule } from './pages/dashboard/material/material.module';
 import { AuthenticateModule } from './pages/authenticate/authenticate.module';
 import { CouponModule } from './pages/dashboard/coupon/coupon.module';
+import { DashboardModule } from './pages/dashboard/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +50,7 @@ import { CouponModule } from './pages/dashboard/coupon/coupon.module';
     LandingPageModule,
     ExchangeModule,
     CouponModule,
+    DashboardModule
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

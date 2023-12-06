@@ -205,7 +205,7 @@ export class MaterialManagementComponent {
         this.center = center;
         this.isCenterAdmin = isCenterAdmin;
       } else {
-        this.router.navigate(['home']);
+        this.router.navigate(['home/dashboard']);
       }
     } else if (isClient || user) {
       this.isClient = isClient;

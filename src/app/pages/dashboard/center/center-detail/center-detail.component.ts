@@ -29,7 +29,7 @@ export class CenterDetailComponent {
     this.userService.userChanges().subscribe((data) => {
       if(data && data.user){
         if(data && data.isSuperAdmin){
-          this.router.navigate(['home']);
+          this.router.navigate(['home/dashboard']);
         } else {
           this.setCenterData(data);
         }

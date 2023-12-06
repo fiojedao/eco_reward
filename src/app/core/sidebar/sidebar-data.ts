@@ -7,7 +7,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Dashboard',
     iconName: 'layout-dashboard',
-    route: 'home/',
+    route: 'home/dashboard',
   },
   {
     navCap: 'Módulos',

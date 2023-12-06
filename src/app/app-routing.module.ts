@@ -25,6 +25,7 @@ import { CouponDetailComponent } from './pages/dashboard/coupon/coupon-detail/co
 
 import { authGuard } from './services/auth.guard';
 import { CouponAllClientCouponComponent } from './pages/dashboard/coupon/coupon-all-client-coupon/coupon-all-client-coupon.component';
+import { DashboardComponent } from './pages/dashboard/dashboard/dashboard.component';
 const routes: Routes = [
   {
     path: '',
@@ -52,6 +53,10 @@ const routes: Routes = [
     path: 'home',
     component: DashTemplateComponent,
     children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
       {
         path: 'user',
         component: UserAllComponent,

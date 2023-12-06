@@ -1,0 +1,37 @@
+<mat-card class="dashboard-card">
+  <mat-card-header>
+    <mat-card-title>Dashboard</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="userRole === 'cliente'">
+      <h2>Billetera Virtual</h2>
+      <p>Disponibles: {{ ecoCoins.disponibles }}</p>
+      <p>Canjeados: {{ ecoCoins.canjeados }}</p>
+      <p>Recibidos: {{ ecoCoins.disponibles + ecoCoins.canjeados }}</p>
+    </div>
+
+    <div *ngIf="userRole === 'admin_centro_acopio'">
+      <h2>Dashboard del Centro de Acopio</h2>
+      <p>Centro de Acopio: {{ centroAcopio.nombre }}</p>
+      <p>Canjes realizados este mes: {{ estadisticas.canjesMesActual }}</p>
+      <p>Canjes por material año actual:</p>
+      <ul>
+        <li *ngFor="let canje of estadisticas.canjesPorMaterial">{{ canje.material }}: {{ canje.cantidad }}</li>
+      </ul>
+      <p>Total eco-monedas generadas: {{ estadisticas.totalEcoMonedas }}</p>
+    </div>
+
+    <div *ngIf="userRole === 'admin'">
+      <h2>Dashboard de Administrador</h2>
+      <p>Canjes de materiales este mes: {{ adminEstadisticas.canjesMesActual }}</p>
+      <p>Eco-monedas por centro de acopio:</p>
+      <ul>
+        <li *ngFor="let ecoMonedas of adminEstadisticas.ecoMonedasPorCentro">{{ ecoMonedas.centro }}: {{
+          ecoMonedas.total }}</li>
+      </ul>
+      <p>Total eco-monedas generadas: {{ adminEstadisticas.totalEcoMonedas }}</p>
+      <p>Canjes de cupones este año: {{ adminEstadisticas.canjesCupones }}</p>
+      <p>Eco-monedas utilizadas en canje de cupones este año: {{ adminEstadisticas.ecoMonedasCanjeCupones }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
