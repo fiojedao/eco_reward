@@ -44,7 +44,6 @@ export class UserWalletModalComponent {
       });
   }
   getCouponExchangeHistory(id: any) {
-    debugger;
     this.gService
       .get('couponexchangehistory/getByUserId', id)
       .pipe(takeUntil(this.destroy$))

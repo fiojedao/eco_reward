@@ -46,7 +46,6 @@ export class CouponAllClientCouponComponent {
   }
 
   listCoupons() {
-    debugger;
     this.gService
       .get('couponexchangehistory/getByUserId', this.userLogin.user.userID)
       .pipe(takeUntil(this.destroy$))
