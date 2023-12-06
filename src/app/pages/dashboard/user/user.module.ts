@@ -24,9 +24,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ChangePasswordModalComponent } from './user-password-moda/change.password.modal.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { UserWalletModalComponent } from './user-wallet-modal/user-wallet-modal.component';
 
 @NgModule({
-  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent, ChangePasswordModalComponent],
+  declarations: [UserAllComponent, UserDetailComponent, UserCouponComponent, UserFormComponent, ChangePasswordModalComponent, UserWalletModalComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,

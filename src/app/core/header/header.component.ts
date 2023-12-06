@@ -8,6 +8,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { UserWalletModalComponent } from 'src/app/pages/dashboard/user/user-wallet-modal/user-wallet-modal.component';
 import { UserService } from 'src/app/services/user.service';
 import { GenericService } from 'src/app/share/generic.service';
 
@@ -30,17 +31,27 @@ export class HeaderComponent {
   constructor(
     public dialog: MatDialog,
     private userService: UserService,
-    private router: Router) {
-      this.userLogin = this.userService.getInfo();
+    private router: Router
+  ) {
+    this.userLogin = this.userService.getInfo();
+    console.log(this.userLogin);
   }
 
-  currentUser(){
+  currentUser() {
     console.log(this.userLogin);
     this.router.navigate(['/home/user/form', this.userLogin.user.userID]);
   }
 
-  logout(){
+  logout() {
     this.userService.setToken('');
     this.router.navigate(['']);
+  }
+
+  openChangePasswordModal() {
+    const dialogRef = this.dialog.open(UserWalletModalComponent, {
+      /*      position: { top: '10%' }, */
+      /*       width: '400px', */
+      data: { userId: this.userLogin.user.userID },
+    });
   }
 }

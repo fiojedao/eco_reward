@@ -6,6 +6,8 @@ import { CouponDetailComponent } from './coupon-detail/coupon-detail.component';
 import { CouponFormComponent } from './coupon-form/coupon-form.component';
 import { MaterialImports } from 'src/app/materialImports.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DialogConfirmCouponExchangeComponent } from './dialog-confirm-coupon-exchange/dialog-confirm-coupon-exchange.component';
+import { CouponAllClientCouponComponent } from './coupon-all-client-coupon/coupon-all-client-coupon.component';
 /* import {} from '@angular/'; */
 
 @NgModule({
@@ -13,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CouponAllComponent,
     CouponDetailComponent,
     CouponFormComponent,
+    DialogConfirmCouponExchangeComponent,
+    CouponAllClientCouponComponent,
   ],
   imports: [CommonModule, MaterialImports, ReactiveFormsModule],
   providers: [DatePipe],

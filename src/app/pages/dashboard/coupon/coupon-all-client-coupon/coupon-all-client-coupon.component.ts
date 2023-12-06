@@ -8,16 +8,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { UserService } from 'src/app/services/user.service';
 import { DatePipe } from '@angular/common';
-import { DialogConfirmCouponExchangeComponent } from '../dialog-confirm-coupon-exchange/dialog-confirm-coupon-exchange.component';
-
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-coupon-all',
-  templateUrl: './coupon-all.component.html',
-  styleUrls: ['./coupon-all.component.css'],
+  selector: 'app-coupon-all-client-coupon',
+  templateUrl: './coupon-all-client-coupon.component.html',
+  styleUrls: ['./coupon-all-client-coupon.component.css'],
 })
-export class CouponAllComponent {
+export class CouponAllClientCouponComponent {
   isSuperAdmin: boolean = false;
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -38,19 +35,20 @@ export class CouponAllComponent {
   ];
   userLogin: any;
   constructor(
-    public dialog: MatDialog,
     private gService: GenericService,
     private router: Router,
     private userService: UserService,
     private datePipe: DatePipe
   ) {
-    this.listCoupons();
     this.userLogin = this.userService.getInfo();
+    console.log(this.userLogin);
+    this.listCoupons();
   }
 
   listCoupons() {
+    debugger;
     this.gService
-      .list('couponexchange/')
+      .get('couponexchangehistory/getByUserId', this.userLogin.user.userID)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.datos = response;
@@ -74,11 +72,5 @@ export class CouponAllComponent {
   formattedDate(date: string): string {
     const formatted = this.datePipe.transform(date, 'dd/MM/yyyy');
     return formatted || '';
-  }
-
-  openDialogConfimCouponExchange() {
-    this.dialog.open(DialogConfirmCouponExchangeComponent, {
-      /* width: '250px', */
-    });
   }
 }

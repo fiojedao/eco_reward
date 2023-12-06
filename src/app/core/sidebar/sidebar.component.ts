@@ -27,7 +27,6 @@ export class SidebarComponent implements OnInit {
   loadUser() {
     this.filterNavItem(this.userService.getInfo());
   }
-  
 
   ngOnInit(): void {
     this.userService.userChanges().subscribe((data) => {
@@ -41,13 +40,18 @@ export class SidebarComponent implements OnInit {
       var items: any[] = navItems;
       if (user) {
         if (isSuperAdmin) {
-          var items: any[] = navItems; 
+          var items: any[] = navItems;
           items.map((item: any) => {
             if (item?.route && item.route.includes('home/center')) {
               item.route = `home/center/`;
             }
           });
-          this.navItems = items;
+          const navItemsFiltrados = items.filter(
+            (item) =>
+              item.displayName !== 'Mis cupones' &&
+              item.displayName !== 'Canjear'
+          );
+          this.navItems = navItemsFiltrados;
         } else if (center && isCenterAdmin) {
           var items: any[] = navItems;
           items.map((item: any) => {
@@ -55,7 +59,16 @@ export class SidebarComponent implements OnInit {
               item.route = `home/center/${center.centerID}`;
             }
           });
-          this.navItems = items.filter((u: any) => u.route !== 'home/user');
+
+          const navItemsFiltrados = items.filter(
+            (item) =>
+              item.displayName !== 'Mis cupones' &&
+              item.displayName !== 'Canjear'
+          );
+
+          this.navItems = navItemsFiltrados.filter(
+            (u: any) => u.route !== 'home/user'
+          );
         } else if (isClient) {
           var items: any[] = navItems;
           this.navItems = items.filter((item) => {
@@ -63,7 +76,9 @@ export class SidebarComponent implements OnInit {
               item.navCap === 'Inicio' ||
               item.displayName === 'Dashboard' ||
               item.navCap === 'Módulos' ||
-              item.displayName === 'Historial de Canje'
+              item.displayName === 'Historial de Canje' ||
+              item.displayName === 'Mis cupones' ||
+              item.displayName === 'Canjear'
             );
           });
         }

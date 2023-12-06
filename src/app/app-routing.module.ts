@@ -24,6 +24,7 @@ import { CouponFormComponent } from './pages/dashboard/coupon/coupon-form/coupon
 import { CouponDetailComponent } from './pages/dashboard/coupon/coupon-detail/coupon-detail.component';
 
 import { authGuard } from './services/auth.guard';
+import { CouponAllClientCouponComponent } from './pages/dashboard/coupon/coupon-all-client-coupon/coupon-all-client-coupon.component';
 const routes: Routes = [
   {
     path: '',
@@ -54,17 +55,17 @@ const routes: Routes = [
       {
         path: 'user',
         component: UserAllComponent,
-        canActivate:[authGuard],
-        data:{
-          roles:[1]
+        canActivate: [authGuard],
+        data: {
+          roles: [1],
         },
       },
       {
         path: 'user/:id',
         component: UserDetailComponent,
-        canActivate:[authGuard],
-        data:{
-          roles:[1]
+        canActivate: [authGuard],
+        data: {
+          roles: [1],
         },
       },
       {
@@ -123,6 +124,10 @@ const routes: Routes = [
       {
         path: 'coupon',
         component: CouponAllComponent,
+      },
+      {
+        path: 'coupon/user',
+        component: CouponAllClientCouponComponent,
       },
       {
         path: 'coupon/create',

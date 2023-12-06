@@ -42,7 +42,8 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
               <td mat-cell *matCellDef="let row">
                 <button mat-mini-fab color="accent" matTooltip="Detalles del material"
-                  aria-label="Detalles del material" color="primary" (click)="materialDetail(row.materialID)">
+                  aria-label="Detalles del material" color="primary" (click)="materialDetail(row.materialID)"
+                  style="margin-right: 5px;">
                   <mat-icon class="mat-18">info</mat-icon>
                 </button>
                 <button mat-mini-fab color="accent" matTooltip="Editar" aria-label="Editar" color="primary"

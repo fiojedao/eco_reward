@@ -28,7 +28,7 @@ export const navItems: NavItem[] = [
     route: 'home/material',
   },
   {
-    displayName: 'Historial de Canje',
+    displayName: 'Historial canje de materiales',
     iconName: 'checkup-list',
     route: 'home/material-exchange',
   },
@@ -41,5 +41,15 @@ export const navItems: NavItem[] = [
     displayName: 'Cupones',
     iconName: 'ticket',
     route: 'home/coupon',
+  },
+  {
+    displayName: 'Canjear',
+    iconName: 'exchange',
+    route: 'home/coupon',
+  },
+  {
+    displayName: 'Mis cupones',
+    iconName: 'ticket',
+    route: 'home/coupon/user',
   },
 ];
