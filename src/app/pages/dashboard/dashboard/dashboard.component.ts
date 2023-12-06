@@ -23,13 +23,13 @@ export class DashboardComponent implements OnInit {
     this.userService.getUser.subscribe((user: any) => {
       if (user) {
         if (user.isSuperAdmin) {
-          this.userRole = 'Super Admin';
+          this.userRole = 'admin';
           this.loadSuperAdminDashboard(user);
         } else if (user.isCenterAdmin) {
-          this.userRole = 'Center Admin';
+          this.userRole = 'admin_centro_acopio';
           this.loadCenterAdminDashboard(user);
         } else if (user.isClient) {
-          this.userRole = 'Client';
+          this.userRole = 'cliente';
           this.loadClientDashboard(user);
         }
       }
@@ -37,17 +37,11 @@ export class DashboardComponent implements OnInit {
   }
 
   loadSuperAdminDashboard(user: any) {
-    // Lógica para cargar el dashboard del Super Admin
-    // ...
   }
 
   loadCenterAdminDashboard(user: any) {
-    // Lógica para cargar el dashboard del Center Admin
-    // ...
   }
 
   loadClientDashboard(user: any) {
-    // Lógica para cargar el dashboard del Client
-    // ...
   }
 }
