@@ -25,6 +25,9 @@
               <mat-error *ngIf="materialForm.get('color_representation')?.hasError('required') && materialForm.get('color_representation')?.touched">
                 La representación de color es requerida.
               </mat-error>
+              <mat-error *ngIf="materialForm.get('color_representation')?.errors?.['Taken']">
+                El color ya está en uso.
+              </mat-error>
             </mat-form-field>
           </div>
           <div style="display: flex;justify-content: center;">

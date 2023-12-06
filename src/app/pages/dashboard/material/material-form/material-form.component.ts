@@ -9,6 +9,7 @@ import {
 } from 'src/app/share/notificacion.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { UtilsValidators } from 'src/app/services/utils.validators';
 
 @Component({
   selector: 'app-material-form',
@@ -35,6 +36,7 @@ export class MaterialFormComponent {
     private userService: UserService,
     private noti: NotificacionService,
     private route: ActivatedRoute,
+    private vaidator: UtilsValidators
   ) {
     this.id = parseInt(this.route.snapshot.paramMap.get('id') as string);
     this.isSuperAdmin = this.userService.getInfo().isSuperAdmin;
@@ -117,7 +119,11 @@ export class MaterialFormComponent {
           Validators.min(0), // Asegura que el valor sea positivo o cero
         ]),
       ],
-      color_representation: [null, Validators.compose([Validators.required])],
+      color_representation: [null, {
+        validators: [Validators.required],
+        asyncValidators: [this.vaidator.colorTakenValidator()],
+        updateOn: 'blur' // Opcional: valida cuando el campo pierde el foco
+      }],
     });
   }
 

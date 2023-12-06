@@ -1,4 +1,6 @@
-<div class="invoice" *ngIf="exchangeDetails">
+<div class="invoice" *ngIf="exchangeDetails" style="
+overflow: auto;
+">
   <div class="invoice-container">
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -55,14 +57,18 @@
             [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"></tr>
         </table>
       </div>
-
-      <h3 style="margin: 1rem 0 0.5rem 0; text-align: right;">Total ECO Coins: {{ exchangeDetails.total_eco_coins }} 🪙
-      </h3>
+      <div style="margin: 1rem 0 0.5rem 0; text-align: right;">
+        <h3>Total ECO Coins: {{ exchangeDetails.total_eco_coins }} 🪙</h3>
+      </div>
 
       <div
-        style="display: flex;  justify-content: space-between;  align-items: center; flex-direction: row;  padding-top: 4rem;">
-        <h4 style="margin: 0;">{{ exchangeDetails.recycling_center.name }}</h4>
-        <p>Teléfono: {{ exchangeDetails.recycling_center.phone }}</p>
+        style="display: flex;  justify-content: space-between;  align-items: center; flex-direction: row;  padding-top: 2rem;">
+        <div style="margin: 0;width: 100%;">
+          <h2>Centro de Acopio</h2>
+          <div style="display: inline-flex;width: inherit;">
+            <h4 style="margin: 0;margin-right: auto;">{{ exchangeDetails.recycling_center.name }}</h4><p style="margin-left: auto;">Teléfono: {{ exchangeDetails.recycling_center.phone }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

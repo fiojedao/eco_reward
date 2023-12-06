@@ -69,21 +69,21 @@ export class MaterialManagementComponent {
     const { selectedCustomer } = this
     const data = this.exchangeService.getData();
 
-    if(!center.status){
-      this.noti.mensaje(
-        'Acción restringida',
-        `El centro se encuentra deshabilitado`,
-        TipoMessage.warning,
-      );
-      return;
-    }
-
     if(!centerAux){
       this.noti.mensajeRedirect(
         'Verificar datos',
         `Debe de seleccionar un centro`,
         TipoMessage.warning,
         'home/exchanging/'
+      );
+      return;
+    }
+
+    if(!centerAux.status){
+      this.noti.mensaje(
+        'Acción restringida',
+        `El centro se encuentra deshabilitado`,
+        TipoMessage.warning,
       );
       return;
     }
@@ -165,9 +165,8 @@ export class MaterialManagementComponent {
 
   onInputChange(event: any, element: any) {
     const inputValue = element.amount;
-    const numericRegex = /^[0-9]*$/; // Expresión regular para permitir solo números
+    const numericRegex = /^[0-9]*$/;
     if (numericRegex.test(inputValue)) {
-      //event.target.value = inputValue.replace(/[^0-9]/g, ''); // Remover caracteres no numéricos
       this.updateAmout(element);
       this.errorAmount = false;
     } else {
