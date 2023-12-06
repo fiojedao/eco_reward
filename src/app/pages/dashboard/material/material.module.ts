@@ -18,6 +18,7 @@ import { MaterialFormComponent } from './material-form/material-form.component';
 import { MaterialAllComponent } from './material-all/material-all.component';
 import { MaterialDetailComponent } from './material-detail/material-detail.component';
 import { MaterialImports } from 'src/app/materialImports.module';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MaterialImports } from 'src/app/materialImports.module';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    NgxDropzoneModule,
     MatIconModule,
     MatButtonModule,
     MatTableModule,

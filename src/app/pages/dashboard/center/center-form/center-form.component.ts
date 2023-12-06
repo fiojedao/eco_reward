@@ -15,7 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class CenterFormComponent {
   destroy$: Subject<boolean> = new Subject<boolean>();
-  titleForm: string = 'New Center';
+  titleForm: string = 'Crear Centro';
   //Center to update
   centerInfo: any;
   administratorList: any;
@@ -47,7 +47,7 @@ export class CenterFormComponent {
 
       if (this.idCenter != undefined && !isNaN(Number(this.idCenter))) {
         this.isCreate = false;
-        this.titleForm = 'Update Center';
+        this.titleForm = 'Actualizar Centro';
 
         this.gService
           .get('center', this.idCenter)

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
@@ -8,6 +8,7 @@ import {
   TipoMessage,
 } from 'src/app/share/notificacion.service';
 import { Subject, takeUntil } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-material-form',
@@ -15,70 +16,83 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./material-form.component.css'],
 })
 export class MaterialFormComponent {
+  id: number = 0;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  titleForm: string = 'New Material';
-  materialInfo: any;
-  file: any;
-  fileName: any;
-  base64String: string = "";
-  //Respuesta del API crear/modificar
-  respMaterial: any;
+  titleForm: string = 'Nuevo Material';
+  base64String: string = '';
+  file: File = new File([], '');
 
-  //Sí es submit
-  submitted = false;
-  isCreate: boolean = true;
-  idMaterial: number = 0;
+  errImg: boolean = false;
   materialForm!: FormGroup;
+  materialData: any;
+  isSuperAdmin: boolean;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private gService: GenericService,
     private router: Router,
-    private activeRouter: ActivatedRoute,
+    private userService: UserService,
     private noti: NotificacionService,
-    private imageUploadService: ImageUploadService
+    private route: ActivatedRoute,
   ) {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id') as string);
+    this.isSuperAdmin = this.userService.getInfo().isSuperAdmin;
     this.formularioReactive();
+    this.initData(this.id);
   }
 
-  ngOnInit(): void {
-    this.activeRouter.params.subscribe((params: Params) => {
-      this.idMaterial = params['id'];
-
-      if (this.idMaterial > 0 && this.idMaterial != undefined) {
-        this.isCreate = false;
-        this.titleForm = 'Update Material';
-
-        this.gService
-          .get('material', this.idMaterial)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            this.materialInfo = data;
-            console.log(this.materialInfo);
-            this.base64String = this.materialInfo.image;
-            //Precargar los datos en el formulario
-            this.materialForm.patchValue({
-              id: this.materialInfo.materialID,
-              name: this.materialInfo.name,
-              description: this.materialInfo.description,
-              image: this.materialInfo.image,
-              unit_of_measure: this.materialInfo.unit_of_measure,
-              price: this.materialInfo.price,
-              color_representation: this.materialInfo.color_representation,
-            });
-          });
+  initData(id: number) {
+    if (!isNaN(Number(id))) {
+      if (Number(id)) {
+        this.getMaterialId(Number(id));
       }
+    }
+  }
+  
+  getMaterialId(id: any) {
+    this.gService
+      .get('material', id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.setData(data);
+      });
+  }  
+  
+  setData(coupon: any){
+    this.materialData = coupon;
+    this.materialForm.patchValue({
+      name: this.materialData.name || '',
+      description: this.materialData.description || '',
+      unit_of_measure: this.materialData.unit_of_measure || '',
+      color_representation: this.materialData.color_representation || '',
+      price: this.materialData.price || 0,
     });
+    // Crear un archivo File
+    this.file = this.getBase64ToFile(this.materialData.base64Image);
+    this.cdr.detectChanges();
+  }
+
+  getBase64ToFile(base64Image: string){
+    if(base64Image){
+      const byteCharacters = atob(base64Image);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const uniqueFileName = `file_${Date.now()}.png`;
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray]);
+  
+      return new File([blob], uniqueFileName, { type: 'image/png' }); // Ajusta el tipo de archivo según corresponda (p. ej. 'image/png' o 'image/jpeg')
+  
+    } 
+    return new File([], '');;
   }
 
   formularioReactive() {
-    //[null, Validators.required]
     this.materialForm = this.fb.group({
-      id: [null, null],
-      name: [
-        null,
-        Validators.compose([Validators.required, Validators.minLength(3)]),
-      ],
+      name: [null, Validators.compose([Validators.required, Validators.minLength(3)])],
       description: [
         null,
         Validators.compose([
@@ -87,7 +101,6 @@ export class MaterialFormComponent {
           Validators.maxLength(150),
         ]),
       ],
-      image: [null],
       unit_of_measure: [
         null,
         Validators.compose([
@@ -108,90 +121,97 @@ export class MaterialFormComponent {
     });
   }
 
-  handleFileInput(event: any): void {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      this.imageUploadService.uploadImage(file).subscribe(
-        (response: any) => {
-          console.log(response);
-        },
-        (error) => {
-          console.error('Error al subir la imagen:', error);
-        }
-      );
+  submitMaterial(): void {
+    if (this.materialForm.invalid || !this.file.name) {
+      this.markFormGroupTouched(this.materialForm);
+      if (!this.file.name) this.errImg = true
+      return;
     }
-  }
+    const form = this.materialForm.value;
+    this.errImg = false
+    const fileReader = new FileReader();
+    const gService = this.gService;
+    const destroy$ = this.destroy$;
+    const noti = this.noti;
+    const router = this.router;
+    const id = this.id;
 
-  convertToBase64(file: File): void {
-    const reader = new FileReader();
 
-    reader.onload = async (e: any) => {
-      // 'e.target.result' contiene la cadena Base64
-      this.base64String = e.target.result;
-      console.log(this.base64String);
+    fileReader.onload = function (event: any) {
+      if (event.target && event.target.result) {
+        const base64String = event.target.result.split(',')[1];
+
+        var body = {
+          name: form.name,
+          description: form.description,
+          unit_of_measure: form.unit_of_measure,
+          price: form.price,
+          color_representation: form.color_representation,
+          image: base64String
+        }
+
+
+        if (!id) {
+          gService
+            .create('material', body)
+            .pipe(takeUntil(destroy$))
+            .subscribe((data: any) => {
+              noti.mensajeRedirect(
+                'Registrado',
+                `Material: ${data.name} creado correctamente`,
+                TipoMessage.success,
+                'home/material'
+              );
+            });
+        } else {
+          gService
+            .update(`material/${id}`, body)
+            .pipe(takeUntil(destroy$))
+            .subscribe((data: any) => {
+              noti.mensajeRedirect(
+                'Actualizado',
+                `Material: ${data.name} actualizado correctamente`,
+                TipoMessage.success,
+                'home/material'
+              );
+            });
+        }
+      }
     };
 
-    // Lee el archivo como una URL de datos (cadena Base64)
-    reader.readAsDataURL(file);
+    fileReader.readAsDataURL(this.file);
   }
 
-  public errorHandling = (control: string, error: string) => {
-    return this.materialForm.controls[control].hasError(error);
-  };
-  submitMaterial(): void {
-    this.submitted = true;
-    console.log(this.materialForm.value);
-    if (this.materialForm.invalid) return;
-    if (this.isCreate) {
-      /* this.gService
-        .create('material', this.materialForm.value)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          //Obtener respuesta
-          this.respMaterial = data;
-          this.noti.mensajeRedirect(
-            'Create material',
-            `Materal: ${data.name} created successfully`,
-            TipoMessage.success,
-            'home/material/'
-          );
-          console.log(data);
-          this.router.navigate(['home/material/']);
-        }); */
-    } else {
-      if (this.idMaterial != undefined && !isNaN(Number(this.idMaterial))) {
-        /*   this.gService
-          .update('material', this.materialForm.value)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            //Obtener respuesta
-            this.respMaterial = data;
-            this.noti.mensajeRedirect(
-              'Update material',
-              `Material: ${data.name} updated successfully`,
-              TipoMessage.success,
-              'home/material/'
-            );
-            console.log(data);
-            this.router.navigate(['home/material/']);
-          }); */
+  markFormGroupTouched(formGroup: FormGroup) {
+    (Object as any).values(formGroup.controls).forEach((control: any) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
       }
-    }
+    });
   }
-  
 
   onReset() {
-    this.submitted = false;
     this.materialForm.reset();
+    this.formularioReactive();
   }
 
   onBack() {
     this.router.navigate(['/home/material']);
   }
+
   ngOnDestroy() {
     this.destroy$.next(true);
-    // Desinscribirse
     this.destroy$.unsubscribe();
+  }
+
+  onSelect(event: any) {
+    this.errImg = false
+    const file = event.addedFiles[0]
+    this.file = file;
+  }
+
+  onRemove() {
+    this.file = new File([], '');
   }
 }

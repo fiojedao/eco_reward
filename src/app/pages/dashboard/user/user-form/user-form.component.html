@@ -2,13 +2,13 @@
   <form *ngIf="id === 0; else updateForm" [formGroup]="userFormCreate" (ngSubmit)="createUser()">
     <div style="display: grid;margin-top: 25px;">
       <div style="display: flex;justify-content: center;">
-        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+        <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
           <mat-label>Nombre:</mat-label>
           <input matInput formControlName="name" />
           <mat-error *ngIf="userFormCreate.get('name')?.invalid && userFormCreate.get('name')?.touched">El nombre es
             requerido.</mat-error>
         </mat-form-field>
-        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+        <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
           <mat-label>Correo electrónico:</mat-label>
           <input matInput type="email" formControlName="email" />
           <mat-error *ngIf="userFormCreate.get('email')?.hasError('email') && userFormCreate.get('email')?.touched">
@@ -23,17 +23,17 @@
         </mat-form-field>
       </div>
       <div style="display: flex;justify-content: center;">
-        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+        <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
           <mat-label>Teléfono:</mat-label>
           <input matInput formControlName="phone" />
         </mat-form-field>
-        <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+        <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
           <mat-label>Identificación:</mat-label>
           <input matInput formControlName="identification" />
         </mat-form-field>
       </div>
       <div style="display: flex;justify-content: left;margin-left: 50px;">
-        <mat-form-field class="p-10" appearance="fill" style="width: 48%;">
+        <mat-form-field class="p-10" appearance="outline" style="width: 48%;">
           <mat-label>Contraseña:</mat-label>
           <input matInput type="password" formControlName="password" />
           <mat-error *ngIf="userFormCreate.get('password')?.invalid && userFormCreate.get('password')?.touched">
@@ -56,13 +56,13 @@
     <form [formGroup]="userForm" (ngSubmit)="updateUser()">
       <div style="display: grid;margin-top: 25px;">
         <div style="display: flex;justify-content: center;">
-          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
             <mat-label>Nombre:</mat-label>
             <input matInput formControlName="name" />
             <mat-error *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">El nombre es
               requerido.</mat-error>
           </mat-form-field>
-          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
             <mat-label>Correo electrónico:</mat-label>
             <input matInput type="email" formControlName="email" />
             <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">El email debe ser
@@ -70,11 +70,11 @@
           </mat-form-field>
         </div>
         <div style="display: flex;justify-content: center;">
-          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
             <mat-label>Teléfono:</mat-label>
             <input matInput formControlName="phone" />
           </mat-form-field>
-          <mat-form-field class="p-10" appearance="fill" style="width: 46%;">
+          <mat-form-field class="p-10" appearance="outline" style="width: 46%;">
             <mat-label>Identificación:</mat-label>
             <input matInput formControlName="identification" />
           </mat-form-field>

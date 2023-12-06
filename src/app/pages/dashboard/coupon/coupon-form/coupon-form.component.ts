@@ -17,18 +17,12 @@ import {
 })
 export class CouponFormComponent {
   id: number = 0;
-  imageSrc: string | ArrayBuffer | null = null;
   destroy$: Subject<boolean> = new Subject<boolean>();
   titleForm: string = 'New Coupon';
-  couponInfo: any;
   base64String: string = '';
-  respCoupon: any;
   file: File = new File([], '');
 
   errImg: boolean = false;
-  submitted = false;
-  isCreate: boolean = true;
-  idCoupon: number = 0;
   couponForm!: FormGroup;
   couponData: any;
   isSuperAdmin: boolean;
@@ -148,7 +142,7 @@ export class CouponFormComponent {
     const destroy$ = this.destroy$;
     const noti = this.noti;
     const id = this.id;
-
+    const router = this.router;
 
     fileReader.onload = function(event: any) {
       if (event.target && event.target.result) {
